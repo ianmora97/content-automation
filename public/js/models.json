@@ -1,0 +1,28 @@
+{
+    "models":[
+        {
+            "name":"X1",
+            "url":"https://cache.bmwusa.com/cosy.arox?pov=walkaround&brand=WBBM&vehicle=21XA&client=byo&paint=P0A83&fabric=FKCSW&sa=S01X1,S0302,S0316,S03AG,S03AT,S03L8,S0420,S0508,S0775,S07HW&quality=70&bkgnd=transparent&RESP=PNG&angle=60&width=600&width=450"
+        },
+        {
+            "name":"X2",
+            "url":"https://cache.bmwusa.com/cosy.arox?pov=walkaround&brand=WBBM&vehicle=22XX&client=byo&paint=P0C1P&fabric=FKCSW&sa=S01XU,S0205,S0249,S0255,S0302,S0316,S03AG,S03MB,S0420,S0423,S0473,S0481,S04LU,S0508,S0534,S0544,S0563,S05A4,S05AS,S0676,S06AC,S06AK,S06UN,S0775&quality=70&bkgnd=transparent&RESP=PNG&angle=60&width=450"
+        },
+        {
+            "name":"X3",
+            "url":"https://cache.bmwusa.com/cosy.arox?pov=walkaround&brand=WBBM&vehicle=22XQ&client=byo&paint=P0C1M&fabric=FKHSW&sa=S0255,S02TB,S0302,S0319,S03AG,S0420,S0423,S0430,S0431,S0459,S0481,S0493,S04K1,S04U0,S04UR,S0508,S0534,S0552,S05AC,S05AS,S05AV,S0676,S06AC,S06AK,S06C4,S06U2,S0775&quality=high&bkgnd=transparent&RESP=PNG&angle=60&width=450&width=900&width=450"
+        },
+        {
+            "name":"X4",
+            "url":"https://cache.bmwusa.com/cosy.arox?pov=walkaround&brand=WBBM&vehicle=22XV&client=byo&paint=P0C4P&fabric=FKHG7&sa=S01CE,S01VU,S02NH,S02TB,S02VF,S0302,S0319,S0322,S03AG,S03DZ,S0402,S0420,S0423,S0430,S0459,S0481,S0493,S04AW,S04KN,S04U0,S04UR,S0534,S0552,S05AC,S05AS,S05AV,S0676,S06AC,S06AK,S06C4,S06U3,S0710,S0715,S0760,S0775&quality=hight&bkgnd=transparent&resp=png&angle=60&width=450"
+        },
+        {
+            "name":"X5",
+            "url":"https://cache.bmwusa.com/cosy.arox?pov=walkaround&brand=WBBM&vehicle=22XO&client=byo&paint=P0300&fabric=FK8SW&sa=S01CE,S01SB,S0255,S02TB,S0302,S0319,S03AT,S03MB,S0402,S0420,S0423,S0459,S0481,S0494,S04AW,S04KR,S04T8,S04UR,S0552,S05A1,S05AC,S05AS,S0676,S06AC,S06AK,S06C4,S06U3,S0775,S07HW&quality=hight&bkgnd=transparent&resp=png&angle=60&width=450"
+        },
+        {
+            "name":"X6",
+            "url":"https://cache.bmwusa.com/cosy.arox?pov=walkaround&brand=WBBM&vehicle=22XL&client=byo&paint=P0C06&fabric=FMCSW&sa=S01CE,S01SF,S0255,S0302,S0319,S0322,S03MB,S0402,S0420,S0423,S0459,S0481,S0494,S04KM,S04T8,S04UR,S05AC,S05AS,S05AV,S0676,S06AC,S06AK,S06C4,S06U3,S0775,S07HW&quality=hight&bkgnd=transparent&resp=png&angle=60&width=450"
+        }
+    ]
+}

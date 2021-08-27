@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline';">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Content Automation</title>
+
+    <!-- Line before Jquery  -->
+    <script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
+
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="../public/css/bootstrap.css">
+    <link rel="stylesheet" href="../public/css/animate.css">
+    <link rel="stylesheet" href="../public/css/fontawesome.css">
+
+    <!-- JS Files -->
+    <script src="../public/js/jq-bs-bundle.js"></script>
+    <script>
+        var g_menuTabSelected = "";
+    </script>
+</head>
+    <body>
+        <div id="wrapper">
+            <div class="" id="menuTabs">
+                <div id="logo" class="d-flex justify-content-start">
+                    <img src="../public/img/logo.svg" alt="">
+                    <div class="d-flex flex-column pt-1 ps-2">
+                        <h4 class="fw-bold text-white mb-0">Content Automation</h4>
+                        <small class="text-light mt-1">BMW</small>
+                    </div>
+                </div>
+                <hr>
+                <p class="text-light m-0 fst-italic fw-light small">Tasks</p>
+                <div class="d-flex flex-column px-2">
+                    <div class="me-3">
+                        <div class="nav flex-column nav-pills me-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                            <button class="nav-link active" id="v-pills-myu-tab" data-bs-toggle="pill" data-bs-target="#v-pills-myu" 
+                            type="button" role="tab" aria-controls="v-pills-myu" aria-selected="true">
+                                <i class="fas fa-redo-alt pe-2"></i> Model Year Updates
+                            </button>
+                            <button class="nav-link" id="v-pills-maco-tab" data-bs-toggle="pill" data-bs-target="#v-pills-maco" 
+                            type="button" role="tab" aria-controls="v-pills-maco" aria-selected="false">
+                                <i class="fas fa-hashtag pe-2"></i> MACO Offers
+                            </button>
+                            <button class="nav-link" id="v-pills-cosy-tab" data-bs-toggle="pill" data-bs-target="#v-pills-cosy" 
+                            type="button" role="tab" aria-controls="v-pills-cosy" aria-selected="false">
+                                <i class="fas fa-image pe-2"></i> CoSy Images
+                            </button>
+                            <button class="nav-link" id="v-pills-templates-tab" data-bs-toggle="pill" data-bs-target="#v-pills-templates" 
+                            type="button" role="tab" aria-controls="v-pills-templates" aria-selected="false">
+                                <i class="fas fa-th-large pe-2"></i> Templates
+                            </button>
+                            <hr>
+                            <p class="text-light m-0 fst-italic fw-light small">Personal</p>
+                            <button class="nav-link " id="v-pills-mytickets-tab" data-bs-toggle="pill" data-bs-target="#v-pills-mytickets" 
+                            type="button" role="tab" aria-controls="v-pills-mytickets" aria-selected="true">
+                                <i class="fab fa-jira pe-2"></i> My Tickets
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="mainContent">
+                <div class="bg-dark-light rounded-15 w-100 h-100">
+                    <div class="tab-content m-0 p-0 h-100" id="v-pills-tabContent">
+                        <div class="tab-pane h-100 p-3 fade show active" id="v-pills-myu" role="tabpanel" aria-labelledby="v-pills-myu-tab">
+                            <h2 class="fw-bold mb-0">Model Year Updates</h2>
+                            <hr>
+                            <div class="row mx-0 px-0">
+                                <%- include("jira") %>
+                                <div class="col-md-8 px-3">
+                                    <div class="d-flex justify-content-start px-3 ">
+                                        <h3 class="me-4">Models</h3>
+                                        <div class="input-group mb-3 w-50">
+                                            <span class="input-group-text bg-dark border-0" id="icon-addon1"><img src="../public/img/i_bmw.svg"></span>
+                                            <input type="text" class="form-control bg-dark border-0" placeholder="Search by name..." 
+                                            aria-label="Search by name..." aria-describedby="icon-addon1">
+                                        </div>
+                                    </div>
+                                    <div id="modelsScrollHorizontal" class="d-flex justify-content-start p-3" style="overflow-x: auto;">
+                                        
+                                    </div>
+                                    <hr>
+                                    <h4>Author URLs</h4>
+                                    <div id="authorURLs" class="" style="overflow-y: auto; height: 400px;">
+                                    // implementar acordeon para que se vea mas ordenado
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane h-100 p-3 fade" id="v-pills-maco" role="tabpanel" aria-labelledby="v-pills-maco-tab">
+                            
+                        </div>
+                        <div class="tab-pane h-100 p-3 fade" id="v-pills-cosy" role="tabpanel" aria-labelledby="v-pills-cosy-tab">
+                            
+                        </div>
+                        <div class="tab-pane h-100 p-3 fade" id="v-pills-templates" role="tabpanel" aria-labelledby="v-pills-templates-tab">
+                            
+                        </div>
+                        <div class="tab-pane h-100 p-3 fade" id="v-pills-mytickets" role="tabpanel" aria-labelledby="v-pills-mytickets-tab">
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script src="../public/js/clipboard.min.js"></script>
+        <script src="../public/js/logic.js"></script>
+        <script src="../public/js/auth.js" ></script>
+        <script src="../public/js/bringModels.js"></script>
+        <script>if (window.module) module = window.module;</script>
+    </body>
+</html>
