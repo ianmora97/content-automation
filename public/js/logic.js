@@ -1,5 +1,23 @@
 var clipboard = new ClipboardJS('.btn-to-clip');
 
+
+const animateCSS = (element, animation, prefix = 'animate__', speed = 'no') =>
+  new Promise((resolve, reject) => {
+    const animationName = `${prefix}${animation}`;
+    const node = document.querySelector(element);
+    if(speed !== 'no'){
+        node.classList.add(`${prefix}animated`, animationName, `${prefix}${speed}`);
+    }else{
+        node.classList.add(`${prefix}animated`, animationName);
+    }
+    function handleAnimationEnd(event) {
+        event.stopPropagation();
+        node.classList.remove(`${prefix}animated`, animationName);
+        resolve('Animation ended');
+    }
+    node.addEventListener('animationend', handleAnimationEnd, {once: true});
+});
+
 function loaded() {
     seeTabs()
 
@@ -32,6 +50,12 @@ function enableTooltips() {
     var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
     var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
     return new bootstrap.Tooltip(tooltipTriggerEl)
+    })
+}
+function enablePopovers() {
+    var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
+    var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
+    return new bootstrap.Popover(popoverTriggerEl)
     })
 }
 function seeTabs(params) {

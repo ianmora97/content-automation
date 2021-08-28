@@ -1,0 +1,16 @@
+DROP TABLE IF EXISTS `maco`;
+
+
+CREATE TABLE `region` (
+   id INTEGER PRIMARY KEY AUTOINCREMENT,
+   name text NOT NULL,
+)
+
+
+CREATE TABLE `maco` (
+   id INTEGER PRIMARY KEY AUTOINCREMENT,
+   region text NOT NULL,
+   name_ text NOT NULL,
+   code INTEGER NOT NULL
+)
+

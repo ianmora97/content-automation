@@ -95,8 +95,10 @@ small{
     font-size: 0.9rem !important;
 }
 .jiraSearch{
-    min-height: 470px;
-    max-height: 470px;
+    position:absolute;
+    top:0;
+    right:0;
+    z-index: 9;
 }
 .carModelSelect{
     border-radius: 16px !important;
@@ -108,8 +110,66 @@ small{
         transition: all .5s;
     }
 }
+.modelsAfterSelectedP{
+    top: 0;
+    left: 0;
+    transition: all .5s;
+}
+#modelsAfterSelected{
+    width: 350px;
+    height: 100%;
+    box-shadow: 0 4px 15px 0 rgba(0, 0, 0, 0.4) !important;
+    transition: all .5s;
+    position: relative;
+    border-radius: 15px !important;
+}
+.bg-modelSelect{
+    background-color: $dark-light !important;
+    // backdrop-filter: blur(2px);
+    width: 100%;
+    height: 100%;
+    transition: all .5s;
+}
+
+.accordion-button{
+    color:$primary !important;
+    box-shadow: none !important;
+    outline: none !important;
+    border: none !important;
+    background-color: $dark !important;
+    &:focus{
+        box-shadow: none !important;
+        outline: none !important;
+        border: none !important;
+    }
+    &::after{
+        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%233f50cd'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e") !important;
+    }
+}
+.accordion-item{
+    background-color: transparent !important;
+}
+.accordion-flush .accordion-item .accordion-button {
+    border-radius: 0 !important;
+}
+.accordion-item:last-of-type .accordion-button.collapsed {
+    border-radius: 0 !important;
+}
+.accordion-body{
+    padding: 1rem 0.5rem !important;
+}
 // ! Buttons
 
 .btn-primary{
-    box-shadow: 0 4px 15px 0 rgba(70, 89, 228,.40);
+    box-shadow: 0 4px 15px 0 rgba(70, 89, 228,.40) !important;
+    outline: none !important;
+    &:focus{
+        box-shadow: none !important;
+        outline: none !important;
+    }
+}
+.btn-xs, .btn-group-xs > .btn {
+    padding: 0.1rem 0.2rem !important;
+    font-size: 0.650rem !important;
+    border-radius: 0.2rem !important;
 }
