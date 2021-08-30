@@ -1,13 +1,3 @@
-var sqlite3 = require("sqlite3").verbose();
-const path = require('path')
-
-let db = new sqlite3.Database(path.join(__dirname+'/public/db/database.db'), (err) => {
-    if (err) {
-      return console.error(err.message);
-    }
-    console.log('Connected to the in-memory SQlite database.');
-});
-  
 var json_config;
 function loadUserConfig(){
     $.ajax({

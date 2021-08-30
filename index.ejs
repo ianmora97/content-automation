@@ -66,7 +66,6 @@
                 <div class="bg-dark-light rounded-15 w-100 h-100">
                     <div class="tab-content m-0 p-0 h-100 position-relative" id="v-pills-tabContent">
                         <%- include("jira") %>
-                        
                         <div class="tab-pane h-100 p-3 fade show active" id="v-pills-myu" role="tabpanel" aria-labelledby="v-pills-myu-tab">
                             <h2 class="fw-bold mb-0">Model Year Updates</h2>
                             <hr>
@@ -102,7 +101,211 @@
                             </div>
                         </div>
                         <div class="tab-pane h-100 p-3 fade" id="v-pills-maco" role="tabpanel" aria-labelledby="v-pills-maco-tab">
-                            
+                            <h2 class="fw-bold mb-0">MACO Offers</h2>
+                            <hr>
+                            <ul class="nav nav-pills" id="myTab" role="tablist">
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link active" id="urls-tab" data-bs-toggle="tab" data-bs-target="#urls" type="button" role="tab" 
+                                    aria-controls="urls" aria-selected="true"><i class="fas fa-link pe-2"></i> Regions</button>
+                                </li>
+                                <li class="nav-item ms-3" role="presentation">
+                                    <button class="nav-link" id="names-tab" data-bs-toggle="tab" data-bs-target="#names" type="button" role="tab" 
+                                    aria-controls="names" aria-selected="false"><i class="fas fa-retweet pe-2"></i> Process</button>
+                                </li>
+                            </ul>
+                            <div class="tab-content" id="myTabContent">
+                                <div class="tab-pane fade show active" id="urls" role="tabpanel" aria-labelledby="urls-tab">
+                                    <div class="d-flex flex-column pt-2" id="macosURLs" style="overflow-y: auto; height: calc(100vh - 200px);">
+                                        <div id="macourl-central" class="">
+                                            <div class="d-flex justify-content-between pb-2 align-items-end">
+                                                <h4 class="mb-0">Central Region</h4>
+                                                <div class="d-flex align-items-end">
+                                                    <p class="mb-0" role="button" data-bs-toggle="collapse" data-bs-target="#collapseCentral" aria-expanded="false" aria-controls="collapseCentral">
+                                                        Links <i class="fas fa-angle-down"></i>
+                                                    </p>
+                                                    <div style="min-height: 47px;">
+                                                        <div class="collapse collapse-horizontal" id="collapseCentral">
+                                                            <div class="d-flex justify-content-end" style="width: 232px;">
+                                                                <div class="d-flex flex-column justify-content-start ms-3">
+                                                                    <small class="fst-italic mb-1">Staging</small>
+                                                                    <div class="btn-group" role="group" aria-label="Basic example">
+                                                                        <button type="button" class="btn no-shadow btn-primary btn-sm"><i class="far fa-copy"></i></button>
+                                                                        <button type="button" class="btn no-shadow btn-primary btn-sm" onclick="openMacoLinks('central','s')"><i class="fab fa-safari"></i></button>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="d-flex flex-column justify-content-start ms-3">
+                                                                    <small class="fst-italic mb-1">Prod</small>
+                                                                    <div class="btn-group" role="group" aria-label="Basic example">
+                                                                        <button type="button" class="btn no-shadow btn-primary btn-sm"><i class="far fa-copy"></i></button>
+                                                                        <button type="button" class="btn no-shadow btn-primary btn-sm" onclick="openMacoLinks('central','p')"><i class="fab fa-safari"></i></button>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="d-flex flex-column justify-content-start ms-3">
+                                                                    <small class="fst-italic mb-1">Live</small>
+                                                                    <div class="btn-group" role="group" aria-label="Basic example">
+                                                                        <button type="button" class="btn no-shadow btn-primary btn-sm"><i class="far fa-copy"></i></button>
+                                                                        <button type="button" class="btn no-shadow btn-primary btn-sm" onclick="openMacoLinks('central','l')"><i class="fab fa-safari"></i></button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div id="macourl-east" class="py-3 mt-3 border-top">
+                                            <div class="d-flex justify-content-between pb-2 align-items-end">
+                                                <h4 class="mb-0">Eastern Region</h4>
+                                                <div class="d-flex align-items-end">
+                                                    <p class="mb-0" role="button" data-bs-toggle="collapse" data-bs-target="#collapseEastern" aria-expanded="false" aria-controls="collapseEastern">
+                                                        Links <i class="fas fa-angle-down"></i> 
+                                                    </p>
+                                                    <div style="min-height: 47px;">
+                                                        <div class="collapse collapse-horizontal" id="collapseEastern">
+                                                            <div class="d-flex justify-content-end" style="width: 232px;">
+                                                                <div class="d-flex flex-column justify-content-start ms-3">
+                                                                    <small class="fst-italic mb-1">Staging</small>
+                                                                    <div class="btn-group" role="group" aria-label="Basic example">
+                                                                        <button type="button" class="btn no-shadow btn-primary btn-sm"><i class="far fa-copy"></i></button>
+                                                                        <button type="button" class="btn no-shadow btn-primary btn-sm" onclick="openMacoLinks('east','s')"><i class="fab fa-safari"></i></button>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="d-flex flex-column justify-content-start ms-3">
+                                                                    <small class="fst-italic mb-1">Prod</small>
+                                                                    <div class="btn-group" role="group" aria-label="Basic example">
+                                                                        <button type="button" class="btn no-shadow btn-primary btn-sm"><i class="far fa-copy"></i></button>
+                                                                        <button type="button" class="btn no-shadow btn-primary btn-sm" onclick="openMacoLinks('east','s')"><i class="fab fa-safari"></i></button>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="d-flex flex-column justify-content-start ms-3">
+                                                                    <small class="fst-italic mb-1">Live</small>
+                                                                    <div class="btn-group" role="group" aria-label="Basic example">
+                                                                        <button type="button" class="btn no-shadow btn-primary btn-sm"><i class="far fa-copy"></i></button>
+                                                                        <button type="button" class="btn no-shadow btn-primary btn-sm" onclick="openMacoLinks('east','s')"><i class="fab fa-safari"></i></button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div id="macourl-west" class="py-3 mt-3 border-top">
+                                            <div class="d-flex justify-content-between pb-2 align-items-end">
+                                                <h4 class="mb-0">Western Region</h4>
+                                                <div class="d-flex align-items-end">
+                                                    <p class="mb-0" role="button" data-bs-toggle="collapse" data-bs-target="#collapseWestern" aria-expanded="false" aria-controls="collapseWestern">
+                                                        Links <i class="fas fa-angle-down"></i>
+                                                    </p>
+                                                    <div style="min-height: 47px;">
+                                                        <div class="collapse collapse-horizontal" id="collapseWestern">
+                                                            <div class="d-flex justify-content-end" style="width: 232px;">
+                                                                <div class="d-flex flex-column justify-content-start ms-3">
+                                                                    <small class="fst-italic mb-1">Staging</small>
+                                                                    <div class="btn-group" role="group" aria-label="Basic example">
+                                                                        <button type="button" class="btn no-shadow btn-primary btn-sm"><i class="far fa-copy"></i></button>
+                                                                        <button type="button" class="btn no-shadow btn-primary btn-sm" onclick="openMacoLinks('west','s')"><i class="fab fa-safari"></i></button>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="d-flex flex-column justify-content-start ms-3">
+                                                                    <small class="fst-italic mb-1">Prod</small>
+                                                                    <div class="btn-group" role="group" aria-label="Basic example">
+                                                                        <button type="button" class="btn no-shadow btn-primary btn-sm"><i class="far fa-copy"></i></button>
+                                                                        <button type="button" class="btn no-shadow btn-primary btn-sm" onclick="openMacoLinks('west','s')"><i class="fab fa-safari"></i></button>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="d-flex flex-column justify-content-start ms-3">
+                                                                    <small class="fst-italic mb-1">Live</small>
+                                                                    <div class="btn-group" role="group" aria-label="Basic example">
+                                                                        <button type="button" class="btn no-shadow btn-primary btn-sm"><i class="far fa-copy"></i></button>
+                                                                        <button type="button" class="btn no-shadow btn-primary btn-sm" onclick="openMacoLinks('west','s')"><i class="fab fa-safari"></i></button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div id="macourl-south" class="py-3 mt-3 border-top">
+                                            <div class="d-flex justify-content-between pb-2 align-items-end">
+                                                <h4 class="mb-0">Southern Region</h4>
+                                                <div class="d-flex align-items-end">
+                                                    <p class="mb-0" role="button" data-bs-toggle="collapse" data-bs-target="#collapseSouthern" aria-expanded="false" aria-controls="collapseSouthern">
+                                                        Links <i class="fas fa-angle-down"></i>
+                                                    </p>
+                                                    <div style="min-height: 47px;">
+                                                        <div class="collapse collapse-horizontal" id="collapseSouthern">
+                                                            <div class="d-flex justify-content-end" style="width: 232px;">
+                                                                <div class="d-flex flex-column justify-content-start ms-3">
+                                                                    <small class="fst-italic mb-1">Staging</small>
+                                                                    <div class="btn-group" role="group" aria-label="Basic example">
+                                                                        <button type="button" class="btn no-shadow btn-primary btn-sm"><i class="far fa-copy"></i></button>
+                                                                        <button type="button" class="btn no-shadow btn-primary btn-sm" onclick="openMacoLinks('south','s')"><i class="fab fa-safari"></i></button>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="d-flex flex-column justify-content-start ms-3">
+                                                                    <small class="fst-italic mb-1">Prod</small>
+                                                                    <div class="btn-group" role="group" aria-label="Basic example">
+                                                                        <button type="button" class="btn no-shadow btn-primary btn-sm"><i class="far fa-copy"></i></button>
+                                                                        <button type="button" class="btn no-shadow btn-primary btn-sm" onclick="openMacoLinks('south','s')"><i class="fab fa-safari"></i></button>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="d-flex flex-column justify-content-start ms-3">
+                                                                    <small class="fst-italic mb-1">Live</small>
+                                                                    <div class="btn-group" role="group" aria-label="Basic example">
+                                                                        <button type="button" class="btn no-shadow btn-primary btn-sm"><i class="far fa-copy"></i></button>
+                                                                        <button type="button" class="btn no-shadow btn-primary btn-sm" onclick="openMacoLinks('south','s')"><i class="fab fa-safari"></i></button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="names" role="tabpanel" aria-labelledby="names-tab" style="overflow-y: auto; height: calc(100vh - 200px);">
+                                    <div class="d-flex justify-content-start align-items-end">
+                                        <div class="me-4 mt-3">
+                                            <h3 class="mb-0">MACO Offers Process</h3>
+                                            <p class="small mb-0">Process for <span class="fst-italic">MACO Offers Automation</span></p>
+                                        </div>
+                                        <a class="btn btn-primary btn-sm" href="https://virtuelle-welt.atlassian.net/wiki/spaces/BMW/pages/257426215/Homepage%2BFMAs%2B-%2BContent%2BProcess"><i class="fab fa-confluence pe-1"></i> Confluence page</a>
+                                    </div>
+                                    <hr>
+                                    <div class="alert alert-warning bg-warning" role="alert">
+                                        <h4 class="alert-heading"><i class="fas fa-exclamation-triangle text-dark"></i> To have in mind!</h4>
+                                        The ticket validation should be approved by QA to upload the Sheet. <br>
+                                        You need confirmation by a PM to upload the sheet. <br>
+                                        This process may be not immediate.
+                                    </div>
+                                    <ol class="list-group list-group-flush list-group-numbered">
+                                        <li class="list-group-item small">Upload the <i class="far fa-file-excel text-success"></i> Priority Sheet to the <a href="https://author.staging.bmwusacm.co/assets.html/content/dam/bmwusa/maco-offers-automation">Priority Sheets DAM Folder</a></li>    
+                                        <li class="list-group-item small">Click the <b>Start Workflow</b> button, and choose <b>"BMW - MACO Offers Automation"</b></li>
+                                        <li class="list-group-item small">Wait 2-5 min until you can see the changes on the <a href="https://author.staging.bmwusacm.co/content/Content/t2-offers-preview-page.html">HomePage Preview</a></li>
+                                        <li class="list-group-item small">Open the <a href="https://author.staging.bmwusacm.co/libs/cq/workflow/content/console.html">Console</a> to start the following Workflows</li>
+                                        <li class="list-group-item small">Start a <b>BMW Tree Activation</b> workflow for: <span data-bs-toggle="tooltip" data-bs-placement="top" title="Copy" role="button" class="badge btn-to-clip bg-light text-dark" data-clipboard-text="/content/experience-fragments/bmw/personalization/homepage/primary-fmas">/content/experience-fragments/bmw/personalization/homepage/primary-fmas</span> and name it<sup>1</sup></li>
+                                        <li class="list-group-item small">Start a <b>BMW Tree Activation</b> workflow for: <span data-bs-toggle="tooltip" data-bs-placement="top" title="Copy" role="button" class="badge btn-to-clip bg-light text-dark" data-clipboard-text="/content/experience-fragments/bmw/personalization/homepage/homepage-fmas">/content/experience-fragments/bmw/personalization/homepage/homepage-fmas</span> and name it<sup>1</sup></li>
+                                        <li class="list-group-item small">Wait until the changes are reflected in <a onclick="openExternalLink('https://www.staging.bmwusacm.co/')" href="https://www.staging.bmwusacm.co"></a></li>
+                                        <li class="list-group-item small">Check Every MACO on each region</li>
+                                    </ol>
+                                    <div class="bg-dark rounded-15 mt-2 mb-4 p-3">
+                                        <h5 class="mb-0">DAM sheet:</h5>
+                                        <a class="mb-2" href="https://author.staging.bmwusacm.co/assets.html/content/dam/bmwusa/maco-offers-automation">Priority Sheet DAM folder</a>
+                                        <h5 class="mb-0">Homepage Preview:</h5>
+                                        <a class="mb-2" href="https://author.staging.bmwusacm.co/content/Content/t2-offers-preview-page.html">MACO's Homepage Preview</a>
+                                        <h5 class="mb-0">Author Console</h5>
+                                        <a class="mb-2" href="https://author.staging.bmwusacm.co/libs/cq/workflow/content/console.html">Author Console</a>
+                                    </div>
+                                    
+                                    <small class="small mt-4"><sup>1</sup> The naming convention for these type of workflows should be:</small> <br>
+                                    <small class="small">Your CONT tickets for each region: <span class="badge bg-light text-dark">central, eastern, western, southern</span> + <span class="badge bg-light text-dark">month year</span> + <span class="badge bg-light text-dark">T1 and T2</span> + <span class="badge bg-light text-dark">fmas/carousel</span></small> <br>
+                                    <small class="small badge bg-primary">CONT-29401, CONT-29402, CONT-29403, CONT-29404 - August 2021 - T1 and T2 - FMAs</small> <br>
+                                    <small class="small badge bg-primary">CONT-29401, CONT-29402, CONT-29403, CONT-29404 - August 2021 - T1 and T2 - Carousel</small> <br>
+                                </div>
+                            </div>
                         </div>
                         <div class="tab-pane h-100 p-3 fade" id="v-pills-cosy" role="tabpanel" aria-labelledby="v-pills-cosy-tab">
                             
@@ -122,6 +325,7 @@
         <script src="public/js/logic.js"></script>
         <script src="public/js/auth.js" ></script>
         <script src="public/js/bringModels.js"></script>
+        <script src="public/js/db.js"></script>
         <script>if (window.module) module = window.module;</script>
     </body>
 </html>

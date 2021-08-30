@@ -221,22 +221,45 @@ function selectModel(model) {
         }
     });
     g_modelsURLs.forEach(element => {
-        if(element.includes(model.toLowerCase())) {
-            let authorURL =  "https://www.staging.bmwusacm.co" + element.split(".com")[1];
-            appendURLs(authorURL,authorURL,"#stagingURLs")
+        if(model.length == 1) {
+            if(element.includes(model+"-series")) {
+                let authorURL =  "https://www.staging.bmwusacm.co" + element.split(".com")[1];
+                appendURLs(authorURL,authorURL,"#stagingURLs")
+            }
+        }else{
+            if(element.includes(model.toLowerCase())) {
+                let authorURL =  "https://www.staging.bmwusacm.co" + element.split(".com")[1];
+                appendURLs(authorURL,authorURL,"#stagingURLs")
+            }
         }
     });
     g_modelsURLs.forEach(element => {
-        if(element.includes(model.toLowerCase())) {
-            let authorURL =  "https://www.prod.bmwusacm.co" + element.split(".com")[1];
-            appendURLs(authorURL,authorURL,"#prodURLs")
+        if(model.length == 1) {
+            if(element.includes(model+"-series")) {
+                let authorURL =  "https://www.prod.bmwusacm.co" + element.split(".com")[1];
+                appendURLs(authorURL,authorURL,"#prodURLs")
+            }   
+        }else{
+            if(element.includes(model.toLowerCase())) {
+                let authorURL =  "https://www.prod.bmwusacm.co" + element.split(".com")[1];
+                appendURLs(authorURL,authorURL,"#prodURLs")
+            }
         }
     });
     g_modelsURLs.forEach(element => {
-        if(element.includes(model.toLowerCase())) {
-            appendURLs(element,element,"#liveURLs")
+        if(model.length == 1) {
+            if(element.includes(model+"-series")) {
+                appendURLs(element,element,"#liveURLs")
+            }
+        }else{
+            if(element.includes(model.toLowerCase())) {
+                appendURLs(element,element,"#liveURLs")
+            }
         }
+
     });
+
+    enableTooltips();
 }
 var g_modelsURLs = [];
 function bringModelsfromBMW(){

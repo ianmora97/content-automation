@@ -2,7 +2,7 @@ $primary:#4659e4;
 $secondary:#FF9500;
 $success:#34C759;
 $info:#5BC7FA;
-$warning:#FF9500;
+$warning:#ffbf00;
 $danger:#FF3C2F;
 $light:#cfcece;
 $dark:#1A1A1A;
@@ -19,6 +19,8 @@ $theme-colors: (
     "dark":       $dark,
     "dark-light": $dark-light
 );
+$list-group-color: white;
+$list-group-bg: $dark;
 
 body{
     background-color: $dark !important;
@@ -93,6 +95,7 @@ small{
     text-align: left !important;
     margin: 12px 0;
     font-size: 0.9rem !important;
+    border-radius: 10px !important;
 }
 .jiraSearch{
     position:absolute;
@@ -173,3 +176,9 @@ small{
     font-size: 0.650rem !important;
     border-radius: 0.2rem !important;
 }
+.no-shadow{
+    box-shadow: none !important;
+}
+
+// ! ---------------------- nav --------------------
+
