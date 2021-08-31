@@ -19,6 +19,7 @@ $theme-colors: (
     "dark":       $dark,
     "dark-light": $dark-light
 );
+
 $list-group-color: white;
 $list-group-bg: $dark;
 
@@ -57,6 +58,7 @@ small{
     outline: none !important;
     border: none !important;
     box-shadow: none !important;
+    color:$light !important;
     &:focus{
         color:white !important;
     }
@@ -99,17 +101,23 @@ small{
 }
 .jiraSearch{
     position:absolute;
-    top:0;
-    right:0;
+    top:10px;
+    right:10px;
     z-index: 9;
 }
 .carModelSelect{
-    border-radius: 16px !important;
+    border-radius: 0 !important;
     transition: all .5s;
     background-color: $dark-light !important;
+    padding: 0.4rem;
     &:hover{
-        box-shadow: 0 4px 15px 0 rgba(70, 89, 228,.40) !important;
-        background-color: $primary !important;
+        box-shadow: 0 4px 15px 1px rgba(22, 22, 22, 0.4) !important;
+        background-color: #333333 !important;
+        transition: all .5s;
+    }
+    &.hover{
+        box-shadow: 0 4px 15px 1px rgba(22, 22, 22, 0.4) !important;
+        background-color: #333333 !important;
         transition: all .5s;
     }
 }
@@ -161,10 +169,38 @@ small{
 .accordion-body{
     padding: 1rem 0.5rem !important;
 }
+
+.alert-warning{
+    border: none !important;
+    font-size: 14px;
+}
+.animate_delay_t1{
+    animation-delay:0.2s;
+  }
+  
+  .animate_delay_t2{
+    animation-delay:0.7s;
+  }
+  
+  .animate_delay_t3{
+    animation-delay:1.2s;
+  }
+  
+  .animate_delay_t4{
+    animation-delay:1.7s;
+  }
 // ! Buttons
 
 .btn-primary{
     box-shadow: 0 4px 15px 0 rgba(70, 89, 228,.40) !important;
+    outline: none !important;
+    &:focus{
+        box-shadow: none !important;
+        outline: none !important;
+    }
+}
+.btn-success{
+    box-shadow: 0 4px 15px 0 rgba(70, 228, 131, 0.4) !important;
     outline: none !important;
     &:focus{
         box-shadow: none !important;
@@ -182,3 +218,10 @@ small{
 
 // ! ---------------------- nav --------------------
 
+// ! ---------------------- Modals --------------------
+
+$modal-content-color: white;
+$modal-content-bg: $dark;
+$modal-content-border-color: none;
+$modal-content-border-width: 0;
+$modal-fade-transform: scaleY(.01) scaleX(0);

@@ -20,7 +20,7 @@ function createWindow () {
         win.show()
     })
     // win.setIcon(path.join(__dirname, '/public/img/logo.svg'));
-    win.removeMenu();
+    //win.removeMenu();
     win.loadFile('index.ejs')
 }
 

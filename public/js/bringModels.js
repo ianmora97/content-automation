@@ -45,8 +45,8 @@ function bringModelsFromJSON() {
         response.models.forEach(element => {
             $("#modelsScrollHorizontal").append(`
                 <div class="d-flex align-items-center flex-column me-4 carModelSelect" 
-                role="button" onclick="selectModel('${element.name}')">
-                    <img src="${element.url}" width="142px">
+                role="button" onclick="selectModel('${element.name}')" id="model-${element.name}">
+                    <img src="${element.url}" width="142px" loading="lazy">
                     <h3>${element.name}</h3>
                 </div>
             `)
@@ -56,6 +56,26 @@ function bringModelsFromJSON() {
     });
 }
 bringModelsFromJSON()
+
+function searchByModel(){
+    $("#searchModel").on("keyup", function() {
+        $("#modelsScrollHorizontal").html("")
+        let val = $("#searchModel").val();
+        g_modelsJSON.forEach(element => {
+            if(element.name.toLowerCase().includes(val.toLowerCase())){
+                $("#modelsScrollHorizontal").append(`
+                    <div class="d-flex align-items-center flex-column me-4 carModelSelect ${val.length ? 'hover' : ''}" 
+                    role="button" onclick="selectModel('${element.name}')" id="model-${element.name}">
+                        <img src="${element.url}" width="142px" loading="lazy">
+                        <h3>${element.name}</h3>
+                    </div>
+                `)
+            }
+        });
+    });
+}
+
+
 
 function closeModelMYU() {
     $("#modelsAfterSelected").html("")
@@ -98,66 +118,6 @@ function selectModel(model) {
     let authorAdmin = "https://author.staging.bmwusacm.co/sites.html/content/bmwusa";
     let authorShowEditor = "editor.html/content/bmwusa";
     let authorShowAdmin = "sites.html/content/bmwusa";
-    /*
-    $("#authorURLs").append(`
-    <div class="accordion accordion-flush" id="accordionURLS">
-        <div class="accordion-item">
-            <h2 class="accordion-header" id="headingOne">
-            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseEditor" aria-expanded="false" aria-controls="collapseEditor">
-                <img src="public/img/aem.png" width="25px" class="me-2"> Editor:
-            </button>
-            </h2>
-            <div id="collapseEditor" class="accordion-collapse collapse bg-dark-light" aria-labelledby="headingOne" data-bs-parent="#accordionURLS">
-                <div class="accordion-body" id="editorURLsGen">
-                </div>
-            </div>
-        </div>
-        <div class="accordion-item">
-            <h2 class="accordion-header" id="headingTwo">
-            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSites" aria-expanded="false" aria-controls="collapseSites">
-                <img src="public/img/aem.png" width="25px" class="me-2"> Sites:
-            </button>
-            </h2>
-            <div id="collapseSites" class="accordion-collapse collapse bg-dark-light" aria-labelledby="headingTwo" data-bs-parent="#accordionURLS">
-                <div class="accordion-body" id="sitesURLsGen">
-                </div>
-            </div>
-        </div>
-        <div class="accordion-item">
-            <h2 class="accordion-header" id="headingThree">
-            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseStaging" aria-expanded="false" aria-controls="collapseStaging">
-                <img src="public/img/bmw.svg" width="20px" class="me-2 ms-1"> Staging:
-            </button>
-            </h2>
-            <div id="collapseStaging" class="accordion-collapse collapse bg-dark-light" aria-labelledby="headingTwo" data-bs-parent="#accordionURLS">
-                <div class="accordion-body" id="stagingURLs"></div>
-            </div>
-        </div>
-        <div class="accordion-item">
-            <h2 class="accordion-header" id="headingFour">
-            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseprod" aria-expanded="false" aria-controls="collapseprod">
-                <img src="public/img/bmw.svg" width="20px" class="me-2 ms-1"> Prod:
-            </button>
-            </h2>
-            <div id="collapseprod" class="accordion-collapse collapse bg-dark-light" aria-labelledby="headingTwo" data-bs-parent="#accordionURLS">
-                <div class="accordion-body" id="prodURLs">
-                </div>
-            </div>
-        </div>
-        <div class="accordion-item">
-            <h2 class="accordion-header" id="headingFour">
-            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapselive" aria-expanded="false" aria-controls="collapselive">
-                <img src="public/img/bmw.svg" width="20px" class="me-2 ms-1"> Live:
-            </button>
-            </h2>
-            <div id="collapselive" class="accordion-collapse collapse bg-dark-light" aria-labelledby="headingTwo" data-bs-parent="#accordionURLS">
-                <div class="accordion-body" id="liveURLs">
-                </div>
-            </div>
-        </div>
-    </div>
-    `);
-    */
     $("#authorURLs").append(`
         <div class="d-flex justify-content-between my-2">
             <div class="d-flex justify-content-start align-items-center">
@@ -296,3 +256,6 @@ bringModelsfromBMW()
     
 //     });
 // }
+document.addEventListener('DOMContentLoaded', function() {
+    searchByModel();
+});

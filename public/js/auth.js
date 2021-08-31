@@ -1,16 +1,30 @@
+const fs = require('fs');
+var jsonpath = 'public/js/config.json';
+
 var json_config;
 function loadUserConfig(){
-    $.ajax({
-        type: "GET",
-        url: 'public/js/config.json',
-        contentType: "application/json",
-    }).then((response) => {
-        json_config = response;
-    }, (error) => {
-    
-    });
+    json_config = JSON.parse(fs.readFileSync(jsonpath).toString());
 }
 loadUserConfig()
+
+function setConfigJsonJira(){
+    let m = {
+        c_email: $('#emailJira').val(),
+        c_token: $('#jiraToken').val()
+    }
+    fs.writeFileSync(jsonpath, JSON.stringify(m));
+    $('#validateButtonIcon').addClass('fa-spinner fa-pulse');
+    setTimeout(() => {
+        $('#validateButtonIcon').removeClass('fa-spinner fa-pulse').addClass('fa-check-circle');
+        $('#validateButton').removeClass('btn-primary').addClass('btn-success');
+        $('#validateButton').find('span').text('Saved')
+        setTimeout(() => {
+            $('#validateButton').removeClass('btn-success').addClass('btn-primary');
+            $('#validateButton').find('span').text('Save')
+            $('#validateButtonIcon').removeClass('fa-check-circle')
+        }, 1000);
+    }, 2000);
+}
 
 function bringJiraTicket(){
     $.ajax({
@@ -25,26 +39,4 @@ function bringJiraTicket(){
     }, (error) => {
     
     });
-}
-
-function selectMacos() {
-    db.all("SELECT * FROM maco", [], (err, rows) => {
-        if (err) {
-            throw err;
-        }
-        rows.forEach((row) => {
-            
-        });
-    });
-}
-function addEntry() {
-    db.run(
-        "INSERT INTO maco(region,name_,code) VALUES('Central','Algo',1233)",
-        (err) => {
-            if (err) {
-                return console.log(err.message);
-            }
-            console.log("Row inserted");
-        }
-    );
 }

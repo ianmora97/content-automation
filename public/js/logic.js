@@ -28,6 +28,7 @@ function loaded() {
     
         e.clearSelection();
     });
+    
 }
 
 function doSuggestions(titulo){
@@ -46,12 +47,8 @@ function doSuggestions(titulo){
 function myuSuggestions(){
 
 }
-function enableTooltips() {
-    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
-    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
-    return new bootstrap.Tooltip(tooltipTriggerEl)
-    })
-}
+
+
 function enablePopovers() {
     var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
     var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {

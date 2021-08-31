@@ -4,13 +4,23 @@ const path = require('path')
 let db = new sqlite3.Database(path.join(__dirname+'/public/db/database.db'), (err) => {
     if (err) {
       return console.error(err.message);
+    }else{
+        getMacos();
+        getMacosbyRegion();
+        console.log('Connected to SQlite database.');
     }
-    console.log('Connected to SQlite database.');
 });
 
 var g_Macos = new Array();
 var g_mapMacos = new Map();
 
+
+function enableTooltips() {
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+    return new bootstrap.Tooltip(tooltipTriggerEl)
+    })
+}
 
 function appendMacosURLs(id,maco,env = "") {
     let url = `https://www.bmwusa.com/home.html?maco=${maco.code}`;
@@ -41,7 +51,7 @@ function appendMacosURLs(id,maco,env = "") {
 function getMacos() {
     db.all("SELECT * FROM v_macos", [], (err, rows) => {
         if (err) {
-            throw err;
+            console.log(err);
         }else{
             rows.forEach((row) => {
                 g_Macos.push(row);
@@ -51,7 +61,48 @@ function getMacos() {
         }
     });
 }
-getMacos()
+function emptyModal(){
+    $('#macosModalurl-central').html('');
+    $('#macosModalurl-east').html('');
+    $('#macosModalurl-west').html('');
+    $('#macosModalurl-south').html('');
+}
+function getMacosbyRegion(){
+    // when modal is opened
+    var myModalEl = document.getElementById('regionURLs')
+    myModalEl.addEventListener('show.bs.modal', function (event) {
+        emptyModal();
+        let regions = ['central','east','west','south'];
+        let envs = [{name:'Staging',code:'s'},{name:'Prod',code:'p'},{name:'Live',code:'l'}];
+        envs.forEach((env)=>{
+            regions.forEach((region) => {
+                $(`#macosModalurl-${region}`).append(`
+                    <div class="d-flex justify-content-start my-2">
+                        <h5 class="mb-0 mt-2">${env.name}:</h5>
+                    </div>
+                `)
+                g_Macos.filter(maco => maco.region_name == region).forEach((maco) => {
+                    appendURLmacoModal(maco,region,env);
+                })
+            });
+        })
+    })
+}
+function appendURLmacoModal(maco,region,env) {
+    if(env.code == "l"){
+        $(`#macosModalurl-${region}`).append(
+            `<p class="mb-0 text-light" style="font-size:13px;">https://www.bmwusa.com/home.html?maco=${maco.code}</p>`
+        );
+    }else{
+        $(`#macosModalurl-${region}`).append(
+            `<p class="mb-0 text-light" style="font-size:13px;">https://www.${env.name.toLowerCase()}.bmwusacm.co/home.html?maco=${maco.code}</p>`
+        );
+    }
+}
+// document.addEventListener('DOMContentLoaded', function() {
+//     getMacos();
+//     getMacosbyRegion();
+// });
 
 function openMacoLinks(region,env) {
     let macos = g_Macos.filter(maco => maco.region_name == region);

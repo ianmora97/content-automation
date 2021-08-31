@@ -1,22 +1,33 @@
+-- --------------------------------------
 -- drop tables if exists
+-- --------------------------------------
+
 DROP TABLE IF EXISTS `region`;
 DROP TABLE IF EXISTS `maco`;
+DROP TABLE IF EXISTS `deployment`;
+DROP TABLE IF EXISTS `ticket_d`;
+DROP TABLE IF EXISTS `ticket_l`;
 
+-- --------------------------------------
 -- create region tables
+-- --------------------------------------
 CREATE TABLE `region` (
    id INTEGER PRIMARY KEY AUTOINCREMENT,
    name text NOT NULL,
    description text NOT NULL
 )
-
+-- --------------------------------------
 -- insert region data
+-- --------------------------------------
 insert into region (name,description) values 
 ('central','Central Region'),
 ('east','Eastern Region'),
 ('west','Western Region'),
 ('south','Southern Region');
 
+-- --------------------------------------
 -- create maco tables
+-- --------------------------------------
 CREATE TABLE `maco` (
    id INTEGER PRIMARY KEY AUTOINCREMENT,
    region INTEGER NOT NULL,
@@ -28,7 +39,9 @@ CREATE TABLE `maco` (
          ON UPDATE NO ACTION
 )
 
+ -- --------------------------------------
  -- insert central maco data
+ -- --------------------------------------
 insert into maco (name,region,code) values
 ('Chicagoland & Northwest Indiana BMW Centers',1,'4001'),
 ('Milwaukee BMW Centers',1,'4010'),
@@ -43,7 +56,9 @@ insert into maco (name,region,code) values
 ('Indianapolis BMW Centers',1,'4004'),
 ('Kansas City BMW Centers',1,'4005');
 
+-- --------------------------------------
 -- insert east maco data
+-- --------------------------------------
 insert into maco (name,region,code) values
 ('Massachusetts',2,'4111'),
 ('Tristate',2,'4121'),
@@ -57,7 +72,9 @@ insert into maco (name,region,code) values
 ('North East',2,'4145'),
 ('Connecticut',2,'4113');
 
+-- --------------------------------------
 -- insert west maco data
+-- --------------------------------------
 insert into maco (name,region,code) values
 ('Southern California',3,'3203'),
 ('Hawaii',3,'3206'),
@@ -74,7 +91,9 @@ insert into maco (name,region,code) values
 ('Colorado',3,'3208'),
 ('Puget Sound',3,'3215');
 
+-- --------------------------------------
 -- insert south maco data
+-- --------------------------------------
 insert into maco (name,region,code) values
 ('Dallas Fort Worth',4,'0449'),
 ('Houston',4,'0432'),
@@ -93,13 +112,68 @@ insert into maco (name,region,code) values
 ('Hilton Head/ Savannah',4,'0451'),
 ('Gulf Coast',4,'0452');
 
+-- --------------------------------------
+-- create deployment table
+-- --------------------------------------
+CREATE TABLE `deployment` (
+   id INTEGER PRIMARY KEY AUTOINCREMENT,
+   name text NOT NULL
+);
 
-CREATE VIEW `v_macosa` AS
-   SELECT region.name AS region,
-          region.description AS description,
-          maco.name AS name,
-          maco.code AS code
-   FROM maco
-   JOIN region
-      ON maco.region = region.id;
+-- --------------------------------------
+-- create ticket for deployments table
+-- --------------------------------------
+CREATE TABLE `ticket_d` (
+   id INTEGER PRIMARY KEY AUTOINCREMENT,
+   deploy INTEGER NOT NULL,
+   url text NOT NULL,
+   code text NOT NULL UNIQUE,
+   workflow text NOT NULL,
+   FOREIGN KEY (deploy) 
+      REFERENCES deployment (id) 
+         ON DELETE CASCADE 
+         ON UPDATE NO ACTION
+);
 
+-- --------------------------------------
+-- create ticket later save table
+-- --------------------------------------
+CREATE TABLE `ticket_l` (
+   id INTEGER PRIMARY KEY AUTOINCREMENT,
+   url text NOT NULL,
+   code text NOT NULL UNIQUE,
+   workflow text NOT NULL
+);
+
+-- --------------------------------------
+-- DROP VIEWS
+-- --------------------------------------
+DROP VIEW IF EXISTS `v_deployments`;
+DROP VIEW IF EXISTS `v_macos`;
+
+-- --------------------------------------
+-- create view for deployments
+-- --------------------------------------
+CREATE VIEW `v_deployments` AS
+SELECT 
+ticket_d.code as code,
+ticket_d.url as url,
+ticket_d.workflow as workflow,
+deployment.name as name
+FROM ticket_d
+JOIN deployment
+   ON ticket_d.deploy = deployment.id;
+      
+-- --------------------------------------
+-- create macos view
+-- --------------------------------------
+CREATE VIEW `v_macos` AS
+SELECT
+	maco.id as id,
+	region.name as region_name,
+	region.description as description,
+	maco.name as name,
+	maco.code as code
+FROM
+	maco
+	INNER JOIN region on maco.region = region.id;
