@@ -1,22 +1,128 @@
 <h2 class="fw-bold mb-0">My tickets</h2>
 <hr>
 <div class="row mx-0">
-    <h4 class="mb-0">Deployments</h4>
+    <ul class="nav nav-pills mb-3" id="deploymentstickets" role="tablist">
+        <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="pills-deployments-tab" data-bs-toggle="pill" data-bs-target="#pills-deployments" 
+            type="button" role="tab" aria-controls="pills-deployments" aria-selected="true"><i class="fas fa-rocket me-2"></i> Deployments</button>
+        </li>
+        <li class="nav-item ms-4" role="presentation">
+            <button class="nav-link" id="pills-tickets-tab" data-bs-toggle="pill" data-bs-target="#pills-tickets" 
+            type="button" role="tab" aria-controls="pills-tickets" aria-selected="false"><i class="fas fa-ticket-alt me-2"></i> Tickets</button>
+        </li>
+    </ul>
+    <hr>
+    <div class="tab-content" id="deploymentsticketsContent">
+        <div class="tab-pane fade show active" id="pills-deployments" role="tabpanel" aria-labelledby="pills-deployments-tab">
+            <div class="row row-cols-md-5 g-3" id="deploymentsList">
+    
+            </div>
+        </div>
+        <div class="tab-pane fade" id="pills-tickets" role="tabpanel" aria-labelledby="pills-tickets-tab">
+            <div class="d-flex justify-content-between align-items-end">
+                <div class=" pe-5 flex-fill">
+                    <label for="ticketsearchbar" class="form-label">Search</label>
+                    <input type="text" class="form-control bg-dark" id="ticketsearchbar" placeholder="Search..." autofocus>
+                </div>
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addTicketModal"
+                ><i class="fas fa-ticket-alt me-1"></i>Add Ticket</button>
+            </div>
+            <div>
+                <div id="ticketsList" style="width: 600px; height: calc(100vh - 360px); overflow-y: auto;">
+
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-<hr>
-<div class="row row-cols-md-5 g-1">
-    <div class="col">
-        <div class="card text-center text-white bg-dark shadow-lg">
-            <div class="card-header">
-                <h5 class="fw-bold">Deployment</h5>
+
+
+<div class="modal fade" id="addnewDeploymentmodal" data-bs-backdrop="static" data-bs-keyboard="false" 
+tabindex="-1" aria-labelledby="addnewDeploymentmodalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+
+        <div class="modal-content bg-dark">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addnewDeploymentmodalLabel">
+                    <i class="fas fa-plus text-primary pe-2"></i> Add new deployment
+                </h5>
+                <button type="button" class="btn-close btn-close-white" 
+                data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="card-body">
-                <img src="https://cache.bmwusa.com/cosy.arox?pov=walkaround&brand=WBBM&vehicle=22XO&client=byo&paint=P0300&fabric=FK8SW&sa=S01CE,S01SB,S0255,S02TB,S0302,S0319,S03AT,S03MB,S0402,S0420
-                ,S0423,S0459,S0481,S0494,S04AW,S04KR,S04T8,S04UR,S0552,S05A1,S05AC,S05AS,S0676,S06AC,S06AK,S06C4,S06U3,S0775,S07HW&quality=hight&bkgnd=transparent&resp=png&angle=60&width=450" width="100%" srcset="">
-                <p class="card-text">MYU22 X5</p>
+            <div class="modal-body" style="position: relative;">
+                <div style="position: absolute; top: 0; left: 0;" class="w-100" id="feedbackAlert">
+            
+                </div>
+                <div class="mb-3">
+                    <label for="deployNameadd" class="form-label">Deployment name</label>
+                    <input type="text" class="form-control bg-dark-light" id="deployNameadd" placeholder="Name..." autofocus>
+                </div>
+                <div class="d-flex justify-content-start mb-5">
+                    <div class="dropdown d-inline ">
+                        <button class="btn btn-light dropdown-toggle" type="button" id="dropdownselectModel" 
+                        data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
+                          Select Model
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownselectModel" 
+                        id="dropdownselectModeldd">
+                            
+                        </ul>
+                    </div>
+                    <div id="modelSelectadd" class="d-inline ms-3 p-3"
+                    style="width: 225px !important; height: 70px; min-width: 225px;"></div>
+                    <span class="visually-hidden" id="modeloSeleccionadoAfter_name"></span>
+                </div>
+                <hr>
+                <div class="mb-3">
+                    <button type="button" class="btn btn-primary" 
+                    onclick="addDeploymentConfirm()">Add Deployment</button>
+                </div>
             </div>
-            <div class="card-footer text-muted">
-                4 Workflows related
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="relateticketsmodal" data-bs-backdrop="static" data-bs-keyboard="false" 
+tabindex="-1" aria-labelledby="relateticketsmodalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content bg-dark">
+            <div class="modal-header">
+                <h5 class="modal-title" >
+                    Deployment
+                </h5>
+                <button type="button" class="btn-close btn-close-white" 
+                data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <h3 id="relateticketsmodalLabel"></h3>
+                <hr>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="addTicketModal" data-bs-backdrop="static" data-bs-keyboard="false" 
+tabindex="-1" aria-labelledby="addTicketModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable">
+        <div class="modal-content bg-dark">
+            <div class="modal-header">
+                <h5 class="modal-title" >
+                    <i class="fas fa-ticket-alt me-2 text-primary"></i> Add Ticket
+                </h5>
+                <button type="button" class="btn-close btn-close-white" 
+                data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <label for="ticketAddModal">Jira Ticket</label>
+                <div class="input-group mt-1">
+                    <span class="input-group-text bg-dark-light border-0" id="icon-addon"><i class="fab fa-jira text-primary"></i></span>
+                    <input type="text" class="form-control bg-dark-light border-0" placeholder="CONT-29419 / 29419" 
+                    aria-describedby="icon-addon" id="ticketAddModal" oninput="this.value = this.value.toUpperCase()">
+                </div>
+                <small class="small text-light">CONT-29419 / 29419</small>
+                <div class="bg-dark-light h-100 w-100 rounded-15 p-3 mt-3" id="ticketBackResponse">
+                    
+                </div>
             </div>
         </div>
     </div>

@@ -1,4 +1,5 @@
 var sqlite3 = require("sqlite3").verbose();
+const { isFunction } = require("jquery");
 const path = require('path')
 
 let db = new sqlite3.Database(path.join(__dirname+'/public/db/database.db'), (err) => {
@@ -7,13 +8,16 @@ let db = new sqlite3.Database(path.join(__dirname+'/public/db/database.db'), (er
     }else{
         getMacos();
         getMacosbyRegion();
+        bringDeployments();
+        addDeployment()
         console.log('Connected to SQlite database.');
     }
 });
 
 var g_Macos = new Array();
 var g_mapMacos = new Map();
-
+var g_Deployments = new Array();
+var g_mapDeployments = new Map();
 
 function enableTooltips() {
     var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
@@ -99,10 +103,6 @@ function appendURLmacoModal(maco,region,env) {
         );
     }
 }
-// document.addEventListener('DOMContentLoaded', function() {
-//     getMacos();
-//     getMacosbyRegion();
-// });
 
 function openMacoLinks(region,env) {
     let macos = g_Macos.filter(maco => maco.region_name == region);
@@ -116,3 +116,112 @@ function openMacoLinks(region,env) {
         }
     });
 }
+function bringDeployments(){
+    db.all("SELECT * FROM v_deployments", [], (err, rows) => {
+        if (err) {
+            console.log(err);
+        }else{
+            rows.forEach((row) => {
+                g_Deployments.push(row);
+                g_mapDeployments.set(row.id, row);
+                appendDeploymentsMytickets(row.id,row.name,row.model,"#deploymentsList");
+            });
+        }
+    });
+
+}
+
+function updateModelDropdownS(name,url) {
+    $('#modelSelectadd').html(`
+    ${url != "none" ? `<img src="${url}" width="150px" loading="lazy">` : ""}
+    <h5 class="fw-bold d-inline ms-1">${name}</h5> 
+    `)
+    $('#modeloSeleccionadoAfter_name').html(`${url}`)
+}
+function appendDeploymentsMytickets(id,name,model,idp) {
+    $(idp).append(`
+    <div class="col" id="deploy-card-${id}" role="button" data-bs-toggle="modal" 
+    data-bs-target="#relateticketsmodal" data-bs-title="${name}" data-bs-image="${model}">
+        <div class="card text-center text-white bg-dark shadow-lg" style="min-height:209px;">
+            <div class="card-header">
+                <h5 class="fw-bold">Deployment</h5>
+            </div>
+            <div class="card-body">
+                <img src="${model}" width="100%" srcset="">
+                <p class="card-text">${name}</p>
+            </div>
+            <div class="card-footer text-muted">
+                something
+            </div>
+        </div>
+    </div>
+    `)
+}
+function addDeployment() {
+    $(`#deploymentsList`).append(`
+    <div class="col" id="deploy-card-create" role="button" data-bs-toggle="modal" 
+    data-bs-target="#addnewDeploymentmodal">
+        <div class="card text-center text-white bg-dark shadow-lg " style="min-height:209px;">
+            <div class="card-header">
+                <h5 class="fw-bold">Deployment</h5>
+            </div>
+            <div class="card-body d-flex align-items-center justify-content-center">
+                <i class="fas fa-plus fa-3x text-light" aria-hidden="true"></i>
+            </div>
+            <div class="card-footer text-muted">
+                <p class="card-text">Create Deploy</p>
+            </div>
+        </div>
+    </div>`)
+}
+
+function addDeploymentConfirm() {
+    let name = $('#deployNameadd').val();
+    let model = $('#modeloSeleccionadoAfter_name').html();
+    if(name != "" && model != ""){
+        db.run("INSERT INTO deployment (name,model) VALUES (?,?)", [name,model], (err) => {
+            if (err) {
+                console.log(err);
+            }else{
+                appendDeploymentsMytickets(0,name,model,"#deploymentsList");
+                let myModal = new bootstrap.Modal(document.getElementById('addnewDeploymentmodal'), {
+                    keyboard: false
+                })
+                myModal.hide()
+            }
+        })
+    }else{
+        let feedback = "";
+        if(name == ""){
+            console.log()
+            feedback ='Deployment name empty!';
+        }else if(model == ""){
+            feedback = 'Model not selected!';
+        }
+        $('#feedbackAlert').html(`
+        <div class="alert alert-danger alert-dismissible animate__animated animate__fadeIn" role="alert" id="AlertModalDeploy">
+            <i class="fas fa-times-circle"></i> <span>${feedback}</span>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        `);
+        setTimeout(() => {
+            animateCSS('#AlertModalDeploy','fadeOut').then(() => {
+                $('#feedbackAlert').html('')
+            })
+        }, 2000);
+    }
+}
+function onModalOpen(){
+    var relateticketsmodal = document.getElementById('relateticketsmodal')
+    relateticketsmodal.addEventListener('show.bs.modal', function (event) {
+        var button = event.relatedTarget
+        var title = button.getAttribute('data-bs-title')
+        var image = button.getAttribute('data-bs-image')
+        $('#relateticketsmodalLabel').html(title)
+    })
+}
+
+
+document.addEventListener('DOMContentLoaded', function () {
+    onModalOpen();
+});

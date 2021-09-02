@@ -1,9 +1,9 @@
 $primary:#4659e4;
 $secondary:#FF9500;
-$success:#34C759;
+$success:#28a745;
 $info:#5BC7FA;
-$warning:#ffbf00;
-$danger:#FF3C2F;
+$warning:#f0bc4d;
+$danger:#dc3545;
 $light:#cfcece;
 $dark:#1A1A1A;
 $dark-light:#242424;
@@ -202,6 +202,16 @@ small{
 .btn-success{
     box-shadow: 0 4px 15px 0 rgba(70, 228, 131, 0.4) !important;
     outline: none !important;
+    &:focus{
+        box-shadow: none !important;
+        outline: none !important;
+    }
+}
+.btn-danger{
+    box-shadow: 0 4px 15px 0 rgba(228, 70, 70, 0.4) !important;
+    outline: none !important;
+    color:white !important;
+    font-weight: 600 !important;
     &:focus{
         box-shadow: none !important;
         outline: none !important;

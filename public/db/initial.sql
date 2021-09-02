@@ -117,22 +117,21 @@ insert into maco (name,region,code) values
 -- --------------------------------------
 CREATE TABLE `deployment` (
    id INTEGER PRIMARY KEY AUTOINCREMENT,
-   name text NOT NULL
+   name text NOT NULL,
+   model text
 );
 
 -- --------------------------------------
 -- create ticket for deployments table
 -- --------------------------------------
-CREATE TABLE `ticket_d` (
-   id INTEGER PRIMARY KEY AUTOINCREMENT,
-   deploy INTEGER NOT NULL,
-   url text NOT NULL,
-   code text NOT NULL UNIQUE,
-   workflow text NOT NULL,
-   FOREIGN KEY (deploy) 
-      REFERENCES deployment (id) 
-         ON DELETE CASCADE 
-         ON UPDATE NO ACTION
+CREATE TABLE "ticket_d" (
+	"id"	INTEGER,
+	"deploy"	INTEGER NOT NULL,
+	"code"	text NOT NULL UNIQUE,
+	"priority"	TEXT,
+	"release" text,
+	FOREIGN KEY("deploy") REFERENCES "deployment"("id") ON DELETE CASCADE ON UPDATE NO ACTION,
+	PRIMARY KEY("id" AUTOINCREMENT)
 );
 
 -- --------------------------------------
@@ -148,18 +147,20 @@ CREATE TABLE `ticket_l` (
 -- --------------------------------------
 -- DROP VIEWS
 -- --------------------------------------
-DROP VIEW IF EXISTS `v_deployments`;
+DROP VIEW IF EXISTS `v_tickets`;
 DROP VIEW IF EXISTS `v_macos`;
+DROP VIEW IF EXISTS `v_deployments`;
 
 -- --------------------------------------
 -- create view for deployments
 -- --------------------------------------
-CREATE VIEW `v_deployments` AS
+CREATE VIEW `v_tickets` AS
 SELECT 
-ticket_d.code as code,
-ticket_d.url as url,
-ticket_d.workflow as workflow,
-deployment.name as name
+   ticket_d.id as id,
+   ticket_d.code as code,
+   ticket_d.url as url,
+   ticket_d.workflow as workflow,
+   deployment.name as name
 FROM ticket_d
 JOIN deployment
    ON ticket_d.deploy = deployment.id;
@@ -177,3 +178,18 @@ SELECT
 FROM
 	maco
 	INNER JOIN region on maco.region = region.id;
+
+
+-- --------------------------------------
+-- create deployments view
+-- --------------------------------------
+CREATE VIEW v_deployments as
+SELECT
+	deployment.id as id,
+	deployment.name as name,
+	deployment.model as model
+FROM deployment
+WHERE deployment.id IN (
+	SELECT count(ticket_d.id) as cantidad
+	FROM ticket_d
+);

@@ -42,6 +42,7 @@ function bringModelsFromJSON() {
         contentType: "application/json",
     }).then((response) => {
         g_modelsJSON = response.models;
+        addToModalDeploymentD();
         response.models.forEach(element => {
             $("#modelsScrollHorizontal").append(`
                 <div class="d-flex align-items-center flex-column me-4 carModelSelect" 
@@ -50,12 +51,34 @@ function bringModelsFromJSON() {
                     <h3>${element.name}</h3>
                 </div>
             `)
+            addToModalDeployment(element);
         });
     }, (error) => {
         
     });
 }
 bringModelsFromJSON()
+
+function addToModalDeploymentD() {
+    $("#dropdownselectModeldd").append(`
+        <li>
+            <button class="dropdown-item" type="button" 
+            onclick="updateModelDropdownS('none','none')">
+                <h5 class="fw-bold d-inline">None</h5>
+            </button>
+        </li>
+    `)
+}
+function addToModalDeployment(car){
+    $("#dropdownselectModeldd").append(`
+        <li>
+            <button class="dropdown-item" type="button" id="select-model-${car.name}" 
+            onclick="updateModelDropdownS('${car.name}','${car.url}')">
+                <img src="${car.url}" width="50px" loading="lazy"><h5 class="fw-bold d-inline">${car.name}</h5>
+            </button>
+        </li>
+    `)
+}
 
 function searchByModel(){
     $("#searchModel").on("keyup", function() {
