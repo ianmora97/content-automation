@@ -235,3 +235,14 @@ $modal-content-bg: $dark;
 $modal-content-border-color: none;
 $modal-content-border-width: 0;
 $modal-fade-transform: scaleY(.01) scaleX(0);
+
+
+
+
+.drop-target {
+    border: 5px solid $primary;
+}
+
+.drag-drop.can-drop {
+    background-color: $primary;
+}

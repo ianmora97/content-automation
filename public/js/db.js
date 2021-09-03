@@ -141,7 +141,7 @@ function updateModelDropdownS(name,url) {
 function appendDeploymentsMytickets(id,name,model,idp) {
     $(idp).append(`
     <div class="col" id="deploy-card-${id}" role="button" data-bs-toggle="modal" 
-    data-bs-target="#relateticketsmodal" data-bs-title="${name}" data-bs-image="${model}">
+    data-bs-target="#relateticketsmodal" data-bs-id="${id}" data-bs-title="${name}" data-bs-image="${model}">
         <div class="card text-center text-white bg-dark shadow-lg" style="min-height:209px;">
             <div class="card-header">
                 <h5 class="fw-bold">Deployment</h5>
@@ -214,14 +214,116 @@ function addDeploymentConfirm() {
 function onModalOpen(){
     var relateticketsmodal = document.getElementById('relateticketsmodal')
     relateticketsmodal.addEventListener('show.bs.modal', function (event) {
+        $('#deploymentticketsList').html('');
+        $('#nondeploymentticketsList').html('');
         var button = event.relatedTarget
         var title = button.getAttribute('data-bs-title')
         var image = button.getAttribute('data-bs-image')
-        $('#relateticketsmodalLabel').html(title)
+        var id = button.getAttribute('data-bs-id')
+        $('#relateticketsmodalLabel').html(title);
+        $('#deploymentticketsList').html();
+        let ticketsFromDeploy = getallTicketsByDeployment(id);
+        let ticketsFromNonDeploy = getallTicketsByNonDeployment(id);
+        ticketsFromDeploy.forEach((ticket) => {
+            $('#deploymentticketsList').append(`
+            <div class="p-2 bg-dark mb-2" id="deploy-cont-${ticket.code}">
+                <div class="d-flex justify-content-start align-items-center">
+                    <i class="fab fa-jira text-primary pe-3 ps-2"></i>
+                    <h6 class="mb-0">${ticket.name}</h6>
+                </div>
+            </div>
+            `)
+        })
+        ticketsFromNonDeploy.forEach((ticket) => {
+            $('#nondeploymentticketsList').append(`
+            <div class="p-2 bg-dark mb-2 draggable drag-drop dragTicketNonDeploy" id="deploy-cont-${ticket.code}">
+                <div class="d-flex justify-content-start align-items-center">
+                    <i class="fab fa-jira text-primary pe-3 ps-2"></i>
+                    <h6 class="mb-0">${ticket.name}</h6>
+                </div>
+            </div>
+            `)
+        })
     })
 }
+function getallTicketsByNonDeployment(id){
+    return g_Tickets.filter(ticket => ticket.deploy == null);
+}
+function getallTicketsByDeployment(id) {
+    return g_Tickets.filter(ticket => ticket.deploy == id);
+}
+function loadTicketsonModalDeploymentDrag(){
+    interact('.draggable').draggable({
+        inertia: true,
+        autoScroll: true,
+        onmove: dragMoveListener,
+        onend: function (event) {
+        }
+        
+    });
+    interact('.dropzone').dropzone({
+        accept: '.dragTicketNonDeploy',
+        overlap: 0.80,
+        ondropactivate: function (event) {
+            event.target.classList.add('drop-active');
+        },
+        ondragenter: function (event) {
+            var draggableElement = event.relatedTarget,
+                dropzoneElement = event.target;
+        
+            // feedback the possibility of a drop
+            dropzoneElement.classList.add('drop-target');
+            draggableElement.classList.add('can-drop');
+            //draggableElement.textContent = 'le bloc est dedans';
+        },
+        ondragleave: function (event) {
+            event.target.classList.remove('drop-target');
+            event.relatedTarget.classList.remove('can-drop');
+            event.relatedTarget.classList.remove('drop-ok');//enlever la class
+        },
+        ondrop: function (event) {
+            event.relatedTarget.classList.add('drop-ok');
+            event.relatedTarget.remove()
+            moveTicketToTicketDeploy(event.relatedTarget.id);
+        },
+        ondropdeactivate: function (event) {
+            event.target.classList.remove('drop-active');
+            event.target.classList.remove('drop-target');
+        }
+      });
+}
+function dragMoveListener (event) {
+    var target = event.target,
+        // keep the dragged position in the data-x/data-y attributes
+        x = (parseFloat(target.getAttribute('data-x')) || 0) + event.dx,
+        y = (parseFloat(target.getAttribute('data-y')) || 0) + event.dy;
+
+    // translate the element
+    target.style.webkitTransform =
+    target.style.transform =
+      'translate(' + x + 'px, ' + y + 'px)';
+
+    // update the posiion attributes
+    target.setAttribute('data-x', x);
+    target.setAttribute('data-y', y);
+}
+function moveTicketToTicketDeploy(ticket) {
+    let ticketId = ticket.split('-')[2];
+    let ticketName = g_Tickets.find(ticket => ticket.code == ticketId);
+    console.log(ticketName);
+    $('#deploymentticketsList').append(`
+    <div class="p-2 bg-dark mb-2" id="deploy-cont-${ticketName.code}">
+        <div class="d-flex justify-content-start align-items-center">
+            <i class="fab fa-jira text-primary pe-3 ps-2"></i>
+            <h6 class="mb-0">${ticketName.name}</h6>
+        </div>
+    </div>
+    `)
+}
+
 
 
 document.addEventListener('DOMContentLoaded', function () {
     onModalOpen();
+    loadTicketsonModalDeploymentDrag();
 });
