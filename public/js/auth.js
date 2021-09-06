@@ -146,6 +146,64 @@ function findTicketAdd(){
     })
     
 }
+function bringEpicJiraTicket(cont){
+    $.ajax({
+        type: "GET",
+        url: 'https://virtuelle-welt.atlassian.net/rest/agile/1.0/epic/'+cont,
+        contentType: "application/json",
+        headers: {
+            "Authorization": "Basic " + btoa(json_config.c_email + ":" + json_config.c_token)
+        },
+    }).then((response) => {
+        console.log(response)
+        // let release = response.fields.labels.filter(e=> e.match('release'))[0]
+        // release = release.slice(release.length - 8,release.length).replace(/\./g, '/');
+        // gt_ticket = {
+        //     code: response.key.split('-')[1],
+        //     name: response.fields.summary,
+        //     status: response.fields.status.name,
+        //     priority: response.fields.priority.name,
+        //     release: release,
+        // }
+        // resolve(gt_ticket)
+    }, (error) => {
+        if(error.status == 404){
+            reject(error)
+            $('#ticketepicAddModal').attr('placeholder', 'Ticket Not found').val('');
+            setTimeout(() => {
+                $('#ticketepicAddModal').attr('placeholder', 'Search ticket').focus();
+            }, 1000);
+        }
+    });
+}
+function findTicketAddEpic(){
+    $('#ticketepicAddModal').on('keyup',function(event){
+        if(event.keyCode == 13){
+            let val = $('#ticketepicAddModal').val();
+            if(val.match('CONT')){
+                bringJiraTicket(val);
+                $('#ticketepicAddModal').val('');
+                $('#ticketepicAddModal').blur();
+                $('#ticketepicAddModal').attr('placeholder', 'Searching...');
+                setTimeout(() => {
+                    $('#ticketepicAddModal').attr('placeholder', 'Search ticket');
+                    $('#ticketepicAddModal').focus();
+                }, 1000);
+            }else{
+                val = "CONT-"+val
+                bringEpicJiraTicket(val);
+                $('#ticketepicAddModal').val('');
+                $('#ticketepicAddModal').blur();
+                $('#ticketepicAddModal').attr('placeholder', 'Searching...');
+                setTimeout(() => {
+                    $('#ticketepicAddModal').attr('placeholder', 'Search ticket');
+                    $('#ticketepicAddModal').focus();
+                }, 1000);
+            }
+        }
+    })
+    
+}
 
 function addTickettoDB(code, name, priority, release){
     db.run("INSERT INTO ticket_l (code, priority, release) VALUES (?,?,?)", [code, priority, release], (err) => {
@@ -255,4 +313,5 @@ function deleteTicket(id,type){
 document.addEventListener('DOMContentLoaded', function() {
     findTicketAdd();
     printTicketList();
+    findTicketAddEpic();
 });
