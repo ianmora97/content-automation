@@ -193,3 +193,72 @@ WHERE deployment.id IN (
 	SELECT count(ticket_d.id) as cantidad
 	FROM ticket_d
 );
+
+-- --------------------------------------
+-- create table techspecs
+-- --------------------------------------
+CREATE TABLE techspecs (
+	id	INTEGER PRIMARY KEY AUTOINCREMENT,
+	name	TEXT NOT NULL,
+	key	TEXT NOT NULL
+);
+
+-- --------------------------------------
+-- insert engine keys
+-- --------------------------------------
+INSERT INTO techspecs (name,key,level) VALUES('engine','engineType',2),
+('engine','displacement',2),
+('engine','engineHorsePower',2),
+('engine','engineHorsePowerMinRPM',2),
+('engine','engineHorsePowerMaxRPM',2),
+('engine','engineTorque',2),
+('engine','engineTorqueMinRPM',2),
+('engine','engineTorqueMaxRPM',2),
+('engine','compressionRatio',2);
+
+insert into techspecs (name,key,level) values 
+('transmission.automatic','transmissionType',3),
+('transmission.automatic','gearRatioOne',3),
+('transmission.automatic','gearRatioTwo',3),
+('transmission.automatic','gearRatioThree',3),
+('transmission.automatic','gearRatioFour',3),
+('transmission.automatic','gearRatioFive',3),
+('transmission.automatic','gearRatioSix',3),
+('transmission.automatic','gearRatioSeven',3),
+('transmission.automatic','gearRatioEight',3),
+('transmission.automatic','gearRatioReverse',3),
+('transmission.automatic','finalDriveRatio',3);
+
+insert into techspecs (name,key,level) values
+('performance','acceleration',2),
+('performance','topSpeedOne',2),
+('performance','topSpeedTwo',2);
+
+insert into techspecs (name,key,level) values
+('fuelConsumption','mpgCombined',2),
+('fuelConsumption','mpgCity',2),
+('fuelConsumption','mpgHighway',2),
+('fuelConsumption','tankCapacity',2);
+
+insert into techspecs (name,key,level) values
+('wheelsAndTires','tireType',2),
+('wheelsAndTires','wheelDimensionsFront',2),
+('wheelsAndTires','wheelDimensionsRear',2),
+('wheelsAndTires','tireDimensionsFront',2),
+('wheelsAndTires','tireDimensionsRear',2);
+
+insert into techspecs (name,key,level) values
+('exterior','length',2),
+('exterior','width',2),
+('exterior','height',2),
+('exterior','curbWeight',2),
+('exterior','weightDistributionFront',2),
+('exterior','weightDistributionRear',2);
+
+insert into techspecs (name,key,level) values
+('interior','headroomFront',2),
+('interior','legroomFront',2),
+('interior','legroomRear',2),
+('interior','shoulderRoomFront',2),
+('interior','shoulderRoomRear',2),
+('interior','cargoCapacity',2);

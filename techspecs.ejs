@@ -1,0 +1,83 @@
+<h2 class="fw-bold mb-0">Tech-Specs Templates</h2>
+<hr>
+<ul class="nav nav-pills mb-3" id="pills-tab-techspecs" role="tablist">
+    <li class="nav-item" role="presentation">
+      <button class="nav-link active" id="pills-keyvalues-tab" data-bs-toggle="pill" data-bs-target="#pills-keyvalues" 
+      type="button" role="tab" aria-controls="pills-keyvalues" aria-selected="true"><i class="fas fa-file-code pe-2"></i> Values</button>
+    </li>
+    <li class="nav-item ms-4" role="presentation">
+      <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" 
+      type="button" role="tab" aria-controls="pills-profile" aria-selected="false"><i class="fas fa-qrcode pe-2"></i> NA Code</button>
+    </li>
+    <li class="nav-item ms-4" role="presentation">
+      <button class="nav-link" id="pills-contact-tab" data-bs-toggle="pill" data-bs-target="#pills-contact" 
+      type="button" role="tab" aria-controls="pills-contact" aria-selected="false">Templates</button>
+    </li>
+</ul>
+<div class="tab-content" id="pills-tab-techspecsContent">
+    <div class="tab-pane fade show active" id="pills-keyvalues" role="tabpanel" aria-labelledby="pills-keyvalues-tab">
+        <div class="row">
+            <div class="col-6">
+                <h5 for="modelchoosevalueModelTech">Type</h5>
+                <div class="input-group mb-3">
+                    <span class="input-group-text bg-dark border-0" id="icon-addon"><i class="fas fa-filter text-primary"></i></span>
+                    <select class="form-select bg-dark border-0 text-light" id="modelchoosevalueModelTech">
+                        <option value="x">X Models</option>
+                        <option value="m">M Models</option>
+                        <option value="all">All Models</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-6">
+                <h5 for="keyvalueModelTech">Key</h5>
+                <div class="input-group mb-3">
+                    <span class="input-group-text bg-dark border-0" id="icon-addon"><i class="fas fa-file-code text-primary"></i></span>
+                    <select class="form-select bg-dark border-0 text-light" id="keyvalueModelTech">
+                        <option selected="selected">Select a Key</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    
+        <div class="bg-dark h-100 w-100 rounded-15 p-3">
+            <div class="d-flex justify-content-start">
+                <h5>Models</h5>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-6" class="mb-3">
+                    <div id="buildTechspecsValuesidhave" style="height: 420px; overflow-y: auto;">
+
+                    </div>
+                </div>
+                <div class="col-6" class="mb-3">
+                    <div id="buildTechspecsValuesidnohave" style="height: 420px; overflow-y: auto;">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+        <h5 for="naCodeModelTech">NA Code</h5>
+        <div class="input-group mb-3">
+            <span class="input-group-text bg-dark border-0" id="icon-addon"><i class="fas fa-file-code text-primary"></i></span>
+            <select class="form-select bg-dark border-0 text-light" id="naCodeModelTech" aria-label="22XR" 
+            placeholder="22XR">
+            </select>
+        </div>
+    
+        <div class="bg-dark h-100 w-100 rounded-15 p-3">
+            <div class="d-flex justify-content-start">
+                <h5>Specifications</h5>
+            </div>
+            <hr>
+            <div class="buildTechspecsid mb-3">
+                
+            </div>
+        </div>
+    </div>
+    <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
+        
+    </div>
+</div>

@@ -311,7 +311,7 @@ function deleteTicket(id,type){
 
 
 document.addEventListener('DOMContentLoaded', function() {
-    findTicketAdd();
-    printTicketList();
-    findTicketAddEpic();
+    // findTicketAdd();
+    // printTicketList();
+    // findTicketAddEpic();
 });
