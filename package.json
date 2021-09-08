@@ -34,6 +34,7 @@
     "clipboard": "^2.0.8",
     "dotenv": "^10.0.0",
     "ejs-electron": "^2.1.1",
+    "electron-find": "^1.0.7",
     "fs": "0.0.1-security",
     "gulp": "^4.0.2",
     "gulp-concat": "^2.6.1",

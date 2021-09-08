@@ -10,8 +10,8 @@
       type="button" role="tab" aria-controls="pills-profile" aria-selected="false"><i class="fas fa-qrcode pe-2"></i> NA Code</button>
     </li>
     <li class="nav-item ms-4" role="presentation">
-      <button class="nav-link" id="pills-contact-tab" data-bs-toggle="pill" data-bs-target="#pills-contact" 
-      type="button" role="tab" aria-controls="pills-contact" aria-selected="false">Templates</button>
+      <button class="nav-link" id="pills-templates-v-tab" data-bs-toggle="pill" data-bs-target="#pills-templates-v" 
+      type="button" role="tab" aria-controls="pills-templates-v" aria-selected="false"><i class="fas fa-th-large pe-2"></i> Templates</button>
     </li>
 </ul>
 <div class="tab-content" id="pills-tab-techspecsContent">
@@ -24,6 +24,7 @@
                     <select class="form-select bg-dark border-0 text-light" id="modelchoosevalueModelTech">
                         <option value="x">X Models</option>
                         <option value="m">M Models</option>
+                        <option value="sedans">Sedans non-electric</option>
                         <option value="all">All Models</option>
                     </select>
                 </div>
@@ -46,12 +47,12 @@
             <hr>
             <div class="row">
                 <div class="col-6" class="mb-3">
-                    <div id="buildTechspecsValuesidhave" style="height: 420px; overflow-y: auto;">
+                    <div id="buildTechspecsValuesidhave" class="" style="height: calc(100vh - 390px); overflow-y: auto;">
 
                     </div>
                 </div>
                 <div class="col-6" class="mb-3">
-                    <div id="buildTechspecsValuesidnohave" style="height: 420px; overflow-y: auto;">
+                    <div id="buildTechspecsValuesidnohave" class="" style="height: calc(100vh - 390px); overflow-y: auto;">
 
                     </div>
                 </div>
@@ -72,12 +73,39 @@
                 <h5>Specifications</h5>
             </div>
             <hr>
-            <div class="buildTechspecsid mb-3">
+            <div class="row mx-0 px-3" id="techSpecsfromNaCode" style="height: calc(80vh - 240px); overflow-y: auto;">
                 
             </div>
         </div>
     </div>
-    <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
-        
+    <div class="tab-pane fade" id="pills-templates-v" role="tabpanel" aria-labelledby="pills-templates-v-tab">
+        <div class="bg-dark h-100 w-100 rounded-15 p-3">
+            <div class="d-flex justify-content-between">
+                <h5>Variations</h5>
+                <div>
+                    <small>Sort by:</small>
+                    <button type="button" class="btn btn-dark-light btn-sm" 
+                    onclick="changeViewTemplatesBtn('list')"><i class="fas fa-list"></i></button>
+                    <button type="button" class="btn btn-dark-light btn-sm" 
+                    onclick="changeViewTemplatesBtn('card')"><i class="fas fa-th"></i></button>
+                </div>
+            </div>
+            <hr>
+            <div class="row mx-0 px-0" id="techSpecsTemplates" style="height: calc(90vh - 240px); overflow-y: auto;">
+                <div class="d-flex align-items-start justify-content-between px-0">
+                    <div class="tab-content" id="v-templates-tabContent">
+                        
+                    </div>
+                    <div class="px-3" style="min-width: 200px;">
+                        <h5 class="text-light">Templates Name</h5>
+                        <hr>
+                        <div class="nav flex-column nav-pills" id="v-templateslist-tab"
+                        aria-orientation="vertical" role="tablist">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
