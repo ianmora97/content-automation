@@ -20,7 +20,7 @@ const animateCSS = (element, animation, prefix = 'animate__', speed = 'no') =>
 
 function loaded() {
     seeTabs()
-
+    ctrlFind()
     clipboard.on('success', function(e) {
         console.info('Trigger:', e.trigger);
         // $(e.trigger).tooltip('hide')
@@ -29,6 +29,14 @@ function loaded() {
         e.clearSelection();
     });
     
+}
+function ctrlFind(){
+    window.addEventListener("keydown",function (e) {
+        if (e.keyCode === 114 ||(e.metaKey && e.keyCode === 70) ||(e.ctrlKey && e.keyCode === 70)){
+            console.log("Search is not in focus");
+            $('#searchOn-Template').focus();
+        }
+    });
 }
 
 function doSuggestions(titulo){
@@ -63,5 +71,6 @@ function seeTabs(params) {
         console.log(event.target)
     })
 }
+
 
 document.addEventListener('DOMContentLoaded', loaded);

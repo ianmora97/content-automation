@@ -60,32 +60,58 @@ tabindex="-1" aria-labelledby="addnewDeploymentmodalLabel" aria-hidden="true">
                 data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body" style="position: relative;">
-                <div style="position: absolute; top: 0; left: 0;" class="w-100" id="feedbackAlert">
-            
-                </div>
-                <div class="mb-3">
-                    <label for="deployNameadd" class="form-label">Deployment name</label>
-                    <input type="text" class="form-control bg-dark-light" id="deployNameadd" placeholder="Name..." autofocus>
-                </div>
-                <div class="d-flex justify-content-start mb-5">
-                    <div class="dropdown d-inline ">
-                        <button class="btn btn-light dropdown-toggle" type="button" id="dropdownselectModel" 
-                        data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
-                          Select Model
-                        </button>
-                        <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownselectModel" 
-                        id="dropdownselectModeldd">
+                <ul class="nav nav-pills mb-3" id="pills-tab-deploymentadd" role="tablist">
+                    <li class="nav-item" role="presentation">
+                      <button class="nav-link active" id="pills-epicadd-tab" data-bs-toggle="pill" data-bs-target="#pills-epicadd" 
+                      type="button" role="tab" aria-controls="pills-epicadd" aria-selected="true">Epic Ticket</button>
+                    </li>
+                    <li class="nav-item ms-3" role="presentation">
+                      <button class="nav-link" id="pills-custumadd-tab" data-bs-toggle="pill" data-bs-target="#pills-custumadd" 
+                      type="button" role="tab" aria-controls="pills-custumadd" aria-selected="false">Custom</button>
+                    </li>
+                </ul>
+                <div class="tab-content" id="pills-tab-deploymentaddContent">
+                    <div class="tab-pane fade show active" id="pills-epicadd" role="tabpanel" aria-labelledby="pills-epicadd-tab">
+                        <label for="ticketepicAddModal">Jira Epic Ticket</label>
+                        <div class="input-group mt-1">
+                            <span class="input-group-text bg-dark-light border-0" id="icon-addon"><i class="fab fa-jira text-primary"></i></span>
+                            <input type="text" class="form-control bg-dark-light border-0" placeholder="CONT-29419 / 29419" 
+                            aria-describedby="icon-addon" id="ticketepicAddModal" oninput="this.value = this.value.toUpperCase()">
+                        </div>
+                        <small class="small text-light">CONT-29419 / 29419</small>
+                        <div class="bg-dark-light h-100 w-100 rounded-15 p-3 mt-3" id="epicTicketBackResponse">
                             
-                        </ul>
+                        </div>
                     </div>
-                    <div id="modelSelectadd" class="d-inline ms-3 p-3"
-                    style="width: 225px !important; height: 70px; min-width: 225px;"></div>
-                    <span class="visually-hidden" id="modeloSeleccionadoAfter_name"></span>
-                </div>
-                <hr>
-                <div class="mb-3">
-                    <button type="button" class="btn btn-primary" 
-                    onclick="addDeploymentConfirm()">Add Deployment</button>
+                    <div class="tab-pane fade" id="pills-custumadd" role="tabpanel" aria-labelledby="pills-custumadd-tab">
+                        <div style="position: absolute; top: 0; left: 0;" class="w-100" id="feedbackAlert">
+            
+                        </div>
+                        <div class="mb-3">
+                            <label for="deployNameadd" class="form-label">Deployment name</label>
+                            <input type="text" class="form-control bg-dark-light" id="deployNameadd" placeholder="Name..." autofocus>
+                        </div>
+                        <div class="d-flex justify-content-start mb-5">
+                            <div class="dropdown d-inline ">
+                                <button class="btn btn-light dropdown-toggle" type="button" id="dropdownselectModel" 
+                                data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
+                                  Select Model
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownselectModel" 
+                                id="dropdownselectModeldd">
+                                    
+                                </ul>
+                            </div>
+                            <div id="modelSelectadd" class="d-inline ms-3 p-3"
+                            style="width: 225px !important; height: 70px; min-width: 225px;"></div>
+                            <span class="visually-hidden" id="modeloSeleccionadoAfter_name"></span>
+                        </div>
+                        <hr>
+                        <div class="mb-3">
+                            <button type="button" class="btn btn-primary" 
+                            onclick="addDeploymentConfirm()">Add Deployment</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

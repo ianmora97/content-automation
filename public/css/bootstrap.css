@@ -33,6 +33,14 @@ small, .small {
   font-size: 0.5rem !important;
 }
 
+.hl::after {
+  content: "______";
+  margin-left: 5px;
+  color: #1A1A1A;
+  border-bottom: #4659e4 1px solid;
+  width: 50px;
+}
+
 ::placeholder {
   font-size: 12px;
 }
@@ -223,6 +231,17 @@ small, .small {
 
 .no-shadow {
   box-shadow: none !important;
+}
+
+.card-nacode {
+  background-color: #1A1A1A !important;
+  width: 100px !important;
+  min-height: 80px !important;
+  transition: all 0.5s;
+}
+.card-nacode:hover {
+  background-color: #4659e4 !important;
+  transition: all 0.5s;
 }
 
 .drop-target {
