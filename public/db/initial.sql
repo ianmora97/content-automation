@@ -387,3 +387,14 @@ insert into templates_techspecs (nacode,template) values
 ('22DC',2),
 ('222B',2),
 ('222K',2);
+
+
+-- --------------------------------------
+-- create table cosys
+-- --------------------------------------
+CREATE TABLE cosys (
+	id	INTEGER PRIMARY KEY AUTOINCREMENT,
+	type TEXT NOT NULL UNIQUE,
+	config TEXT NOT NULL
+);
+

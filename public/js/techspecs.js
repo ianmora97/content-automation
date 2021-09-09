@@ -86,6 +86,7 @@ function loadDataListInput(list){
 }
 function fillDataList(model){
     $('#naCodeModelTech').append(`<option value="${model.code}">${model.code} ${model.name}</option>`)
+    $('#naCodeModelCosysModal').append(`<option value="${model.code}">${model.code} ${model.name}</option>`)
 }
 function showEngineType(models) {
     models.forEach(model => {
@@ -203,35 +204,52 @@ function changeViewTemplatesBtn(view){
 }
 
 function appendTemplatesTabs(row) { // ! hacer un mostrar como card o lista en los tabpanes y poner un titulo 
-    if(g_contTemplatesTabs == 0){
-        $('#v-templates-tabContent').append(`
-            <div class="tab-pane fade active show " id="v-listTemplates-${row.name}-tab" 
-            role="tabpanel" aria-labelledby="v-listTemplates-${row.name}-tab">
-                <div class="d-flex flex-wrap border-end border-dark-light pe-1" id="v-listTemplates-${row.name}">
-                </div>
+    $('#v-templates-tabContent').append(`
+        <div class="tab-pane fade ${g_contTemplatesTabs ? '':'active show'}" id="v-listTemplates-${row.name}-tab" 
+        role="tabpanel" aria-labelledby="v-listTemplates-${row.name}-tab">
+            <div class="row">
+                <input type="text" class="form-control bg-dark" id="v-listTemplates-${row.name}-search" 
+                oninput="this.value = this.value.toUpperCase()" placeholder="Search" onkeyup="searchNaCodeTemplate('${row.name}')">
             </div>
-        `);
-        $('#v-templateslist-tab').append(`
-            <button class="nav-link active" id="v-listTemplates-${row.name}-tab" data-bs-toggle="pill" data-bs-target="#v-listTemplates-${row.name}-tab" 
-            type="button" role="tab" aria-controls="v-listTemplates-${row.name}-tab" aria-selected="true"><i class="fas fa-clone pe-2"></i> ${row.name}</button>
-        `)
-    }else{
-        $('#v-templates-tabContent').append(`
-            <div class="tab-pane fade" id="v-listTemplates-${row.name}-tab" 
-            role="tabpanel" aria-labelledby="v-listTemplates-${row.name}-tab">
-                <div class="d-flex flex-wrap border-end border-dark-light pe-1" id="v-listTemplates-${row.name}">
-                </div>
+            <div class="d-flex flex-wrap border-end border-dark-light pe-1" id="v-listTemplates-${row.name}">
             </div>
-        `);
-        $('#v-templateslist-tab').append(`
-            <button class="nav-link" id="v-listTemplates-${row.name}-tab" data-bs-toggle="pill" data-bs-target="#v-listTemplates-${row.name}-tab" 
-            type="button" role="tab" aria-controls="v-listTemplates-${row.name}-tab" aria-selected="false"><i class="fas fa-clone pe-2"></i> ${row.name}</button>
-        `)
-    }
+        </div>
+    `);
+    $('#v-templateslist-tab').append(`
+        <button class="nav-link ${g_contTemplatesTabs ? '':'active'}" id="v-listTemplates-${row.name}-tab" data-bs-toggle="pill" data-bs-target="#v-listTemplates-${row.name}-tab" 
+        type="button" role="tab" aria-controls="v-listTemplates-${row.name}-tab" aria-selected="${g_contTemplatesTabs ? 'false':'true'}"><i class="fas fa-clone pe-2"></i> ${row.name}</button>
+    `)
     g_contTemplatesTabs++;
 }
-function name(params) {
-    
+function searchNaCodeTemplate(name) {
+    let val = $(`#v-listTemplates-${name}-search`).val()
+    let json = JSON.parse(fs.readFileSync(jsonpath).toString());
+
+    $(`#v-listTemplates-${name}`).html('')
+    g_templates_techspecs.filter(row => (row.nacode.match(val) && row.name == name)).forEach((row) => {
+        appendTemplatesModelstoTabsV2(row,json.fav_view,name)
+    });
+}
+function appendTemplatesModelstoTabsV2(row,view,tab) {
+    getTechSpecsApiV2(row.nacode).then((response) => {
+        let model = response.name;
+        if(view == 'list'){
+            $(`#v-listTemplates-${tab}`).append(`
+                <div class="bg-dark-light border-0 shadow-sm rounded-lg p-1 me-4 mb-1 w-100" role="button" id="card-nacode-${row.nacode}">
+                    <p class="mb-0">[${row.nacode}] - ${model}</p>
+                </div>
+            `)
+        }else{
+            $(`#v-listTemplates-${tab}`).append(`
+                <div class="card card-nacode border-0 shadow rounded-15 me-3 mb-3" role="button" id="card-nacode-${row.nacode}">
+                    <div class="card-body text-center px-1">
+                        <h4 class="card-title">${row.nacode}</h4>
+                        <p class="mb-0 small">${model}</p>
+                    </div>
+                </div>
+            `)
+        }
+    });
 }
 function appendTemplatesModelstoTabs(row, view) {
     //let config = g_mapModelConfigSS.get(row.nacode)
@@ -272,6 +290,7 @@ function onSelectTechValueChange(){
         checkKeyFromModelsFromList(value,mod)
     })
 }
+
 function regexCheckModel(modelType){
     // x,m,electric
     switch (modelType) {

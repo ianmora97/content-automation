@@ -33,11 +33,37 @@ small, .small {
   font-size: 0.5rem !important;
 }
 
+.label-2 {
+  font-size: 13px;
+  line-height: 16px;
+  letter-spacing: 0.25px;
+}
+
+.eyebrow-2 {
+  font-size: 10px;
+  font-weight: 400;
+  line-height: 13px;
+  letter-spacing: 2px;
+}
+
+.headline-4 {
+  line-height: 48px;
+  letter-spacing: -0.1px;
+}
+
 .hl::after {
   content: "______";
   margin-left: 5px;
   color: #1A1A1A;
   border-bottom: #4659e4 1px solid;
+  width: 50px;
+}
+
+.hl-light::after {
+  content: "______";
+  margin-left: 5px;
+  color: #1A1A1A;
+  border-bottom: #cfcece 1px solid;
   width: 50px;
 }
 
@@ -250,6 +276,14 @@ small, .small {
 
 .drag-drop.can-drop {
   background-color: #4659e4;
+}
+
+.btn-dark-light:focus {
+  box-shadow: none !important;
+}
+
+.form-select:focus {
+  box-shadow: none !important;
 }
 
 /*!
