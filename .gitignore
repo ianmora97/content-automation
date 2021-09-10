@@ -12,6 +12,7 @@ bin-release/
 *.air
 *.ipa
 *.apk
+*.DS_Store
 
 # others
 node_modules/

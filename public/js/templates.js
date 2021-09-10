@@ -287,10 +287,6 @@ var template_SEDAN = (model) => {
                 <span class="fw-bold">${model.exterior.weightDistributionFront != undefined ? model.exterior.weightDistributionFront : 'TBA'} /
                 ${model.exterior.weightDistributionRear != undefined ? model.exterior.weightDistributionRear : 'TBA'}</span>
             </p>
-            <p>
-                <span class="text-light small">PAYLOAD (lbs):</span><br>
-                <span class="fw-bold">${model.exterior.payload != undefined ? model.exterior.payload : 'TBA'}</span>
-            </p>
         </div>
         <div class="col-6">
             <h5 class="hl">Interior Dimensions</h5>
@@ -307,10 +303,6 @@ var template_SEDAN = (model) => {
                 <span class="text-light small">SHOULDER ROOM, FRONT/REAR (in):</span><br>
                 <span class="fw-bold">${model.interior.shoulderRoomFront != undefined ? model.interior.shoulderRoomFront : 'TBA'} /
                 ${model.interior.shoulderRoomRear != undefined ? model.interior.shoulderRoomRear : 'TBA'}</span>
-            </p>
-            <p>
-                <span class="text-light small">CARGO CAPACITY (cu ft):</span><br>
-                <span class="fw-bold">${model.interior.cargoCapacity != undefined ? model.interior.cargoCapacity : 'TBA'}</span>
             </p>
         </div>
     </div>
