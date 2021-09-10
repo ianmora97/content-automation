@@ -1,3 +1,3 @@
-# Content Automation
+# Chrome Extension Content Automation
 
 
