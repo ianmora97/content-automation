@@ -141,37 +141,70 @@ function selectModel(model) {
     let authorAdmin = "https://author.staging.bmwusacm.co/sites.html/content/bmwusa";
     let authorShowEditor = "editor.html/content/bmwusa";
     let authorShowAdmin = "sites.html/content/bmwusa";
+
     $("#authorURLs").append(`
-        <div class="d-flex justify-content-between my-2">
-            <div class="d-flex justify-content-start align-items-center">
-                <img src="public/img/aem.png" width="25px" class="d-inline me-2"> Editor:
+    <div class="accordion accordion-flush" id="acordionmyuurls">
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="editorheadline">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOneeditor" aria-expanded="true" aria-controls="collapseOneeditor">
+                    <div class="d-flex justify-content-start align-items-center">
+                        <img src="public/img/aem.png" width="25px" class="d-inline me-2"> Editor:
+                    </div>
+                </button>
+            </h2>
+            <div id="collapseOneeditor" class="accordion-collapse collapse show" aria-labelledby="editorheadline" data-bs-parent="#acordionmyuurls">
+                <div class="accordion-body" id="editorURLsGen">
+
+                </div>
             </div>
-            <button type="button" class="btn btn-xs btn-primary me-2"><i class="fas fa-external-link-alt"></i> Open all URLs</button>
         </div>
-        <div class="border-bottom pb-3 border-light" id="editorURLsGen"></div>
-
-        <div class="d-flex justify-content-between my-2">
-            <div class="d-flex justify-content-start align-items-center">
-                <img src="public/img/aem.png" width="25px" class="d-inline me-2"> Sites:
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="headingTwosites">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                    <div class="d-flex justify-content-start align-items-center">
+                        <img src="public/img/aem.png" width="25px" class="d-inline me-2"> Sites:
+                    </div>
+                </button>
+            </h2>
+            <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwosites" data-bs-parent="#acordionmyuurls">
+                <div class="accordion-body" id="sitesURLsGen">
+                </div>
             </div>
-            <button type="button" class="btn btn-xs btn-primary me-2"><i class="fas fa-external-link-alt"></i> Open all URLs</button>
         </div>
-        <div class="border-bottom pb-3 border-light" id="sitesURLsGen"></div>
-
-        <div class="d-flex justify-content-start my-2">
-            <img src="public/img/bmw.svg" width="20px" class="d-inline me-2 ms-1"> Staging:
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="headingThreestaging">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThreestaging" aria-expanded="false" aria-controls="collapseThreestaging">
+                    <img src="public/img/bmw.svg" width="20px" class="d-inline me-2 ms-1"> Staging:
+                </button>
+            </h2>
+            <div id="collapseThreestaging" class="accordion-collapse collapse" aria-labelledby="headingThreestaging" data-bs-parent="#acordionmyuurls">
+                <div class="accordion-body" id="stagingURLs">
+                </div>
+            </div>
         </div>
-        <div class="border-bottom pb-3 border-light" id="stagingURLs"></div>
-
-        <div class="d-flex justify-content-start my-2">
-            <img src="public/img/bmw.svg" width="20px" class="d-inline me-2 ms-1"> Prod:
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="prodheadiingcollapse">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseprod" aria-expanded="false" aria-controls="collapseprod">
+                    <img src="public/img/bmw.svg" width="20px" class="d-inline me-2 ms-1"> Prod:
+                </button>
+            </h2>
+            <div id="collapseprod" class="accordion-collapse collapse" aria-labelledby="prodheadiingcollapse" data-bs-parent="#acordionmyuurls">
+                <div class="accordion-body" id="prodURLs">
+                </div>
+            </div>
         </div>
-        <div class="border-bottom pb-3 border-light" id="prodURLs"></div>
-
-        <div class="d-flex justify-content-start my-2">
-            <img src="public/img/bmw.svg" width="20px" class="d-inline me-2 ms-1"> Live:
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="headinglive">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapselive" aria-expanded="false" aria-controls="collapselive">
+                    <img src="public/img/bmw.svg" width="20px" class="d-inline me-2 ms-1"> Staging:
+                </button>
+            </h2>
+            <div id="collapselive" class="accordion-collapse collapse" aria-labelledby="headinglive" data-bs-parent="#acordionmyuurls">
+                <div class="accordion-body" id="liveURLs">
+                </div>
+            </div>
         </div>
-        <div class="border-bottom pb-3 border-light" id="liveURLs"></div>
+    </div>
     `)
     g_modelsURLs.forEach(element => {
         if(model.length == 1){
