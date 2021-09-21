@@ -108,15 +108,14 @@ function closeModelMYU() {
 function appendURLs(authorShow,authorURL,id) {
     $(id).append(`
     <div class="d-flex mb-1 animate__animated animate__flipInX">
-        <div class="col-10 bg-dark">
-            <p class="m-0 p-1 text-decoration-underline text-light" style="white-space: nowrap !important; font-size: 13px;">${authorShow}</p>
-        </div>
-        <div class="col-2 bg-dark d-flex justify-content-start align-items-center">
+        <div class="bg-dark d-flex justify-content-start align-items-center">
             <span role="button" style="font-size: 16px;" data-clipboard-text="${authorURL}" class=" badge text-white btn-to-clip"
             data-bs-toggle="tooltip" data-bs-placement="top" title="Copy"><i class="far fa-copy"></i></span>
             
             <span role="button" style="font-size: 16px;" onclick="openExternalLink('${authorURL}')" class=" badge text-white btn-to-clip"
             data-bs-toggle="tooltip" data-bs-placement="top" title="Open in Browser"><i class="fab fa-safari"></i></span>
+            
+            <p class="m-0 p-1 text-decoration-underline text-light" style="white-space: nowrap !important; font-size: 13px;">${authorShow}</p>
         </div>
     </div>
     `)
@@ -196,7 +195,7 @@ function selectModel(model) {
         <div class="accordion-item">
             <h2 class="accordion-header" id="headinglive">
                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapselive" aria-expanded="false" aria-controls="collapselive">
-                    <img src="public/img/bmw.svg" width="20px" class="d-inline me-2 ms-1"> Staging:
+                    <img src="public/img/bmw.svg" width="20px" class="d-inline me-2 ms-1"> Live:
                 </button>
             </h2>
             <div id="collapselive" class="accordion-collapse collapse" aria-labelledby="headinglive" data-bs-parent="#acordionmyuurls">

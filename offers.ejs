@@ -6,8 +6,8 @@
             role="tab" aria-controls="urls" aria-selected="true"><i class="fas fa-link pe-2"></i> Regions</button>
     </li>
     <li class="nav-item ms-3" role="presentation">
-        <button class="nav-link" id="names-tab" data-bs-toggle="tab" data-bs-target="#names" type="button" role="tab"
-            aria-controls="names" aria-selected="false"><i class="fas fa-retweet pe-2"></i> CPO</button>
+        <button class="nav-link disabled" id="names-tab" data-bs-toggle="tab" data-bs-target="#names" type="button" role="tab"
+            aria-controls="names" aria-selected="false"><i class="fas fa-retweet pe-2"></i> Loyalty</button>
     </li>
 </ul>
 <hr>
@@ -18,11 +18,11 @@
                 <h3 class="mb-0">MACO Regions</h3>
             </div>
             <div>
-                <button type="button" class="btn btn-primary btn-sm rounded-15" data-bs-toggle="modal" data-bs-target="#offersProcess">
-                    <i class="fas fa-question-circle"></i> How to?
-                </button>
                 <button type="button" class="btn btn-primary btn-sm rounded-15 ms-3" data-bs-toggle="modal" data-bs-target="#regionURLs">
                     <i class="fas fa-globe"></i> URLs by Region
+                </button>
+                <button type="button" class="btn btn-primary btn-sm rounded-15" data-bs-toggle="modal" data-bs-target="#offersProcess">
+                    <i class="fas fa-question-circle"></i> How
                 </button>
             </div>
         </div>
@@ -34,7 +34,7 @@
                     <div class="d-flex align-items-end">
                         <p class="mb-0" role="button" data-bs-toggle="collapse" data-bs-target="#collapseCentral"
                             aria-expanded="false" aria-controls="collapseCentral">
-                            Links <i class="fas fa-angle-down"></i>
+                            Links <i class="fas fa-angle-right"></i>
                         </p>
                         <div style="min-height: 47px;">
                             <div class="collapse collapse-horizontal" id="collapseCentral">
@@ -42,7 +42,7 @@
                                     <div class="d-flex flex-column justify-content-start ms-3">
                                         <small class="fst-italic mb-1">Staging</small>
                                         <div class="btn-group" role="group" aria-label="Basic example">
-                                            <button type="button" class="btn no-shadow btn-primary btn-sm"><i
+                                            <button type="button" class="btn no-shadow btn-primary btn-sm" disabled><i
                                                     class="far fa-copy"></i></button>
                                             <button type="button" class="btn no-shadow btn-primary btn-sm"
                                                 onclick="openMacoLinks('central','s')"><i
@@ -52,7 +52,7 @@
                                     <div class="d-flex flex-column justify-content-start ms-3">
                                         <small class="fst-italic mb-1">Prod</small>
                                         <div class="btn-group" role="group" aria-label="Basic example">
-                                            <button type="button" class="btn no-shadow btn-primary btn-sm"><i
+                                            <button type="button" class="btn no-shadow btn-primary btn-sm" disabled><i
                                                     class="far fa-copy"></i></button>
                                             <button type="button" class="btn no-shadow btn-primary btn-sm"
                                                 onclick="openMacoLinks('central','p')"><i
@@ -62,7 +62,7 @@
                                     <div class="d-flex flex-column justify-content-start ms-3">
                                         <small class="fst-italic mb-1">Live</small>
                                         <div class="btn-group" role="group" aria-label="Basic example">
-                                            <button type="button" class="btn no-shadow btn-primary btn-sm"><i
+                                            <button type="button" class="btn no-shadow btn-primary btn-sm" disabled><i
                                                     class="far fa-copy"></i></button>
                                             <button type="button" class="btn no-shadow btn-primary btn-sm"
                                                 onclick="openMacoLinks('central','l')"><i
@@ -81,7 +81,7 @@
                     <div class="d-flex align-items-end">
                         <p class="mb-0" role="button" data-bs-toggle="collapse" data-bs-target="#collapseEastern"
                             aria-expanded="false" aria-controls="collapseEastern">
-                            Links <i class="fas fa-angle-down"></i>
+                            Links <i class="fas fa-angle-right"></i>
                         </p>
                         <div style="min-height: 47px;">
                             <div class="collapse collapse-horizontal" id="collapseEastern">
@@ -89,7 +89,7 @@
                                     <div class="d-flex flex-column justify-content-start ms-3">
                                         <small class="fst-italic mb-1">Staging</small>
                                         <div class="btn-group" role="group" aria-label="Basic example">
-                                            <button type="button" class="btn no-shadow btn-primary btn-sm"><i
+                                            <button type="button" class="btn no-shadow btn-primary btn-sm" disabled><i
                                                     class="far fa-copy"></i></button>
                                             <button type="button" class="btn no-shadow btn-primary btn-sm"
                                                 onclick="openMacoLinks('east','s')"><i
@@ -99,7 +99,7 @@
                                     <div class="d-flex flex-column justify-content-start ms-3">
                                         <small class="fst-italic mb-1">Prod</small>
                                         <div class="btn-group" role="group" aria-label="Basic example">
-                                            <button type="button" class="btn no-shadow btn-primary btn-sm"><i
+                                            <button type="button" class="btn no-shadow btn-primary btn-sm" disabled><i
                                                     class="far fa-copy"></i></button>
                                             <button type="button" class="btn no-shadow btn-primary btn-sm"
                                                 onclick="openMacoLinks('east','s')"><i
@@ -109,7 +109,7 @@
                                     <div class="d-flex flex-column justify-content-start ms-3">
                                         <small class="fst-italic mb-1">Live</small>
                                         <div class="btn-group" role="group" aria-label="Basic example">
-                                            <button type="button" class="btn no-shadow btn-primary btn-sm"><i
+                                            <button type="button" class="btn no-shadow btn-primary btn-sm" disabled><i
                                                     class="far fa-copy"></i></button>
                                             <button type="button" class="btn no-shadow btn-primary btn-sm"
                                                 onclick="openMacoLinks('east','s')"><i
@@ -128,7 +128,7 @@
                     <div class="d-flex align-items-end">
                         <p class="mb-0" role="button" data-bs-toggle="collapse" data-bs-target="#collapseWestern"
                             aria-expanded="false" aria-controls="collapseWestern">
-                            Links <i class="fas fa-angle-down"></i>
+                            Links <i class="fas fa-angle-right"></i>
                         </p>
                         <div style="min-height: 47px;">
                             <div class="collapse collapse-horizontal" id="collapseWestern">
@@ -136,7 +136,7 @@
                                     <div class="d-flex flex-column justify-content-start ms-3">
                                         <small class="fst-italic mb-1">Staging</small>
                                         <div class="btn-group" role="group" aria-label="Basic example">
-                                            <button type="button" class="btn no-shadow btn-primary btn-sm"><i
+                                            <button type="button" class="btn no-shadow btn-primary btn-sm" disabled><i
                                                     class="far fa-copy"></i></button>
                                             <button type="button" class="btn no-shadow btn-primary btn-sm"
                                                 onclick="openMacoLinks('west','s')"><i
@@ -146,7 +146,7 @@
                                     <div class="d-flex flex-column justify-content-start ms-3">
                                         <small class="fst-italic mb-1">Prod</small>
                                         <div class="btn-group" role="group" aria-label="Basic example">
-                                            <button type="button" class="btn no-shadow btn-primary btn-sm"><i
+                                            <button type="button" class="btn no-shadow btn-primary btn-sm" disabled><i
                                                     class="far fa-copy"></i></button>
                                             <button type="button" class="btn no-shadow btn-primary btn-sm"
                                                 onclick="openMacoLinks('west','s')"><i
@@ -156,7 +156,7 @@
                                     <div class="d-flex flex-column justify-content-start ms-3">
                                         <small class="fst-italic mb-1">Live</small>
                                         <div class="btn-group" role="group" aria-label="Basic example">
-                                            <button type="button" class="btn no-shadow btn-primary btn-sm"><i
+                                            <button type="button" class="btn no-shadow btn-primary btn-sm" disabled><i
                                                     class="far fa-copy"></i></button>
                                             <button type="button" class="btn no-shadow btn-primary btn-sm"
                                                 onclick="openMacoLinks('west','s')"><i
@@ -175,7 +175,7 @@
                     <div class="d-flex align-items-end">
                         <p class="mb-0" role="button" data-bs-toggle="collapse" data-bs-target="#collapseSouthern"
                             aria-expanded="false" aria-controls="collapseSouthern">
-                            Links <i class="fas fa-angle-down"></i>
+                            Links <i class="fas fa-angle-right"></i>
                         </p>
                         <div style="min-height: 47px;">
                             <div class="collapse collapse-horizontal" id="collapseSouthern">
@@ -183,7 +183,7 @@
                                     <div class="d-flex flex-column justify-content-start ms-3">
                                         <small class="fst-italic mb-1">Staging</small>
                                         <div class="btn-group" role="group" aria-label="Basic example">
-                                            <button type="button" class="btn no-shadow btn-primary btn-sm"><i
+                                            <button type="button" class="btn no-shadow btn-primary btn-sm" disabled><i
                                                     class="far fa-copy"></i></button>
                                             <button type="button" class="btn no-shadow btn-primary btn-sm"
                                                 onclick="openMacoLinks('south','s')"><i
@@ -193,7 +193,7 @@
                                     <div class="d-flex flex-column justify-content-start ms-3">
                                         <small class="fst-italic mb-1">Prod</small>
                                         <div class="btn-group" role="group" aria-label="Basic example">
-                                            <button type="button" class="btn no-shadow btn-primary btn-sm"><i
+                                            <button type="button" class="btn no-shadow btn-primary btn-sm" disabled><i
                                                     class="far fa-copy"></i></button>
                                             <button type="button" class="btn no-shadow btn-primary btn-sm"
                                                 onclick="openMacoLinks('south','s')"><i
@@ -203,7 +203,7 @@
                                     <div class="d-flex flex-column justify-content-start ms-3">
                                         <small class="fst-italic mb-1">Live</small>
                                         <div class="btn-group" role="group" aria-label="Basic example">
-                                            <button type="button" class="btn no-shadow btn-primary btn-sm"><i
+                                            <button type="button" class="btn no-shadow btn-primary btn-sm" disabled><i
                                                     class="far fa-copy"></i></button>
                                             <button type="button" class="btn no-shadow btn-primary btn-sm"
                                                 onclick="openMacoLinks('south','s')"><i
@@ -228,7 +228,7 @@
         <div class="modal-content ">
             <div class="modal-header">
                 <h5 class="modal-title" id="regionURLsLabel"><i class="fas fa-globe pe-2 text-primary"></i> URLs by Region</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <ul class="nav nav-pills mb-3 d-flex justify-content-around" id="pills-tab" role="tablist">

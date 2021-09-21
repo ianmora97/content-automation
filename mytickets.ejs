@@ -2,29 +2,29 @@
 <hr>
 <div class="row mx-0">
     <ul class="nav nav-pills mb-3" id="deploymentstickets" role="tablist">
-        <li class="nav-item" role="presentation">
-            <button class="nav-link active" id="pills-deployments-tab" data-bs-toggle="pill" data-bs-target="#pills-deployments" 
-            type="button" role="tab" aria-controls="pills-deployments" aria-selected="true"><i class="fas fa-rocket me-2"></i> Deployments</button>
+        <li class="nav-item " role="presentation">
+            <button class="nav-link active" id="pills-tickets-tab" data-bs-toggle="pill" data-bs-target="#pills-tickets" 
+            type="button" role="tab" aria-controls="pills-tickets" aria-selected="false"><i class="fas fa-ticket-alt me-2"></i> Tickets</button>
         </li>
         <li class="nav-item ms-4" role="presentation">
-            <button class="nav-link" id="pills-tickets-tab" data-bs-toggle="pill" data-bs-target="#pills-tickets" 
-            type="button" role="tab" aria-controls="pills-tickets" aria-selected="false"><i class="fas fa-ticket-alt me-2"></i> Tickets</button>
+            <button class="nav-link " id="pills-deployments-tab" data-bs-toggle="pill" data-bs-target="#pills-deployments" 
+            type="button" role="tab" aria-controls="pills-deployments" aria-selected="true"><i class="fas fa-rocket me-2"></i> Deployments</button>
         </li>
     </ul>
     <hr>
     <div class="tab-content" id="deploymentsticketsContent">
-        <div class="tab-pane fade show active" id="pills-deployments" role="tabpanel" aria-labelledby="pills-deployments-tab">
+        <div class="tab-pane fade" id="pills-deployments" role="tabpanel" aria-labelledby="pills-deployments-tab">
             <div class="row row-cols-md-5 g-3" id="deploymentsList">
     
             </div>
         </div>
-        <div class="tab-pane fade" id="pills-tickets" role="tabpanel" aria-labelledby="pills-tickets-tab">
+        <div class="tab-pane fade show active" id="pills-tickets" role="tabpanel" aria-labelledby="pills-tickets-tab">
             <div class="d-flex justify-content-between align-items-end">
                 <div class=" pe-5 flex-fill">
                     <label for="ticketsearchbar" class="form-label">Search</label>
                     <input type="text" class="form-control bg-dark" id="ticketsearchbar" placeholder="Search..." autofocus>
                 </div>
-                <div class="dropdown pe-5 ">
+                <!-- <div class="dropdown pe-5 ">
                     <button class="btn btn-dark dropdown-toggle" type="button" id="filterticketsdropdown" data-bs-toggle="dropdown" aria-expanded="false">
                       Filter By
                     </button>
@@ -32,7 +32,7 @@
                       <li><button class="dropdown-item" type="button">Non-Deployment Related</button></li>
                       <li><button class="dropdown-item" type="button">Related Deployment</button></li>
                     </ul>
-                </div>
+                </div> -->
                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addTicketModal"
                 ><i class="fas fa-ticket-alt me-1"></i>Add Ticket</button>
             </div>
@@ -61,17 +61,17 @@ tabindex="-1" aria-labelledby="addnewDeploymentmodalLabel" aria-hidden="true">
             </div>
             <div class="modal-body" style="position: relative;">
                 <ul class="nav nav-pills mb-3" id="pills-tab-deploymentadd" role="tablist">
-                    <li class="nav-item" role="presentation">
-                      <button class="nav-link active" id="pills-epicadd-tab" data-bs-toggle="pill" data-bs-target="#pills-epicadd" 
-                      type="button" role="tab" aria-controls="pills-epicadd" aria-selected="true">Epic Ticket</button>
-                    </li>
                     <li class="nav-item ms-3" role="presentation">
-                      <button class="nav-link" id="pills-custumadd-tab" data-bs-toggle="pill" data-bs-target="#pills-custumadd" 
-                      type="button" role="tab" aria-controls="pills-custumadd" aria-selected="false">Custom</button>
+                      <button class="nav-link active" id="pills-custumadd-tab" data-bs-toggle="pill" data-bs-target="#pills-custumadd" 
+                      type="button" role="tab" aria-controls="pills-custumadd" aria-selected="true">Custom</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                      <button class="nav-link disabled" id="pills-epicadd-tab" data-bs-toggle="pill" data-bs-target="#pills-epicadd" 
+                      type="button" role="tab" aria-controls="pills-epicadd" aria-selected="false">Epic Ticket</button>
                     </li>
                 </ul>
                 <div class="tab-content" id="pills-tab-deploymentaddContent">
-                    <div class="tab-pane fade show active" id="pills-epicadd" role="tabpanel" aria-labelledby="pills-epicadd-tab">
+                    <div class="tab-pane fade" id="pills-epicadd" role="tabpanel" aria-labelledby="pills-epicadd-tab">
                         <label for="ticketepicAddModal">Jira Epic Ticket</label>
                         <div class="input-group mt-1">
                             <span class="input-group-text bg-dark-light border-0" id="icon-addon"><i class="fab fa-jira text-primary"></i></span>
@@ -83,7 +83,7 @@ tabindex="-1" aria-labelledby="addnewDeploymentmodalLabel" aria-hidden="true">
                             
                         </div>
                     </div>
-                    <div class="tab-pane fade" id="pills-custumadd" role="tabpanel" aria-labelledby="pills-custumadd-tab">
+                    <div class="tab-pane fade show active" id="pills-custumadd" role="tabpanel" aria-labelledby="pills-custumadd-tab">
                         <div style="position: absolute; top: 0; left: 0;" class="w-100" id="feedbackAlert">
             
                         </div>
