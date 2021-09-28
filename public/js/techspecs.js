@@ -79,15 +79,7 @@ function iterateOverObjectTech(obj, stack) {
         }
     }
 }
-function loadDataListInput(list){
-    list.forEach(element => {
-        fillDataList(element)
-    });
-}
-function fillDataList(model){
-    $('#naCodeModelTech').append(`<option value="${model.code}">${model.code} ${model.name}</option>`)
-    $('#naCodeModelCosysModal').append(`<option value="${model.code}">${model.code} ${model.name}</option>`)
-}
+
 function showEngineType(models) {
     models.forEach(model => {
         if(model.name.match(/(X[1-7])/g)){
@@ -110,7 +102,7 @@ function showEngineType(models) {
     })
 }
 
-var g_modelList = {};
+var g_modelList = new Array();
 function getAllModelsList() {
     $.ajax({
         type: "GET",
@@ -123,6 +115,27 @@ function getAllModelsList() {
     
     });
 }
+function filter22ModelsFirst(a,b){
+    let regx = new RegExp(`${json_config.p_year}([0-9]|[A-Za-z])`)
+    if(a.code.match(regx)){
+        return 1;
+    }
+    return 0;
+}
+function loadDataListInput(list){
+    $('#naCodeModelTech').html('')
+    $('#naCodeModelCosysModal').html('')
+    list.filter(filter22ModelsFirst)
+    .forEach(element => {
+        fillDataList(element)
+    });
+}
+function fillDataList(model){
+    $('#naCodeModelTech').append(`<option value="${model.code}">${model.code} ${model.name}</option>`)
+    $('#naCodeModelCosysModal').append(`<option value="${model.code}">${model.code} ${model.name}</option>`)
+}
+
+
 var g_techValues = new Array()
 var g_mapTechValues = new Map()
 var g_templates_techspecs = new Array()
@@ -207,10 +220,7 @@ function appendTemplatesTabs(row) { // ! hacer un mostrar como card o lista en l
     $('#v-templates-tabContent').append(`
         <div class="tab-pane fade ${g_contTemplatesTabs ? '':'active show'}" id="v-listTemplates-${row.name}-tab" 
         role="tabpanel" aria-labelledby="v-listTemplates-${row.name}-tab">
-            <div class="row">
-                <input type="text" class="form-control bg-dark" id="v-listTemplates-${row.name}-search" 
-                oninput="this.value = this.value.toUpperCase()" placeholder="Search" onkeyup="searchNaCodeTemplate('${row.name}')">
-            </div>
+            
             <div class="d-flex flex-wrap border-end border-dark-light pe-1" id="v-listTemplates-${row.name}">
             </div>
         </div>

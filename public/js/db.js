@@ -1,10 +1,14 @@
 var sqlite3 = require("sqlite3").verbose();
-const { isFunction } = require("jquery");
-const path = require('path')
+const path = require('path');
 
-let db = new sqlite3.Database(path.join(__dirname+'/public/db/database.db'), (err) => {
+
+
+let db = new sqlite3.Database('./public/db/database.db', (err) => {
     if (err) {
-      return console.error(err.message);
+        if(err.message.includes("SQLITE_CANTOPEN")){
+            console.log("No se encuentra");
+        }
+        return;
     }else{
         getMacos();
         getMacosbyRegion();
@@ -324,6 +328,6 @@ function moveTicketToTicketDeploy(ticket) {
 
 
 document.addEventListener('DOMContentLoaded', function () {
-    onModalOpen();
+    // onModalOpen();
     loadTicketsonModalDeploymentDrag();
 });

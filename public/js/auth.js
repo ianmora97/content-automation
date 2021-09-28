@@ -1,11 +1,4 @@
-const fs = require('fs');
-var jsonpath = 'public/js/config.json';
 
-var json_config;
-function loadUserConfig(){
-    json_config = JSON.parse(fs.readFileSync(jsonpath).toString());
-}
-loadUserConfig()
 
 function setConfigJsonJira(){
     let m = {
@@ -26,6 +19,14 @@ function setConfigJsonJira(){
         }, 1000);
     }, 2000);
 }
+
+function setCondigJsonCosyYear(se){
+    json_config.p_year = $(se).val();
+    fs.writeFileSync(jsonpath, JSON.stringify(json_config));
+    getAllModelsList()
+    
+}
+
 var gt_ticket = {};
 function bringJiraTicket(cont){
     $.ajax({
