@@ -5,9 +5,9 @@ var browserSync = require('browser-sync').create();
 
 // Compile sass into CSS & auto-inject into browsers
 gulp.task('sass', function() {
-    return gulp.src("public/sass/*.scss")
+    return gulp.src("./public/sass/*.scss")
         .pipe(sass())
-        .pipe(gulp.dest("public/css"))
+        .pipe(gulp.dest("./public/css"))
         .pipe(browserSync.stream());
 });
 
@@ -15,14 +15,14 @@ gulp.task('sass', function() {
 gulp.task('animate', function() {
     return gulp.src('node_modules/animate.css/animate.css')
         .pipe(concat('animate.css'))
-        .pipe(gulp.dest("public/css"));
+        .pipe(gulp.dest("../css"));
 });
 
 // move fontawesome.css to web/css
 gulp.task('fontawesome', function() {
     return gulp.src('node_modules/@fortawesome/fontawesome-free/css/all.css')
         .pipe(concat('fontawesome.css'))
-        .pipe(gulp.dest("public/css"));
+        .pipe(gulp.dest("../css"));
 });
 
 // move bootstrap JS and Jquery
@@ -32,12 +32,17 @@ gulp.task('js', function() {
             'node_modules/bootstrap/dist/js/bootstrap.bundle.min.js'
         ])
         .pipe(concat('jq-bs-bundle.js'))
-        .pipe(gulp.dest('public/js'));
+        .pipe(gulp.dest('../js'));
 });
 
-// watching scss/html files
+// watching all tasks
 gulp.task('serve', gulp.series('sass','js','animate','fontawesome', function() {
-    gulp.watch("public/sass/*.scss", gulp.series('sass'));
+    gulp.watch("../sass/*.scss", gulp.series('sass'));
 }));
 
-gulp.task('default', gulp.series('serve'));
+// watching only scss task
+gulp.task('styles', gulp.series('sass', function() {
+    gulp.watch("./public/sass/*.scss", gulp.series('sass'));
+}));
+
+gulp.task('default', gulp.series('styles'));

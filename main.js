@@ -19,9 +19,9 @@ function createWindow () {
     win.once('ready-to-show', () => {
         win.show()
     })
-    // win.setIcon(path.join(__dirname, '/public/img/logo.svg'));
-    //win.removeMenu();
-    win.loadFile('index.ejs')
+    win.setIcon(path.join(__dirname, '/images/icon.png'));
+    win.removeMenu();
+    win.loadFile('public/views/index.ejs')
 }
 
 // open links in external browser

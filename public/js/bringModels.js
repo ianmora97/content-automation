@@ -38,7 +38,7 @@ var g_modelsJSON = [];
 function bringModelsFromJSON() {
     $.ajax({
         type: "GET",
-        url: 'public/js/models.json',
+        url: '../js/models.json',
         contentType: "application/json",
     }).then((response) => {
         g_modelsJSON = response.models;
@@ -147,7 +147,7 @@ function selectModel(model) {
             <h2 class="accordion-header" id="editorheadline">
                 <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOneeditor" aria-expanded="true" aria-controls="collapseOneeditor">
                     <div class="d-flex justify-content-start align-items-center">
-                        <img src="public/img/aem.png" width="25px" class="d-inline me-2"> Editor:
+                        <img src="../img/aem.png" width="25px" class="d-inline me-2"> Editor:
                     </div>
                 </button>
             </h2>
@@ -161,7 +161,7 @@ function selectModel(model) {
             <h2 class="accordion-header" id="headingTwosites">
                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
                     <div class="d-flex justify-content-start align-items-center">
-                        <img src="public/img/aem.png" width="25px" class="d-inline me-2"> Sites:
+                        <img src="../img/aem.png" width="25px" class="d-inline me-2"> Sites:
                     </div>
                 </button>
             </h2>
@@ -173,7 +173,7 @@ function selectModel(model) {
         <div class="accordion-item">
             <h2 class="accordion-header" id="headingThreestaging">
                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThreestaging" aria-expanded="false" aria-controls="collapseThreestaging">
-                    <img src="public/img/bmw.svg" width="20px" class="d-inline me-2 ms-1"> Staging:
+                    <img src="../img/bmw.svg" width="20px" class="d-inline me-2 ms-1"> Staging:
                 </button>
             </h2>
             <div id="collapseThreestaging" class="accordion-collapse collapse" aria-labelledby="headingThreestaging" data-bs-parent="#acordionmyuurls">
@@ -184,7 +184,7 @@ function selectModel(model) {
         <div class="accordion-item">
             <h2 class="accordion-header" id="prodheadiingcollapse">
                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseprod" aria-expanded="false" aria-controls="collapseprod">
-                    <img src="public/img/bmw.svg" width="20px" class="d-inline me-2 ms-1"> Prod:
+                    <img src="../img/bmw.svg" width="20px" class="d-inline me-2 ms-1"> Prod:
                 </button>
             </h2>
             <div id="collapseprod" class="accordion-collapse collapse" aria-labelledby="prodheadiingcollapse" data-bs-parent="#acordionmyuurls">
@@ -195,7 +195,7 @@ function selectModel(model) {
         <div class="accordion-item">
             <h2 class="accordion-header" id="headinglive">
                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapselive" aria-expanded="false" aria-controls="collapselive">
-                    <img src="public/img/bmw.svg" width="20px" class="d-inline me-2 ms-1"> Live:
+                    <img src="../img/bmw.svg" width="20px" class="d-inline me-2 ms-1"> Live:
                 </button>
             </h2>
             <div id="collapselive" class="accordion-collapse collapse" aria-labelledby="headinglive" data-bs-parent="#acordionmyuurls">

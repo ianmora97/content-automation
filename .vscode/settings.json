@@ -56,7 +56,7 @@
             "previewLimit": 50,
             "driver": "SQLite",
             "name": "content-automation",
-            "database": "${workspaceFolder:content-automation}/public/db/database.db"
+            "database": "${workspaceFolder:content-automation}/../db/database.db"
         }
     ],
     "sqltools.useNodeRuntime": true

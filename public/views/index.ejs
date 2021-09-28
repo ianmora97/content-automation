@@ -11,15 +11,16 @@
     <script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
 
     <!-- CSS Files -->
-    <link rel="stylesheet" href="public/css/bootstrap.css">
-    <link rel="stylesheet" href="public/css/animate.css">
-    <link rel="stylesheet" href="public/css/fontawesome.css">
+    <link rel="stylesheet" href="../css/bootstrap.css">
+    <link rel="stylesheet" href="../css/animate.css">
+    <link rel="stylesheet" href="../css/fontawesome.css">
 
     <!-- JS Files -->
-    <script src="public/js/jq-bs-bundle.js"></script>
-    <script src="public/js/interact.js"></script>
-    <script src="public/js/xlsx.min.js"></script>
+    <script src="../js/jq-bs-bundle.js"></script>
+    <script src="../js/interact.js"></script>
+    <script src="../js/xlsx.min.js"></script>
     
+    <script src="../js/config.js" ></script>
     <script>
         var g_menuTabSelected = "";
     </script>
@@ -38,7 +39,7 @@
                                     <div class="d-flex justify-content-start px-3 ">
                                         <h3 class="me-4">Models</h3>
                                         <div class="input-group mb-3 w-50">
-                                            <span class="input-group-text bg-dark border-0" id="icon-addon1"><img src="public/img/bmw.svg" width="20px"></span>
+                                            <span class="input-group-text bg-dark border-0" id="icon-addon1"><img src="../img/bmw.svg" width="20px"></span>
                                             <input type="text" class="form-control bg-dark border-0" placeholder="Search by name..." 
                                             aria-label="Search by name..." aria-describedby="icon-addon1" id="searchModel">
                                         </div>
@@ -74,28 +75,45 @@
                         <div class="tab-pane h-100 p-3 fade" id="v-pills-templates" role="tabpanel" aria-labelledby="v-pills-templates-tab">
                             <%- include("techspecs") %>
                         </div>
-                        <div class="tab-pane h-100 p-3 fade" id="v-pills-mytickets" role="tabpanel" aria-labelledby="v-pills-mytickets-tab">
-                            <%- include("mytickets") %>
-                        </div>
+                        
                         <div class="tab-pane h-100 p-3 fade" id="v-pills-myconfig" role="tabpanel" aria-labelledby="v-pills-myconfig-tab">
                             <h2 class="fw-bold mb-0">Settings</h2>
                             <hr>
-                            <div class="d-flex">
-                                <div class="col-md-6 border-end pe-3">
-                                    <h4>Jira Settings</h4>
-                                    <p class="small text-light">This settings are optional</p>
-                                    <div class="mb-3">
-                                        <label for="emailJira" class="form-label">Jira Email</label>
-                                        <input type="email" class="form-control bg-dark border-0" id="emailJira" placeholder="Email...">
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="jiraToken" class="form-label">Jira Token</label>
-                                        <input type="password" class="form-control bg-dark border-0" id="jiraToken" placeholder="Token...">
-                                    </div>
-                                    <button type="button" class="btn btn-primary" onclick="setConfigJsonJira()" id="validateButton">
-                                        <i class="fas " id="validateButtonIcon"></i> <span>Save</span></button>
+                            <div class="p-2">
+                                <h4 class="pb-2">Jira Settings</h4>
+                                <div class="mb-3">
+                                    <label for="emailJira" class="form-label text-light">Jira Email</label>
+                                    <input type="email" class="form-control bg-dark border-0" id="emailJira" placeholder="Email...">
                                 </div>
-                                <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="jiraToken" class="form-label text-light">Jira Token</label>
+                                    <input type="password" class="form-control bg-dark border-0" id="jiraToken" placeholder="Token...">
+                                </div>
+                                <button type="button" class="btn btn-primary" onclick="setConfigJsonJira()" id="validateButton">
+                                    <i class="fas " id="validateButtonIcon"></i> <span>Save</span>
+                                </button>
+                                <div class="py-3">
+                                    <hr>
+                                </div>
+                                <h4 class="pb-2">In-App Settings</h4>
+                                <div class="mb-3">
+                                    <label for="cosyYear" class="form-label text-light">CoSy Year</label>
+                                    <select class="form-select bg-dark border-0" aria-label="cosyYear" onchange="setCondigJsonCosyYear(this)" id="cosyYear">
+                                        
+                                    </select>
+                                    <script>
+                                        let lo_year = parseInt(new Date().getFullYear().toString().slice(2,4));
+                                        let lo_vecYears = new Array();
+                                        lo_vecYears.push(lo_year);
+                                        for(let i = 1; i < 3; i++){lo_vecYears.push(lo_year - i, lo_year + i)}
+                                        lo_vecYears
+                                        .sort(function(a,b){if(a>b)return -1;return 0})
+                                        .forEach(e => {
+                                            $('#cosyYear').append(`
+                                                <option value="${e}" ${json_config.p_year == e ? 'selected':''}>${e}</option>`
+                                            );
+                                        });
+                                    </script>
                                 </div>
                             </div>
                         </div>
@@ -104,16 +122,16 @@
             </div>
         </div>
 
-        <script src="public/js/templates.js"></script>
-        <script src="public/js/electron-f.js"></script>
-        <script src="public/js/clipboard.min.js"></script>
-        <script src="public/js/logic.js"></script>
-        <script src="public/js/auth.js" ></script>
-        <script src="public/js/bringModels.js"></script>
-        <script src="public/js/db.js"></script>
-        <script src="public/js/macos.js"></script>
-        <script src="public/js/techspecs.js"></script>
-        <script src="public/js/cosy.js"></script>
+        <script src="../js/templates.js"></script>
+        <script src="../js/electron-f.js"></script>
+        <script src="../js/clipboard.min.js"></script>
+        <script src="../js/logic.js"></script>
+        <script src="../js/auth.js" ></script>
+        <script src="../js/bringModels.js"></script>
+        <script src="../js/db.js"></script>
+        <script src="../js/macos.js"></script>
+        <script src="../js/techspecs.js"></script>
+        <script src="../js/cosy.js"></script>
         <script>if (window.module) module = window.module;</script>
     </body>
 </html>

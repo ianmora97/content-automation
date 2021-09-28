@@ -83,13 +83,13 @@ small{
     font-size: 12px;
 }
 
-.form-control{
+.form-control, .form-select{
     outline: none !important;
     border: none !important;
     box-shadow: none !important;
     color:$light !important;
     &:focus{
-        color:white !important;
+        color:rgb(255, 255, 255) !important;
     }
 }
 .rounded-15{
