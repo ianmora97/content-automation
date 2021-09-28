@@ -19,7 +19,7 @@ function createWindow () {
     win.once('ready-to-show', () => {
         win.show()
     })
-    win.setIcon(path.join(__dirname, '/images/icon.png'));
+    win.setIcon(path.join(__dirname, '/public/img/logo.png'));
     win.removeMenu();
     win.loadFile('public/views/index.ejs')
 }
