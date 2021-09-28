@@ -125,6 +125,7 @@ function filter22ModelsFirst(a,b){
 function loadDataListInput(list){
     $('#naCodeModelTech').html('')
     $('#naCodeModelCosysModal').html('')
+    $('#naCodeModelCosysModalBefore').html('')
     list.filter(filter22ModelsFirst)
     .forEach(element => {
         fillDataList(element)
@@ -133,6 +134,7 @@ function loadDataListInput(list){
 function fillDataList(model){
     $('#naCodeModelTech').append(`<option value="${model.code}">${model.code} ${model.name}</option>`)
     $('#naCodeModelCosysModal').append(`<option value="${model.code}">${model.code} ${model.name}</option>`)
+    $('#naCodeModelCosysModalBefore').append(`<option value="${model.code}">${model.code} ${model.name}</option>`)
 }
 
 
