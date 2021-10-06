@@ -20,7 +20,7 @@
     <script src="../js/interact.js"></script>
     <script src="../js/xlsx.min.js"></script>
     
-    <script src="../js/config.js" ></script>
+    <script src="../js/crypto.js"></script>
     <script>
         var g_menuTabSelected = "";
     </script>
@@ -29,6 +29,7 @@
         <div id="wrapper">
             <%- include("menu") %>
             <div id="mainContent">
+                <%- include("jira") %>
                 <div class="bg-dark-light rounded-15 w-100 h-100">
                     <div class="tab-content m-0 p-0 h-100 position-relative" id="v-pills-tabContent">
                         <div class="tab-pane h-100 p-3 fade show active" id="v-pills-myu" role="tabpanel" aria-labelledby="v-pills-myu-tab">
@@ -107,19 +108,6 @@
                                     <select class="form-select bg-dark border-0" aria-label="cosyYear" onchange="setCondigJsonCosyYear(this)" id="cosyYear">
                                         
                                     </select>
-                                    <script>
-                                        let lo_year = parseInt(new Date().getFullYear().toString().slice(2,4));
-                                        let lo_vecYears = new Array();
-                                        lo_vecYears.push(lo_year);
-                                        for(let i = 1; i < 3; i++){lo_vecYears.push(lo_year - i, lo_year + i)}
-                                        lo_vecYears
-                                        .sort(function(a,b){if(a>b)return -1;return 0})
-                                        .forEach(e => {
-                                            $('#cosyYear').append(`
-                                                <option value="${e}" ${json_config.p_year == e ? 'selected':''}>${e}</option>`
-                                            );
-                                        });
-                                    </script>
                                 </div>
                             </div>
                         </div>
@@ -147,6 +135,8 @@
                 </div>
             </div>
         </div>
+        <%- include("modalEditor") %>
+        
 
         <script src="../js/templates.js"></script>
         <script src="../js/electron-f.js"></script>
@@ -155,8 +145,10 @@
         <script src="../js/auth.js" ></script>
         <script src="../js/bringModels.js"></script>
         <script src="../js/db.js"></script>
+        <script src="../js/config.js"></script>
         <script src="../js/techspecs.js"></script>
         <script src="../js/cosy.js"></script>
+        <script src="../js/texteditor.js"></script>
         <script>if (window.module) module = window.module;</script>
     </body>
 </html>

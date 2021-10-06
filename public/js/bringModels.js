@@ -296,21 +296,7 @@ function bringModelsfromBMW(){
     });
 }
 bringModelsfromBMW()
-// function bringModelsfromBMW(){ 
-//     $.ajax({
-//         type: "GET",
-//         url: 'https://www.bmwusa.com/',
-//         contentType: "application/json",
-//     }).then((response) => {
-//         var i = response.split("globalnav-primary-vehicles__car").slice(2,16)
-//         i.forEach((e) => {
-//             let a = e.split("\"imageUrl\" : \"")[1].split("\"isDamAsset\"")[0].replaceAll("amp;","").split("\",")[0];
-            
-//         })
-//     }, (error) => {
-    
-//     });
-// }
+
 document.addEventListener('DOMContentLoaded', function() {
     searchByModel();
 });
