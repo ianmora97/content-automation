@@ -6,7 +6,7 @@ const path = require('path');
 let db = new sqlite3.Database('./public/db/database.db', (err) => {
     if (err) {
         if(err.message.includes("SQLITE_CANTOPEN")){
-            console.log("No se encuentra");
+            console.log("SQLite not found");
         }
         return;
     }else{

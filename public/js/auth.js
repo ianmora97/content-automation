@@ -1,32 +1,4 @@
 
-
-function setConfigJsonJira(){
-    let m = {
-        c_email: $('#emailJira').val(),
-        c_token: $('#jiraToken').val()
-    }
-    fs.writeFileSync(jsonpath, JSON.stringify(m));
-    $('#validateButtonIcon').addClass('fa-spinner fa-pulse');
-    setTimeout(() => {
-        $('#validateButtonIcon').removeClass('fa-spinner fa-pulse').addClass('fa-check-circle');
-        $('#validateButton').removeClass('btn-primary').addClass('btn-success');
-        $('#validateButton').find('span').text('Saved')
-        setTimeout(() => {
-            $('#validateButton').removeClass('btn-success').addClass('btn-primary');
-            $('#validateButton').find('span').text('Save')
-            $('#validateButtonIcon').removeClass('fa-check-circle')
-            loadUserConfig()
-        }, 1000);
-    }, 2000);
-}
-
-function setCondigJsonCosyYear(se){
-    json_config.p_year = $(se).val();
-    fs.writeFileSync(jsonpath, JSON.stringify(json_config));
-    getAllModelsList()
-    
-}
-
 var gt_ticket = {};
 function bringJiraTicket(cont){
     $.ajax({
@@ -49,7 +21,12 @@ function bringJiraTicket(cont){
         $('#ticketBackResponse').html('');
         showTicketResponse(gt_ticket)
     }, (error) => {
-        if(error.status == 404){
+        if(error.responseText.includes('Client must be authenticated to access this resource')){
+            $('#ticketBackResponse').append(`
+                <p class="text-danger"> <i class="fas fa-exclamation-triangle"></i> Client must be authenticated to access this resource</p>
+                <p class="text-light m-0 fw-light small">Please check your credentials</p>
+            `)
+        }else if(error.status == 404){
             $('#ticketAddModal').attr('placeholder', 'Ticket Not found').val('');
             setTimeout(() => {
                 $('#ticketAddModal').attr('placeholder', 'Search ticket').focus();
@@ -90,19 +67,9 @@ async function bringJiraTicketAsync(cont){
 }
 function showTicketResponse(ticket){
     $('#ticketBackResponse').append(`
-    <div class="d-flex justify-content-between">
+    <div class="d-flex justify-content-start">
         <h5 class="mb-2 btn-to-clip" role="button" data-clipboard-text="CONT-${ticket.code}">CONT-${ticket.code}</h5>
-            <button class="btn btn-sm btn-danger" data-bs-dismiss="modal" onclick="addTickettoDB('${ticket.code}','${ticket.name}','${ticket.priority}','${ticket.release}')">
-            <i class="fas fa-folder-plus"></i> Add Ticket</button>
     </div>
-    <hr>
-    <p class="mb-0"><h6>Name:</h6> <i class="fas fa-circle text-primary" style="font-size:10px;"></i>
-     <u>${ticket.name}</u></p>
-    <p class="mb-0"><h6>Status:</h6> <span class="badge bg-primary">${ticket.status}</span></p>
-    <p class="mb-0"><h6>Priority:</h6> <i class="fas fa-circle text-primary" style="font-size:10px;"></i>
-     <u>${ticket.priority}</u></p>
-    <p class="mb-0"><h6>Release:</h6> <i class="fas fa-circle text-primary" style="font-size:10px;"></i>
-     <u>${ticket.release}</u></p>
     <hr>
     <p class="text-light m-0 fw-light small">Version:</p>
     <div role="button" class="jiraTicketVersion mb-3 btn-to-clip user-select-all" data-clipboard-text="CONT-${ticket.code} - ${ticket.name}"
@@ -114,6 +81,14 @@ function showTicketResponse(ticket){
     data-bs-toggle="tooltip" data-bs-placement="top" title="Copy to Clipboard" >
         CONT-${ticket.code} - ${ticket.name}
     </div>
+    <hr>
+    <p class="mb-0"><h6>Name:</h6> <i class="fas fa-circle text-primary" style="font-size:10px;"></i>
+     <u>${ticket.name}</u></p>
+    <p class="mb-0"><h6>Status:</h6> <span class="badge bg-primary">${ticket.status}</span></p>
+    <p class="mb-0"><h6>Priority:</h6> <i class="fas fa-circle text-primary" style="font-size:10px;"></i>
+     <u>${ticket.priority}</u></p>
+    <p class="mb-0"><h6>Release:</h6> <i class="fas fa-circle text-primary" style="font-size:10px;"></i>
+     <u>${ticket.release}</u></p>
     `);
     enableTooltips();
 

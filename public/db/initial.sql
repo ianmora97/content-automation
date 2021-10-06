@@ -2,6 +2,7 @@
 -- drop tables if exists
 -- --------------------------------------
 
+DROP TABLE IF EXISTS `config`;
 DROP TABLE IF EXISTS `region`;
 DROP TABLE IF EXISTS `maco`;
 DROP TABLE IF EXISTS `deployment`;
@@ -9,13 +10,24 @@ DROP TABLE IF EXISTS `ticket_d`;
 DROP TABLE IF EXISTS `ticket_l`;
 
 -- --------------------------------------
--- create region tables
+-- create config table
+-- --------------------------------------
+CREATE TABLE `config` (
+   id INTEGER PRIMARY KEY AUTOINCREMENT,
+   c_email text NOT NULL,
+   c_token text NOT NULL,
+   fav_view text NOT NULL,
+   p_year text NOT NULL
+);
+
+-- --------------------------------------
+-- create region table
 -- --------------------------------------
 CREATE TABLE `region` (
    id INTEGER PRIMARY KEY AUTOINCREMENT,
    name text NOT NULL,
    description text NOT NULL
-)
+);
 -- --------------------------------------
 -- insert region data
 -- --------------------------------------
@@ -37,7 +49,7 @@ CREATE TABLE `maco` (
       REFERENCES region (id) 
          ON DELETE CASCADE 
          ON UPDATE NO ACTION
-)
+);
 
  -- --------------------------------------
  -- insert central maco data
