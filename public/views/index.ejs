@@ -19,6 +19,7 @@
     <script src="../js/jq-bs-bundle.js"></script>
     <script src="../js/interact.js"></script>
     <script src="../js/xlsx.min.js"></script>
+    <script src="../js/moment.js"></script>
     
     <script src="../js/crypto.js"></script>
     <script>
@@ -76,67 +77,17 @@
                         <div class="tab-pane h-100 p-3 fade" id="v-pills-templates" role="tabpanel" aria-labelledby="v-pills-templates-tab">
                             <%- include("techspecs") %>
                         </div>
-                        
-                        <div class="tab-pane h-100 p-3 fade" id="v-pills-myconfig" role="tabpanel" aria-labelledby="v-pills-myconfig-tab">
-                            <h2 class="fw-bold mb-0">Settings</h2>
-                            <hr>
-                            <div class="p-2">
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <h4 class="pb-2">Jira</h4>
-                                    <button type="button" class="btn btn-primary btn-sm rounded-15" data-bs-toggle="modal" data-bs-target="#jiratokenmodal">
-                                        <i class="fas fa-question-circle"></i> Get Jira Token
-                                    </button>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="emailJira" class="form-label text-light small mb-1">Email</label>
-                                    <input type="email" class="form-control bg-dark border-0" id="emailJira" placeholder="Email...">
-                                    <small>Your Jira email</small>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="jiraToken" class="form-label text-light small mb-1">Token</label>
-                                    <input type="password" class="form-control bg-dark border-0" id="jiraToken" placeholder="Token...">
-                                </div>
-                                <button type="button" class="btn btn-primary" onclick="setConfigJsonJira()" id="validateButton">
-                                    <i class="fas " id="validateButtonIcon"></i> <span>Save</span>
-                                </button>
-                                <div class="py-3">
-                                    <hr>
-                                </div>
-                                <h4 class="pb-2">In-App</h4>
-                                <div class="mb-3">
-                                    <label for="cosyYear" class="form-label text-light small mb-1">CoSy Year</label>
-                                    <select class="form-select bg-dark border-0" aria-label="cosyYear" onchange="setCondigJsonCosyYear(this)" id="cosyYear">
-                                        
-                                    </select>
-                                </div>
-                            </div>
+                        <div class="tab-pane h-100 p-3 fade" id="v-pills-confluence" role="tabpanel" aria-labelledby="v-pills-confluence-tab">
+                            <%- include("confluence") %>
                         </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="modal fade" id="jiratokenmodal" tabindex="-1" aria-labelledby="jiratokenmodalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="jiratokenmodalLabel">Jira Token</h5>
-                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="bg-dark-light rounded-15 p-2">
-                            <ol>
-                                <li>Open on browser <a onclick="openExternalLink('https://id.atlassian.com/manage-profile/security/api-tokens')" href="https://id.atlassian.com/manage-profile/security/api-tokens">API Tokens</a></li>
-                                <li>Click on "Create API token".</li>
-                                <li>Choose a Label for the token.</li>
-                                <li>Copy your new Token.</li>
-                            </ol>
+                        <div class="tab-pane h-100 p-3 fade" id="v-pills-myconfig" role="tabpanel" aria-labelledby="v-pills-myconfig-tab">
+                            <%- include("config") %>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
         <%- include("modalEditor") %>
-        
 
         <script src="../js/templates.js"></script>
         <script src="../js/electron-f.js"></script>
@@ -145,10 +96,11 @@
         <script src="../js/auth.js" ></script>
         <script src="../js/bringModels.js"></script>
         <script src="../js/db.js"></script>
-        <script src="../js/config.js"></script>
         <script src="../js/techspecs.js"></script>
+        <script src="../js/config.js"></script>
         <script src="../js/cosy.js"></script>
         <script src="../js/texteditor.js"></script>
+        <script src="../js/confluence.js"></script>
         <script>if (window.module) module = window.module;</script>
     </body>
 </html>

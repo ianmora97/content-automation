@@ -1,9 +1,7 @@
 var sqlite3 = require("sqlite3").verbose();
 const path = require('path');
 
-
-
-let db = new sqlite3.Database('./public/db/database.db', (err) => {
+let db = new sqlite3.Database(path.join(__dirname,'../db/database.db'), (err) => {
     if (err) {
         if(err.message.includes("SQLITE_CANTOPEN")){
             console.log("SQLite not found");
@@ -14,9 +12,24 @@ let db = new sqlite3.Database('./public/db/database.db', (err) => {
         getMacosbyRegion();
         bringDeployments();
         addDeployment()
-        console.log('Connected to SQlite database.');
+        
+        console.log(`%cSQLite Connected`,'background: #222; color: #bada55');
     }
 });
+var g_modelList = new Array();
+
+function getAllModelsList() {
+    $.ajax({
+        type: "GET",
+        url: `${cosy_config.ubyo_modelList}`,
+        contentType: "application/json",
+    }).then((response) => {
+        g_modelList = response;
+        loadDataListInput(response);
+    }, (error) => {
+    
+    });
+}
 
 var g_Macos = new Array();
 var g_mapMacos = new Map();
@@ -329,5 +342,5 @@ function moveTicketToTicketDeploy(ticket) {
 
 document.addEventListener('DOMContentLoaded', function () {
     // onModalOpen();
-    loadTicketsonModalDeploymentDrag();
+    // loadTicketsonModalDeploymentDrag();
 });

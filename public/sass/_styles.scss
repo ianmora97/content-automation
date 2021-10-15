@@ -1,7 +1,7 @@
 $primary:#4659e4;
 $secondary:#FF9500;
 $success:#28a745;
-$info:#5BC7FA;
+$info:#3076f8;
 $warning:#f0bc4d;
 $danger:#dc3545;
 $light:#cfcece;
@@ -263,6 +263,20 @@ small{
 }
 .no-shadow{
     box-shadow: none !important;
+}
+.btn-check:checked + .btn-outline-primary-cus{
+    background-color: $primary;
+    color:$light;
+    box-shadow: 0 3px 7px 0 rgba(70, 89, 228,.40) !important;
+    font-weight: bold;
+}
+.btn-check:not(:checked) + .btn-outline-primary-cus{
+    background-color: $light;
+    color:$dark;
+    font-weight: bold;
+    &:hover{
+        background-color: $warning;
+    }
 }
 
 // ! ---------------------- nav --------------------

@@ -29,59 +29,42 @@ function changeCosyLeave(image,type) {
 function modalCosyTypeOnShow(){
     var cosyModal = document.getElementById('cosyModal')
     cosyModal.addEventListener('show.bs.modal', function (event) {
+        /** 
+        * @param ans amount of angles in a configuration
+        * @param an1 angle 1 
+        * @param an2 angle 2 
+        */
+        // TODO: create MAP with different angles
+        let mapType = new Map();
+        mapType.set("GN20",{ans:2,an1:40,an2:220})
+        mapType.set("LN",{ans:2,an1:270,an2:320})
+        mapType.set("DC24",{ans:1,an1:270})
+        mapType.set("DC12",{ans:1,an1:30})
+        mapType.set("DC13",{ans:1,an1:300})
+        mapType.set("BM30",{ans:1,an1:60})
+        mapType.set("GN17",{ans:1,an1:60})
+
         var button = event.relatedTarget
         var type = button.getAttribute('data-bs-type')
         $('#typeCosyModelSpan').html(type)
+        let mt = mapType.get(type)
         clearIdsModalCosy()
-        if(type == 'GN20'){
-            $('#basicConfigurationCosyEnd').html(`
-                <p class="text-light fw-bold mb-1 small">Front</p>
-                <p class="text-break user-select-all btn-to-clip" data-clipboard-text="&quality=hight&bkgnd=transparent&w=9800&h=8000&x=180&y=800&resp=png&angle=40">
-                &quality=hight&bkgnd=transparent&w=9800&h=8000&x=180&y=800&resp=png&angle=<span class="text-primary">40</span></p>
-                <hr>
-                <p class="text-light fw-bold mb-1 small">Rear</p>
-                <p class="text-break user-select-all btn-to-clip" data-clipboard-text="&quality=hight&bkgnd=transparent&w=9800&h=8000&x=180&y=800&resp=png&angle=220">
-                &quality=hight&bkgnd=transparent&w=9800&h=8000&x=180&y=800&resp=png&angle=<span class="text-primary">220</span></p>
+        if(mt.ans === 2){
+            $('#configAngleID').html(`
+                <input type="radio" class="btn-check" name="cosy-angle" id="angle-${mt.an1}-cosy-checkbox-outlined" autocomplete="off" checked>
+                <label class="btn btn-sm btn-outline-primary-cus" for="angle-${mt.an1}-cosy-checkbox-outlined" onclick="changeAngleOnPreview('${mt.an1}')">${mt.an1}</label>
+
+                <input type="radio" class="btn-check" name="cosy-angle" id="angle-${mt.an2}-cosy-checkbox-outlined" autocomplete="off">
+                <label class="btn btn-sm btn-outline-primary-cus ms-2" for="angle-${mt.an2}-cosy-checkbox-outlined" onclick="changeAngleOnPreview('${mt.an2}')">${mt.an2}</label>  
             `)
-        }else if(type == 'LN'){
-            $('#basicConfigurationCosyEnd').html(`
-                <p class="text-light fw-bold mb-1 small">Side</p>
-                <p class="text-break user-select-all btn-to-clip" data-clipboard-text="&quality=hight&bkgnd=transparent&w=9800&h=8000&x=180&y=800&resp=png&angle=270">
-                &quality=hight&bkgnd=transparent&w=9800&h=8000&x=180&y=800&resp=png&angle=<span class="text-primary">270</span></p>
-                <hr>
-                <p class="text-light fw-bold mb-1 small">Front</p>
-                <p class="text-break user-select-all btn-to-clip" data-clipboard-text="&quality=hight&bkgnd=transparent&w=9800&h=8000&x=180&y=800&resp=png&angle=320">
-                &quality=hight&bkgnd=transparent&w=9800&h=8000&x=180&y=800&resp=png&angle=<span class="text-primary">320</span></p>
+        }else if(mt.ans === 1){
+            $('#configAngleID').html(`
+                <input type="radio" class="btn-check" name="cosy-angle" id="angle-${mt.an1}-cosy-checkbox-outlined" autocomplete="off" checked>
+                <label class="btn btn-sm btn-outline-primary-cus" for="angle-${mt.an1}-cosy-checkbox-outlined" >${mt.an1}</label>
             `)
-        }else if(type == "DC24"){
-            $('#basicConfigurationCosyEnd').html(`
-                <p class="text-light fw-bold mb-1 small">Side</p>
-                <p class="text-break user-select-all btn-to-clip" data-clipboard-text="&quality=hight&bkgnd=transparent&w=9800&h=8000&x=180&y=800&resp=png&angle=270">
-                &quality=hight&bkgnd=transparent&w=9800&h=8000&x=180&y=800&resp=png&angle=<span class="text-primary">270</span></p>
-            `)
-        }else if(type == "DC12"){
-            $('#basicConfigurationCosyEnd').html(`
-                <p class="text-light fw-bold mb-1 small">360</p>
-                <p class="text-break user-select-all btn-to-clip" data-clipboard-text="&quality=hight&bkgnd=transparent&w=9800&h=8000&x=180&y=800&resp=png&angle=30">
-                &quality=hight&bkgnd=transparent&w=9800&h=8000&x=180&y=800&resp=png&angle=<span class="text-primary">30</span></p>
-            `)
-        }else if(type == "DC13"){
-            $('#basicConfigurationCosyEnd').html(`
-                <p class="text-light fw-bold mb-1 small">Side</p>
-                <p class="text-break user-select-all btn-to-clip" data-clipboard-text="&quality=hight&bkgnd=transparent&w=9800&h=8000&x=180&y=800&resp=png&angle=300">
-                &quality=hight&bkgnd=transparent&w=9800&h=8000&x=180&y=800&resp=png&angle=<span class="text-primary">300</span></p>
-            `)
-        }else if(type == "BM30"){
-            $('#basicConfigurationCosyEnd').html(`
-                <p class="text-light fw-bold mb-1 small">Side</p>
-                <p class="text-break user-select-all btn-to-clip" data-clipboard-text="&quality=hight&bkgnd=transparent&w=9800&h=8000&x=180&y=800&resp=png&angle=60">
-                &quality=hight&bkgnd=transparent&w=9800&h=8000&x=180&y=800&resp=png&angle=<span class="text-primary">60</span></p>
-            `)
-        }else if(type == "GN17"){
-            $('#basicConfigurationCosyEnd').html(`
-                <p class="text-light fw-bold mb-1 small">Side</p>
-                <p class="text-break user-select-all btn-to-clip" data-clipboard-text="&quality=hight&bkgnd=transparent&resp=png&width=450&angle=60">
-                &quality=hight&bkgnd=transparent&resp=png&width=450&angle=<span class="text-primary">60</span></p>
+        }else{
+            $('#configAngleID').html(`
+                <p>No config found</p>
             `)
         }
     })
@@ -90,6 +73,7 @@ function askInputCosyModalImage() {
     $('#naCodeModelCosysModal').on('change', function(event) {
         let val = $('#naCodeModelCosysModal').val();
         gerImageCosysByModel(val);
+        $('#Basicconfigurationsbkangle').show()
     });
     $('#naCodeModelCosysModalBefore').on('change', function(event) {
         let val = $('#naCodeModelCosysModalBefore').val();
@@ -102,18 +86,18 @@ function clearIdsModalCosy(){
     $('#basicColorsCosyEnd').html('')
     $('#previewCarImageModalCosy').html('')
     $('#previewCarColorsPicker').html('')
-    $('#basicConfigurationCosyEnd').html('')
+    $('#Basicconfigurationsbkangle').hide()
 }
 
 function gerImageCosysByModel(model) {
     $.ajax({
         type: "GET",
-        url: 'https://configure.bmwusa.com/UBYOConfigurator/v1/configuration/start/'+model,
+        url: `${cosy_config.ubyo_start}`+model,
         contentType: "application/json",
     }).then((config) => {
         $.ajax({
             type: "GET",
-            url: 'https://configure.bmwusa.com/UBYOConfigurator/v4/BM/options/'+model,
+            url: `${cosy_config.ubyo_options}`+model,
             contentType: "application/json",
         }).then((colors) => {
             let colors_filter = colors.filter(obj => {
@@ -161,9 +145,7 @@ function showPathImageCosyOnLoad(path,walk = '',p=''){
         console.log()
         $('#pathWalkaroundCosyRes').html(`
             <p class="text-light small mb-1">Path:</p>
-            <p class="text-break btn-to-clip text-primary user-select-all" data-clipboard-text="${path}" id="pathCarImageSS">
-                ${path}
-            </p>
+            <p class="text-break btn-to-clip text-primary user-select-all" data-clipboard-text="${path}" id="pathCarImageSS">${path}</p>
         `)
         $('#walkaroundModalCosyResponse').append(`
             <hr>
@@ -180,9 +162,7 @@ function showPathImageCosyOnLoad(path,walk = '',p=''){
     }else{
         $('#pathWalkaroundCosyRes').html(`
             <p class="text-light small mb-1">Path:</p>
-            <p class="text-break btn-to-clip text-primary user-select-all" data-clipboard-text="${path}" id="pathCarImageSS">
-                ${path}
-            </p>
+            <p class="text-break btn-to-clip text-primary user-select-all" data-clipboard-text="${path}" id="pathCarImageSS">${path}</p>
         `)
     }
 }
@@ -190,27 +170,27 @@ function showPathImageCosyOnLoad(path,walk = '',p=''){
 function showimagePathsCosys(response,colors,wheelCodes) {
     $('#basicColorsCosyEnd').html('');
     if($('#typeCosyModelSpan').html() == 'GN20'){
-        let walkaround_path = 'https://prod.cosy.bmwusa.com/cosy/cosy?'+response.configuration.walkaround360DegViewUrlPart+'&quality=hight&bkgnd=transparent&w=9800&h=8000&x=180&y=800&resp=png&angle=40';
+        let walkaround_path = `${cosy_config.domain}`+response.configuration.walkaround360DegViewUrlPart+'&bkgnd=1&quality=70&resp=jpeg&angle=40';
         showPathImageCosyOnLoad(walkaround_path);
         showCarImagePreview(walkaround_path);
     }else if($('#typeCosyModelSpan').html() == 'LN' || $('#typeCosyModelSpan').html() == 'DC24'){
-        let walkaround_path = 'https://prod.cosy.bmwusa.com/cosy/cosy?'+response.configuration.walkaround360DegViewUrlPart+'&quality=hight&bkgnd=transparent&w=9800&h=8000&x=180&y=800&resp=png&angle=270';
+        let walkaround_path = `${cosy_config.domain}`+response.configuration.walkaround360DegViewUrlPart+'&bkgnd=1&quality=70&resp=jpeg&angle=270';
         showPathImageCosyOnLoad(walkaround_path);
         showCarImagePreview(walkaround_path);
     }else if($('#typeCosyModelSpan').html() == "DC12"){
-        let walkaround_path = 'https://prod.cosy.bmwusa.com/cosy/cosy?'+response.configuration.walkaround360DegViewUrlPart+'&quality=hight&bkgnd=transparent&w=9800&h=8000&x=180&y=800&resp=png&angle=30';
+        let walkaround_path = `${cosy_config.domain}`+response.configuration.walkaround360DegViewUrlPart+'&bkgnd=1&quality=70&resp=jpeg&angle=30';
         showPathImageCosyOnLoad(walkaround_path,wheelCodes,response.configuration.walkaround360DegViewUrlPart);
         showCarImagePreview(walkaround_path,colors);
     }else if($('#typeCosyModelSpan').html() == "DC13"){
-        let walkaround_path = 'https://prod.cosy.bmwusa.com/cosy/cosy?'+response.configuration.walkaround360DegViewUrlPart+'&quality=hight&bkgnd=transparent&w=9800&h=8000&x=180&y=800&resp=png&angle=300';
+        let walkaround_path = `${cosy_config.domain}`+response.configuration.walkaround360DegViewUrlPart+'&bkgnd=1&quality=70&resp=jpeg&angle=300';
         showPathImageCosyOnLoad(walkaround_path);
         showCarImagePreview(walkaround_path);
     }else if($('#typeCosyModelSpan').html() == "BM30"){
-        let walkaround_path = 'https://prod.cosy.bmwusa.com/cosy/cosy?'+response.configuration.walkaround360DegViewUrlPart+'&quality=hight&bkgnd=transparent&w=9800&h=8000&x=180&y=800&resp=png&angle=60';
+        let walkaround_path = `${cosy_config.domain}`+response.configuration.walkaround360DegViewUrlPart+'&bkgnd=1&quality=70&resp=jpeg&angle=60';
         showPathImageCosyOnLoad(walkaround_path);
         showCarImagePreview(walkaround_path);
     }else if($('#typeCosyModelSpan').html() == "GN17"){
-        let walkaround_path = 'https://prod.cosy.bmwusa.com/cosy/cosy?'+response.configuration.walkaround360DegViewUrlPart+'&quality=hight&bkgnd=transparent&resp=png&width=450&angle=60';
+        let walkaround_path = `${cosy_config.domain}`+response.configuration.walkaround360DegViewUrlPart+'&quality=hight&bkgnd=transparent&resp=png&width=450&angle=60';
         showPathImageCosyOnLoad(walkaround_path);
         showCarImagePreview(walkaround_path);
     }
@@ -241,12 +221,12 @@ document.addEventListener('DOMContentLoaded', function() {
 function getImagesCosysByModelAll(model) {
     $.ajax({
         type: "GET",
-        url: 'https://configure.bmwusa.com/UBYOConfigurator/v1/configuration/start/'+model,
+        url: `${cosy_config.ubyo_start}`+model,
         contentType: "application/json",
     }).then((config) => {
         $.ajax({
             type: "GET",
-            url: 'https://configure.bmwusa.com/UBYOConfigurator/v4/BM/options/'+model,
+            url: `${cosy_config.ubyo_options}`+model,
             contentType: "application/json",
         }).then((colors) => {
             let colors_filter = colors.filter(obj => {
@@ -281,32 +261,32 @@ function showimagePathsCosysAll(response,colors) {
     clearallcosysSpaces();
     let walkaround_path = "";
     // ! ----------------------- configMLU ------------------------------
-    walkaround_path = 'https://prod.cosy.bmwusa.com/cosy/cosy?'+response.configuration.walkaround360DegViewUrlPart+'&quality=hight&bkgnd=transparent&w=9800&h=8000&x=180&y=800&resp=png&angle=40';
+    walkaround_path = `${cosy_config.domain}`+response.configuration.walkaround360DegViewUrlPart+'&quality=hight&bkgnd=transparent&w=9800&h=8000&x=180&y=800&resp=png&angle=40';
     showPathImageCosyOnLoadAll(walkaround_path,'configMLU');
     showColorsAll(colors,'configMLU');
     showImageCosyAll(walkaround_path,'configMLU');
     // ! ----------------------- configLN ------------------------------
-    walkaround_path = 'https://prod.cosy.bmwusa.com/cosy/cosy?'+response.configuration.walkaround360DegViewUrlPart+'&quality=hight&bkgnd=transparent&w=9800&h=8000&x=180&y=800&resp=png&angle=270';
+    walkaround_path = `${cosy_config.domain}`+response.configuration.walkaround360DegViewUrlPart+'&quality=hight&bkgnd=transparent&w=9800&h=8000&x=180&y=800&resp=png&angle=270';
     showPathImageCosyOnLoadAll(walkaround_path,'configLN');
     showColorsAll(colors,'configLN');
     showImageCosyAll(walkaround_path,'configLN');
     // ! ----------------------- configMSL ------------------------------
-    walkaround_path = 'https://prod.cosy.bmwusa.com/cosy/cosy?'+response.configuration.walkaround360DegViewUrlPart+'&quality=hight&bkgnd=transparent&w=9800&h=8000&x=180&y=800&resp=png&angle=270';
+    walkaround_path = `${cosy_config.domain}`+response.configuration.walkaround360DegViewUrlPart+'&quality=hight&bkgnd=transparent&w=9800&h=8000&x=180&y=800&resp=png&angle=270';
     showPathImageCosyOnLoadAll(walkaround_path,'configMSL');
     showColorsAll(colors,'configMSL');
     showImageCosyAll(walkaround_path,'configMSL');
     // ! ----------------------- configBYO ------------------------------
-    walkaround_path = 'https://prod.cosy.bmwusa.com/cosy/cosy?'+response.configuration.walkaround360DegViewUrlPart+'&quality=hight&bkgnd=transparent&w=9800&h=8000&x=180&y=800&resp=png&angle=300';
+    walkaround_path = `${cosy_config.domain}`+response.configuration.walkaround360DegViewUrlPart+'&quality=hight&bkgnd=transparent&w=9800&h=8000&x=180&y=800&resp=png&angle=300';
     showPathImageCosyOnLoadAll(walkaround_path,'configBYO');
     showColorsAll(colors,'configBYO');
     showImageCosyAll(walkaround_path,'configBYO');
     // ! ----------------------- configAllBMWS ------------------------------
-    walkaround_path = 'https://prod.cosy.bmwusa.com/cosy/cosy?'+response.configuration.walkaround360DegViewUrlPart+'&quality=hight&bkgnd=transparent&w=9800&h=8000&x=180&y=800&resp=png&angle=60';
+    walkaround_path = `${cosy_config.domain}`+response.configuration.walkaround360DegViewUrlPart+'&quality=hight&bkgnd=transparent&w=9800&h=8000&x=180&y=800&resp=png&angle=60';
     showPathImageCosyOnLoadAll(walkaround_path,'configAllBMWS');
     showColorsAll(colors,'configAllBMWS');
     showImageCosyAll(walkaround_path,'configAllBMWS');
     // ! ----------------------- configGL ------------------------------
-    walkaround_path = 'https://prod.cosy.bmwusa.com/cosy/cosy?'+response.configuration.walkaround360DegViewUrlPart+'&quality=hight&bkgnd=transparent&resp=png&width=450&angle=60';
+    walkaround_path = `${cosy_config.domain}`+response.configuration.walkaround360DegViewUrlPart+'&quality=hight&bkgnd=transparent&resp=png&width=450&angle=60';
     showPathImageCosyOnLoadAll(walkaround_path,'configGL');
     showColorsAll(colors,'configGL');
     showImageCosyAll(walkaround_path,'configGL');
@@ -315,9 +295,7 @@ function showimagePathsCosysAll(response,colors) {
 function showPathImageCosyOnLoadAll(path,id){
     $(`#${id}`).html(`
         <p class="text-light small mb-1">Path:</p>
-        <p class="text-break btn-to-clip text-primary user-select-all" data-clipboard-text="${path}" id="pathCarImageSS${id}">
-            ${path}
-        </p>
+        <p class="text-break btn-to-clip text-primary user-select-all" data-clipboard-text="${path}" id="pathCarImageSS${id}">${path}</p>
     `)
 }
 function showColorsAll(colors='',id){
@@ -343,4 +321,25 @@ function showImageCosyAll(path,id){
     $(`#imagePreview${id}`).html(`
         <img src="${path}" class="img-fluid" alt="">
     `)
+}
+// ! --------------- changes on parameters ---------------
+//cosy-background
+function changeBackgroundOnPreview(id){
+    let path = $('#pathCarImageSS').html().replaceAll('&amp;','&');
+    let a = path.split('&bkgnd=')[0];
+    let b = path.split('&bkgnd=')[1].split('&quality=')[1]
+    let c = `${a}&bkgnd=${id}&quality=${b}`;
+    if(id == 'transparent'){
+        c = c.replace('jpeg','png')
+    }
+    $('#pathCarImageSS').html(c);
+    showCarImagePreview(c);
+}
+
+function changeAngleOnPreview(id){
+    let path = $('#pathCarImageSS').html().replaceAll('&amp;','&');
+    let a = path.split('&angle=')[0];
+    let c = `${a}&angle=${id}`;
+    $('#pathCarImageSS').html(c);
+    showCarImagePreview(c);
 }

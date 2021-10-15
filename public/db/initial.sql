@@ -2,22 +2,35 @@
 -- drop tables if exists
 -- --------------------------------------
 
-DROP TABLE IF EXISTS `config`;
-DROP TABLE IF EXISTS `region`;
-DROP TABLE IF EXISTS `maco`;
-DROP TABLE IF EXISTS `deployment`;
-DROP TABLE IF EXISTS `ticket_d`;
-DROP TABLE IF EXISTS `ticket_l`;
+DROP TABLE IF EXISTS config;
+DROP TABLE IF EXISTS cosyConfig;
+DROP TABLE IF EXISTS region;
+DROP TABLE IF EXISTS maco;
+DROP TABLE IF EXISTS deployment;
+DROP TABLE IF EXISTS ticket_d;
+DROP TABLE IF EXISTS ticket_l;
 
 -- --------------------------------------
 -- create config table
 -- --------------------------------------
-CREATE TABLE `config` (
+CREATE TABLE config (
    id INTEGER PRIMARY KEY AUTOINCREMENT,
    c_email text NOT NULL,
    c_token text NOT NULL,
    fav_view text NOT NULL,
    p_year text NOT NULL
+);
+
+-- --------------------------------------
+-- create cosyConfig table
+-- --------------------------------------
+CREATE TABLE cosyConfig (
+   id INTEGER PRIMARY KEY AUTOINCREMENT,
+   domain text NOT NULL,
+   ubyo_start text NOT NULL,
+   ubyo_options text NOT NULL,
+   ubyo_modelList text NOT NULL,
+   ubyo_specs text NOT NULL
 );
 
 -- --------------------------------------

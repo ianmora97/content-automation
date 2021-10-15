@@ -1,6 +1,5 @@
 function techEvents(event) {
     askInputTechSpecs()
-    getAllModelsList();
     bringKeyValuesTechSpecs()
     onSelectTechValueChange();
     onSearchTemplatesModels()
@@ -28,7 +27,7 @@ function validateModel(json) {
 function getTechSpecsApi(model) {
     $.ajax({
         type: "GET",
-        url: 'https://qa.configure.bmwusa.com/UBYOConfigurator/v4/BM/techspecs/'+model,
+        url: `${cosy_config.ubyo_specs}`+model,
         contentType: "application/json",
     }).then((response) => {
         printNaCodeSpecs(response,model)
@@ -40,7 +39,7 @@ async function getTechSpecsApiV2(model){
     return new Promise((resolve,reject)=>{
         $.ajax({
             type: "GET",
-            url: 'https://qa.configure.bmwusa.com/UBYOConfigurator/v4/BM/techspecs/'+model,
+            url: `${cosy_config.ubyo_specs}`+model,
             contentType: "application/json",
         }).then((response) => {
             resolve(response);
@@ -87,7 +86,7 @@ function showEngineType(models) {
                 if(model.code != '22ST'){
                     $.ajax({
                         type: "GET",
-                        url: 'https://qa.configure.bmwusa.com/UBYOConfigurator/v4/BM/techspecs/'+model.code,
+                        url: `${cosy_config.ubyo_specs}`+model.code,
                         contentType: "application/json",
                     }).then((response) => {
                         let text = response.hasOwnProperty();
@@ -102,19 +101,7 @@ function showEngineType(models) {
     })
 }
 
-var g_modelList = new Array();
-function getAllModelsList() {
-    $.ajax({
-        type: "GET",
-        url: 'https://configure.bmwusa.com/UBYOConfigurator/v1/static/BM/modellist?loadtype=full',
-        contentType: "application/json",
-    }).then((response) => {
-        g_modelList = response;
-        loadDataListInput(response);
-    }, (error) => {
-    
-    });
-}
+
 function filter22ModelsFirst(a,b){
     let regx = new RegExp(`${json_config.p_year}([0-9]|[A-Za-z])`)
     if(a.code.match(regx)){
@@ -183,17 +170,6 @@ var g_contTemplatesTabs = 0;
 function bringConfigSulzer(row,model){
     let json = json_config;
     appendTemplatesModelstoTabs(row,json.fav_view)
-    // ! temp until alpha
-    // $.ajax({
-    //     type: "GET",
-    //     url: 'https://configure.bmwusa.com/UBYOConfigurator/v1/configuration/start/'+model,
-    //     contentType: "application/json",
-    // }).then((response) => {
-    //     g_mapModelConfigSS.set(model, response)
-        
-    // }, (error) => {
-    
-    // });
 }
 async function clearTemplatesView() {
     return new Promise((resolve, reject) => {
@@ -208,14 +184,21 @@ async function clearTemplatesView() {
     });
 }
 function changeViewTemplatesBtn(view){
-    let json = JSON.parse(fs.readFileSync(jsonpath).toString());
-    json.fav_view = view;
-    fs.writeFileSync(jsonpath, JSON.stringify(json));
-    clearTemplatesView().then((d) => {
-        g_templates_techspecs.forEach((row) => {
-            appendTemplatesModelstoTabs(row,view)
-        });
+    json_config.fav_view = view;
+    db.run(`UPDATE config set fav_view = ? WHERE id = 1`, 
+    [json_config.fav_view], function(err) {
+        if (err) {
+            console.log(err.message);
+        }else{
+            clearTemplatesView().then((d) => {
+                g_templates_techspecs.forEach((row) => {
+                    appendTemplatesModelstoTabs(row,view)
+                });
+            });
+            console.log(`%cFavorite view has been updated`,'background: #222; color: #bada55');
+        }
     });
+    
 }
 
 function appendTemplatesTabs(row) { // ! hacer un mostrar como card o lista en los tabpanes y poner un titulo 
@@ -235,7 +218,7 @@ function appendTemplatesTabs(row) { // ! hacer un mostrar como card o lista en l
 }
 function searchNaCodeTemplate(name) {
     let val = $(`#v-listTemplates-${name}-search`).val()
-    let json = JSON.parse(fs.readFileSync(jsonpath).toString());
+    let json = json_config;
 
     $(`#v-listTemplates-${name}`).html('')
     g_templates_techspecs.filter(row => (row.nacode.match(val) && row.name == name)).forEach((row) => {
@@ -264,8 +247,6 @@ function appendTemplatesModelstoTabsV2(row,view,tab) {
     });
 }
 function appendTemplatesModelstoTabs(row, view) {
-    //let config = g_mapModelConfigSS.get(row.nacode)
-    //let image = `https://prod.cosy.bmwusa.com/cosy/cosy?${config.configuration.walkaround360DegViewUrlPart}&angle=60&bkgnd=transparent&resp=png`;
     getTechSpecsApiV2(row.nacode).then((response) => {
         let model = response.name;
         if(view == 'list'){
@@ -326,7 +307,7 @@ function checkKeyFromModelsFromList(value,mod){
         if(model.name.match(regexCheckModel(mod))){
             $.ajax({
                 type: "GET",
-                url: 'https://qa.configure.bmwusa.com/UBYOConfigurator/v4/BM/techspecs/'+model.code,
+                url: `${cosy_config.ubyo_specs}`+model.code,
                 contentType: "application/json",
             }).then((response) => {
                 printTechSpecsHas(model,response,value)
