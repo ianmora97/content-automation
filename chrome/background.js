@@ -6,7 +6,7 @@ chrome.runtime.onInstalled.addListener(() => {
 // TODO: 
 function openAuthor(info,tab) {
 	let editor_path = info.selectionText;
-	if(info.selectionText.includes('https://www.bmwusa.com')){
+	if(info.selectionText.includes('bmwusa')){
 		editor_path = `https://author.staging.bmwusacm.co/editor.html/content/bmwusa/${info.selectionText.split(".com/")[1]}`
         if(editor_path.match("no-cache")){
             editor_path = editor_path.replace(".no-cache","");
