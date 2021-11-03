@@ -1,0 +1,43 @@
+<div class="modal fade" id="modalEditor" tabindex="-1" aria-labelledby="modalEditorLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalEditorLabel">Editor</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body ">
+                <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link mt-0 active" id="pills-build-tab" data-bs-toggle="pill" data-bs-target="#pills-build" 
+                        type="button" role="tab" aria-controls="pills-build" aria-selected="true"><i class="fas fa-link me-2"></i> URL</button>
+                    </li>
+                    <li class="nav-item ms-4" role="presentation">
+                        <button class="nav-link mt-0 disabled" id="pills-texteditor-tab" data-bs-toggle="pill" data-bs-target="#pills-texteditor" 
+                        type="button" role="tab" aria-controls="pills-texteditor" aria-selected="false" disabled><i class="fas fa-align-left me-2"></i> Text Editor</button>
+                    </li>
+                </ul>
+                <hr>
+                <div class="tab-content" id="pills-tabContent">
+                    <div class="tab-pane fade show active" id="pills-build" role="tabpanel" aria-labelledby="pills-build-tab">
+                        <div>
+                            <div class="mb-3 bg-dark-light rounded-15">
+                                <div class="d-flex justify-content-start p-2">
+                                    <button type="button" class="btn btn-dark btn-sm" onclick="clearTextareaUrls()"><i class="fas fa-trash text-danger"></i></button>
+                                </div>
+                                <hr class="my-1">
+                                <textarea class="form-control bg-dark-light" id="urlsTextarea" rows="2" placeholder="Links"></textarea>
+                            </div>
+                            <div class="bg-dark-light rounded-15 p-2" id="buildOutput" style="min-height: 300px; max-height: 500px; overflow-y: auto;">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="pills-texteditor" role="tabpanel" aria-labelledby="pills-texteditor-tab">
+                        <div class="bg-dark-light rounded-15 p-2">
+                    
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

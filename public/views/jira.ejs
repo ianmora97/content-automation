@@ -1,0 +1,24 @@
+
+<div class="offcanvas offcanvas-end bg-dark-light" tabindex="-1" id="jiraTicketOffcanvas" aria-labelledby="jiraTicketOffcanvasLabel">
+    <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="jiraTicketOffcanvasLabel">Jira</h5>
+        <button type="button" class="btn-close btn-close-white text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body bg-dark">
+        <div class="h-100 w-100 position-absolute d-flex justify-content-center align-items-center" id="ticketJiraWarning">
+            <span>You not have a Jira token.</span>
+        </div>
+        <div class="w-100">
+            <label for="ticketAddModal">Jira Ticket code</label>
+            <div class="input-group mt-1">
+                <span class="input-group-text bg-dark-light border-0" id="icon-addon"><i class="fab fa-jira text-primary"></i></span>
+                <input type="text" class="form-control bg-dark-light border-0" placeholder="CONT-29419 / 29419" 
+                aria-describedby="icon-addon" id="ticketAddModal" oninput="this.value = this.value.toUpperCase()">
+            </div>
+            <small class="small text-light">CONT-29419 / 29419</small>
+            <div class="bg-dark-light w-100 rounded-15 p-3 mt-3" id="ticketBackResponse">
+                
+            </div>
+        </div>
+    </div>
+</div>
