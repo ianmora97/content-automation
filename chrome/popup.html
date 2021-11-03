@@ -3,19 +3,47 @@
   <head>
     <link rel="stylesheet" href="style.css">
 	<script src="jquery.js"></script>
+	<script src="popper.min.js"></script>
+	<script src="tippy-bundle.umd.js"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css"/>
   </head>
   <body>
-	<div class="apart">
+	<div class="wrapper-600">
 		<div class="logo">
 			<img src="/images/logo.png" width="50px">
 			<div class="logo-brand">
-				<h5 class="ms-3">Content Automation</h5>
-				<h4 class="ms-3 mt-1 text-muted">BMW</h4>
+				<h1 class="ms-3">Content Automation</h1>
+				<h6 class="ms-3 mt-1 text-muted">BMW</h6>
 			</div>
 		</div>
-		<button type="button" id="btnShowGrid">Show Grid</button>
-  	</div>
-	<hr>
+		<hr>
+		<div class="d-flex jcs">
+			<button type="button" class="me-2 btn-primary" id="btnShowGrid"><i class="fas fa-th"></i> Grid</button>
+			<button type="button" class="me-2 btn-primary" id="btnShowSpacers"><i class="fas fa-grip-lines"></i> Spacers</button>
+			<button type="button" class="btn-primary disabled" id="btnJira" disabled><i class="fab fa-jira"></i> JIRA</button>
+			<!-- <button type="button" class="me-2 btn-primary" id="btnImages"><i class="fas fa-images"></i> Images</button> -->
+		</div>
+		<hr>
+		<p class="bold mb-2">Resize Window</p>
+		<div class="d-flex jcs mb-2">
+			<button type="button" class="me-2 btn-min btn-dark-light" id="btnBPDesktop">
+				<i class="fas fa-1-5x fa-desktop"></i> 
+			</button>
+			<button type="button" class="me-2 btn-min btn-dark-light" id="btnBPTablet">
+				<i class="fas fa-1-5x fa-tablet-alt"></i> 
+			</button>
+			<button type="button" class="me-2 btn-min btn-dark-light" id="btnBPMobile">
+				<i class="fas fa-1-5x fa-mobile-alt"></i> 
+			</button>
+			<button type="button" class="me-2 btn-danger btn-sm" id="btnBPReset">Reset</button>
+		</div>
+		<div class="d-flex jcs a-i-e">
+			<input type="number" id="customBPInput" value="300" min="300" minlength="300" max="2100" maxlength="2100" 
+			class="form-control-light form-sm">
+		</div>
+		<hr>
+		
+	</div>
     <script src="popup.js"></script>
   </body>
 </html>
