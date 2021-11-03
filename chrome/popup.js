@@ -5,9 +5,9 @@ chrome.tabs.query({active: true, lastFocusedWindow: true}, tabs => {
 
 async function evaluateDomain(url){
 	existsDomain(url).then((res)=>{
-		if(res){
+		if(res){ // * If res is true, the domain exists in the local storage
 			createPathsV2(url);
-		}else if(url.indexOf(".atlassian.net") !== -1){
+		}else if(url.indexOf(".atlassian.net") !== -1){ // * If res is false, the domain does not exist in the local storage and the url is from Jira
 			let btnJira = document.getElementById("btnJira");
 			btnJira.disabled = false;
 			btnJira.classList.remove("disabled");
@@ -16,7 +16,7 @@ async function evaluateDomain(url){
 			jira.innerHTML="<p>Jira<p>"
 			document.body.appendChild(jira); 
 		}
-	}).catch((err)=>{
+	}).catch((err)=>{ // * If throws an error domain is not recognized
 		let unknown = document.createElement("div");
 		unknown.innerHTML=`<p>${err}<p>`
 		document.body.appendChild(unknown);
