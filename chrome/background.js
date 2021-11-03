@@ -1,8 +1,9 @@
 chrome.runtime.onInstalled.addListener(() => {
-    console.log('Links loaded');
+    console.log('Background, Options loaded');
 });
 
 // ! ------------------------------------------ Right Click ------------------------------------------
+// ! change the right click to check STG and prod links
 // TODO: 
 function openAuthor(info,tab) {
 	let editor_path = info.selectionText;
