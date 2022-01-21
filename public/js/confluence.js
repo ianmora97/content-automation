@@ -1,4 +1,3 @@
-//https://virtuelle-welt.atlassian.net/wiki/rest/api/content/1874300?expand=body.view
 
 function bringConfluenceContentDeployments() {
     $.ajax({
@@ -16,7 +15,8 @@ function bringConfluenceContentDeployments() {
 }
 function searchForDeployments(vec) {
     let body = vec.body.view.value;
-    let deployTags = body.split('AEMContentDeployment-AEMContentDeployments:')[1].split('<a');
+    console.log('CONFLUENCE', body)
+    let deployTags = body.split('AEMContentReleaseNotes-AEMContentDeployments:')[1].split('<a');
     deployTags.shift();
     deployTags.shift();
 
@@ -26,6 +26,7 @@ function searchForDeployments(vec) {
 }
 
 function showContentDeployments(id) {
+    console.log('ID', id)
     $.ajax({
         type: "GET",
         url: `https://virtuelle-welt.atlassian.net/wiki/rest/api/content/${id}`,
@@ -39,7 +40,7 @@ function showContentDeployments(id) {
         $('#deployments').append(`
             <li class="list-group-item bg-dark mb-3 rounded-15">
                 <div class="d-flex justify-content-start align-items-center">
-                    <span class="d-block me-3">🚀</span>
+                    <span class="d-block me-2" style="font-size:20px;">🚀</span>
                     <h4>AEM Content Release Notes</h4>
                 </div>
                 <h4><b class="text-${date.isSame(new Date(), 'day') ? 'success':'secondary'}">${date.format('ll')}</b></h4>

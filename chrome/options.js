@@ -4,6 +4,7 @@ var bpTablet = document.getElementById("bpTablet");
 var bpMobile = document.getElementById("bpMobile");
 var aemDomainInput = document.getElementById("aemDomainInput");
 var aemRootInput = document.getElementById("aemRootInput");
+var jsonText = document.getElementById("jsonText");
 
 var btnSaveBP = document.getElementById("btnSaveBP");
 btnSaveBP.addEventListener("click", handleButtonClickBP);
@@ -13,6 +14,9 @@ btnSaveAem.addEventListener("click", handleButtonClickDomain);
 
 var addEnvBtn = document.getElementById("addEnvBtn");
 addEnvBtn.addEventListener("click", handleAddEnvBtn);
+
+var btnJsonText = document.getElementById("btnJsonText");
+btnJsonText.addEventListener("click", handleButtonClickJson);
 
 var envListItems = new Map();
 var contEnvListItems = 0;
@@ -140,5 +144,23 @@ function buildEnvsInputs(envs) {
 		});
 	}
 }
+function handleButtonClickJson(){
+	let valueJson = JSON.parse(jsonText.value);
+	let bp_desktop = valueJson.breakpoints[0];
+	let bp_tablet = valueJson.breakpoints[1];
+	let bp_mobile = valueJson.breakpoints[2];
 
+	chrome.storage.sync.set({ bp_desktop });
+  	chrome.storage.sync.set({ bp_tablet });
+  	chrome.storage.sync.set({ bp_mobile });
+
+	let domain = JSON.stringify(valueJson.domain);
+	chrome.storage.sync.set({ domain });
+
+	let environments = JSON.stringify(valueJson.environments);
+	chrome.storage.sync.set({ environments });
+
+	$("#fbText").html("All Settings Saved")
+	$("#feedback").fadeIn('slow').animate({opacity: 1.0}, 1500).fadeOut('slow'); 
+}
 evalOptions();
