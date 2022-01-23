@@ -1,430 +1,109 @@
 <h2 class="fw-bold mb-0">CoSy Images</h2>
 <hr>
-<div style="height: calc(100vh - 140px);overflow-y: auto;">
-    <div class="d-flex justify-content-start align-items-center">
-        <button type="button" class="btn btn-primary" data-bs-target="#cosyModalBefore" data-bs-toggle="modal"><i class="fas fa-ellipsis-h me-2"></i> All Cosys</button>
-    </div>
-    <hr>
-    <div class="row mx-0 flex-wrap justify-content-start" >
-        <div class="col-4 align-self-stretch">
-            <div class="h-100 card rounded-15 shadow animate__animated animate__fadeIn bg-dark mb-3 border-0 p-4" style="min-width: 250px;">
-                    <div style="min-height: 242px;">
-                        <div class="text-center mb-2">
-                            <span class="text-light eyebrow-2">CORE MODELS</span>
-                        </div>
-                        <img role="button" onmouseenter="changeCosyEnter(this,'GN20')" onmouseleave="changeCosyLeave(this,'GN20')" 
-                        src="https://cache.bmwusa.com/cosy.arox?pov=walkaround&brand=WBBM&vehicle=223O&client=byo&paint=P0300&fabric=FKHSW&sa=S01T4,S0255,S02TB,S0302,S03MB,S0403,S0430,S0431,S0459,S0465,S0481,S0493,S04KC,S04UR,S0534,S0544,S05A4,S05AC,S05AV,S0676,S06AC,S06AK,S06C4,S06CP,S06U3,S0775,S07AC&date=20210706&quality=hight&bkgnd=transparent&w=9800&h=8000&x=180&y=800&resp=png&angle=40" 
-                        class="card-img-top" alt="3 Series">
-                        <div class="text-center mt-3">
-                            <h5 class="fw-bold mb-2">330i Models <i class="fas fa-chevron-right text-primary"></i></h5>
-                            <p class="label-2">Starting MSRP $41,450 <i class="far fa-question-circle"></i></p>
-                        </div>
-                    </div>
-                <hr>
-                <div class="card-body position-relative">
-                    <h4 class="card-title fw-bold">Model Line Up</h4>
-                    <h5 class="fw-bold text-light">Standalone Vehicle Tile</h5>
-                    <p class="card-text text-light">GN20</p>
-                    <button type="button" class="btn btn-primary btn-sm w-100 mt-3 stretched-link" 
-                    data-bs-toggle="modal" data-bs-target="#cosyModal" data-bs-type="GN20">
-                        <i class="fas fa-external-link-square-alt pe-2"></i> Inspect CoSy
-                    </button>
-                </div>
-            </div>
+<div style="height: calc(100vh - 140px); overflow-y: auto;">
+    <div class="bg-dark rounded-15 w-100 my-2" style="height: 180px; overflow: auto;">
+        <div class="px-3">
+            <label for="searchBaronModelCodes" class="my-2">Search model</label>
+            <input class="form-control bg-dark-light" style="width: 400px;" id="searchBaronModelCodes" type="text" placeholder="Search" aria-label="Search Tab">
         </div>
-
-        <div class="col-4 align-self-stretch">
-            <div class="h-100 card rounded-15 shadow animate__animated animate__fadeIn bg-dark mb-3 border-0 p-4" style="min-width: 250px;">
-                <div style="min-height: 242px;">
-                    <div class="text-center mb-2">
-                        <span class="text-light eyebrow-2">CORE MODELS</span>
-                    </div>
-                    <img role="button" onmouseenter="changeCosyEnter(this,'LN')" onmouseleave="changeCosyLeave(this,'LN')" 
-                    src="https://cache.bmwusa.com/cosy.arox?pov=walkaround&brand=WBBM&vehicle=223O&client=byo&paint=P0300&fabric=FKHSW&sa=S01T4,S0255,S02TB,S0302,S03MB,S0403,S0430,S0431,S0459,S0465,S0481,S0493,S04KC,S04UR,S0534,S0544,S05A4,S05AC,S05AV,S0676,S06AC,S06AK,S06C4,S06CP,S06U3,S0775,S07AC&date=20210706&quality=hight&bkgnd=transparent&w=9800&h=8000&x=180&y=800&resp=png&angle=270" 
-                    class="card-img-top" alt="3 Series">
-                    <div class="text-center mt-3">
-                        <p class="fw-bold mb-2">330i Models <i class="fas fa-chevron-right text-primary"></i></p>
-                    </div>
-                </div>
-                <hr>
-                <div class="card-body position-relative">
-                    <h4 class="card-title fw-bold">Localnav Dropdown</h4>
-                    <h5 class="fw-bold text-light">Standalone Vehicle Tile</h5>
-                    <p class="card-text text-light">GN20</p>
-                    <button type="button" class="btn btn-primary btn-sm w-100 mt-3 stretched-link" 
-                    data-bs-toggle="modal" data-bs-target="#cosyModal" data-bs-type="LN">
-                        <i class="fas fa-external-link-square-alt pe-2"></i> Inspect CoSy
-                    </button>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-4 align-self-stretch">
-            <div class="h-100 card rounded-15 shadow animate__animated animate__fadeIn bg-dark mb-3 border-0 p-4" style="min-width: 250px;">
-                <div style="min-height: 242px;">
-                    <div class="text-start">
-                        <span class="text-light eyebrow-2 mb-1 hl-light">2022 MODEL YEAR</span>
-                        <h4 class="text-light ">330i Sedan</h4>
-                    </div>
-                    <img role="button" 
-                    src="https://cache.bmwusa.com/cosy.arox?pov=walkaround&brand=WBBM&vehicle=223O&client=byo&paint=P0300&fabric=FKHSW&sa=S01T4,S0255,S02TB,S0302,S03MB,S0403,S0430,S0431,S0459,S0465,S0481,S0493,S04KC,S04UR,S0534,S0544,S05A4,S05AC,S05AV,S0676,S06AC,S06AK,S06C4,S06CP,S06U3,S0775,S07AC&date=20210706&quality=hight&bkgnd=transparent&w=9800&h=8000&x=180&y=800&resp=png&angle=300" 
-                    class="card-img-top" alt="3 Series">
-                    <div class="d-flex justify-content-between py-2 border-dark-light border-top border-bottom mt-2">
-                        <div><small class="fw-bold">RWD &nbsp;</small><small class="text-light">Drivetrain</small></div>
-                        <div><small class="fw-bold">36 &nbsp;</small><small class="text-light">MPG</small></div>
-                        <div><small class="fw-bold">5.6 sec &nbsp;</small><small class="text-light">0-60 MPH</small></div>
-                    </div>
-                </div>
-                <hr>
-                <div class="card-body position-relative">
-                    <h4 class="card-title fw-bold">Build Your Own</h4>
-                    <h5 class="fw-bold text-light">BYO Model Variant Selector</h5>
-                    <p class="card-text text-light">DC13</p>
-                    <button type="button" class="btn btn-primary btn-sm w-100 mt-3 stretched-link" 
-                    data-bs-toggle="modal" data-bs-target="#cosyModal" data-bs-type="DC13">
-                        <i class="fas fa-external-link-square-alt pe-2"></i> Inspect CoSy
-                    </button>
-                </div>
-            </div>
-        </div>
-
-        <div class="mt-4 col-4 align-self-stretch">
-            <div class="h-100 card rounded-15 shadow animate__animated animate__fadeIn bg-dark mb-3 border-0 p-4" style="min-width: 250px;">
-                <div style="min-height: 242px;">
-                    <p class="fs-6 mb-1 text-light">330i xDrive Sedans</p>
-                    <p class="small mb-0 text-light">The 330i models combine..</p>
-                    <div class="d-flex flex-column justify-content-center mt-2 border-top border-bottom border-dark-light py-2">
-                        <img role="button" 
-                        src="https://cache.bmwusa.com/cosy.arox?pov=walkaround&brand=WBBM&vehicle=223O&client=byo&paint=P0300&fabric=FKHSW&sa=S01T4,S0255,S02TB,S0302,S03MB,S0403,S0430,S0431,S0459,S0465,S0481,S0493,S04KC,S04UR,S0534,S0544,S05A4,S05AC,S05AV,S0676,S06AC,S06AK,S06C4,S06CP,S06U3,S0775,S07AC&date=20210706&quality=hight&bkgnd=transparent&w=9800&h=8000&x=180&y=800&resp=png&angle=270" 
-                        class="card-img-top" alt="3 Series">
-                    </div>
-                </div>
-                <hr>
-                <div class="card-body position-relative">
-                    <h4 class="card-title fw-bold">BYO List</h4>
-                    <h5 class="fw-bold text-light">Model Series List</h5>
-                    <p class="card-text text-light">DC24</p>
-                    <button type="button" class="btn btn-primary btn-sm w-100 mt-3 stretched-link" 
-                    data-bs-toggle="modal" data-bs-target="#cosyModal" data-bs-type="DC24">
-                        <i class="fas fa-external-link-square-alt pe-2"></i> Inspect CoSy
-                    </button>
-                </div>
-            </div>
-        </div>
-
-        <div class="mt-4 col-4 align-self-stretch">
-            <div class="h-100 card rounded-15 shadow animate__animated animate__fadeIn bg-dark mb-3 border-0 p-4" style="min-width: 250px;">
-                <div style="min-height: 242px;">
-                    <h4 class="text-center">All BMW Models</h4>
-                    <div class="d-flex flex-column justify-content-center position-relative mt-4 border-top border-bottom border-dark-light py-3">
-                        <h1 class="fw-bold mb-0 text-light position-absolute" style="top: 0; left: 13px;">M3</h1>
-                        <img role="button" style="z-index: 3;" 
-                        src="https://cache.bmwusa.com/cosy.arox?pov=walkaround&brand=WBBM&vehicle=22TN&client=byo&paint=P0300&fabric=FLKSW&sa=S01T5,S0302,S0319,S0322,S0430,S0431,S0459,S0493,S0494,S04KK,S0508,S0534,S0544,S05AC,S05AS,S0688,S06AC,S06AK,S06C4,S06U3,S0712,S0760,S0775&quality=hight&bkgnd=transparent&w=9800&h=8000&x=180&y=800&resp=png&angle=60" 
-                        class="card-img-top" alt="M3">
-                        <div class="d-flex justify-content-center mt-2">
-                            <small>
-                                <span class="fa-stack">
-                                <i class="far fa-circle fa-stack-2x"></i>
-                                <i class="fas fa-plus fa-stack-1x"></i>
-                            </span>VIEW ALL MODELS</small>
-                        </div>
-                    </div>
-                </div>
-                <hr>
-                <div class="card-body position-relative">
-                    <h4 class="card-title fw-bold">All BMWs</h4>
-                    <h5 class="fw-bold text-light">Model Series Hero</h5>
-                    <p class="card-text text-light">BM30</p>
-                    <button type="button" class="btn btn-primary btn-sm w-100 mt-3 stretched-link" 
-                    data-bs-toggle="modal" data-bs-target="#cosyModal" data-bs-type="BM30">
-                        <i class="fas fa-external-link-square-alt pe-2"></i> Inspect CoSy
-                    </button>
-                </div>
-            </div>
-        </div>
-
-        <div class="mt-4 col-4 align-self-stretch">
-            <div class="h-100 card rounded-15 shadow animate__animated animate__fadeIn bg-dark mb-3 border-0 p-4" style="min-width: 250px;">
-                <div style="min-height: 242px;">
-                    <div class="d-flex flex-column justify-content-center mt-1 py-2 bg-dark-light shadow">
-                        <img role="button"  
-                        src="https://cache.bmwusa.com/cosy.arox?pov=walkaround&brand=WBBM&vehicle=22XL&client=byo&paint=P0300&fabric=FMCSW&sa=S01CE,S01SF,S0255,S0302,S0319,S0322,S03MB,S0402,S0420,S0423,S0459,S0481,S0494,S04KM,S04T8,S04UR,S05AC,S05AS,S05AV,S0676,S06AC,S06AK,S06C4,S06U3,S0775,S07HW&quality=hight&bkgnd=transparent&resp=png&width=450&angle=60" 
-                        class="card-img-top d-block" alt="M3">
-                        <h1 class="text-center my-1">X3</h1>
-                    </div>
-                </div>
-                <hr>
-                <div class="card-body position-relative">
-                    <h4 class="card-title fw-bold">Global Nav</h4>
-                    <h5 class="fw-bold text-light">Vehicle Tile</h5>
-                    <p class="card-text text-light">GN17</p>
-                    <button type="button" class="btn btn-primary btn-sm w-100 mt-3 stretched-link" 
-                    data-bs-toggle="modal" data-bs-target="#cosyModal" data-bs-type="GN17">
-                        <i class="fas fa-external-link-square-alt pe-2"></i> Inspect CoSy
-                    </button>
-                </div>
-            </div>
-        </div>
-
-    </div>
-</div>
-
-<div class="modal fade" id="cosyModal" tabindex="-1" aria-labelledby="cosyModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-fullscreen">
-        <div class="modal-content bg-dark-light">
-            <div class="modal-header">
-                <h5 class="modal-title" id="cosyModalLabel"><i class="fas fa-image pe-2 text-primary"></i> Cosy</h5>
-                <button type="button" class="btn-close btn-close-white " data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <span class="visually-hidden" id="typeCosyModelSpan"></span>
-                <div class="row">
-                    <h6 for="naCodeModelTech">NA Code</h6>
-                    <div class="input-group mb-3">
-                        <span class="input-group-text bg-dark border-0" id="icon-addon"><i class="fas fa-file-code text-primary"></i></span>
-                        <select class="form-select bg-dark border-0 text-light" id="naCodeModelCosysModal">
-                        </select>
-                    </div>
-                </div>
-                <hr>
-                <div class="d-flex justify-content-between">
-                    <div class="col pe-2">
-                        <div class="bg-dark p-3 rounded-15 h-100">
-                            <h5 class="mb-3">Configurator</h5>
-                            <div id="Basicconfigurationsbkangle" style="display: none;">
-                                <hr>
-                                <div class="d-flex justify-content-start">
-                                    <div class="border-end border-dark-light pe-3">
-                                        <span class="d-block mb-2">Background</span>
-                                        <div class="d-flex justify-content-start">
-                                            <input type="radio" class="btn-check" name="cosy-background" id="white-cosy-checkbox-outlined" autocomplete="off" checked>
-                                            <label class="btn btn-sm btn-outline-primary-cus" for="white-cosy-checkbox-outlined" data-bs-toggle="tooltip" data-bs-placement="bottom" title="White" onclick="changeBackgroundOnPreview('1')">
-                                                <i class="fas fa-square text-white"></i>
-                                            </label>
-                                            
-                                            <input type="radio" class="btn-check" name="cosy-background" id="black-cosy-checkbox-outlined" autocomplete="off">
-                                            <label class="btn btn-sm btn-outline-primary-cus ms-2" for="black-cosy-checkbox-outlined" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Dark" onclick="changeBackgroundOnPreview('2')">
-                                                <i class="fas fa-square text-dark"></i>
-                                            </label>
-                                            
-                                            <input type="radio" class="btn-check" name="cosy-background" id="trans-cosy-checkbox-outlined" autocomplete="off">
-                                            <label class="btn btn-sm btn-outline-primary-cus ms-2" for="trans-cosy-checkbox-outlined" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Transparent" onclick="changeBackgroundOnPreview('transparent')">
-                                                <i class="far fa-square"></i>
-                                            </label>
-                                        </div>
-                                    </div>
-                                    <div class="px-3">
-                                        <span class="d-block mb-2">Angle</span>
-                                        <div class="d-flex justify-content-start" id="configAngleID"></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <hr>
-                            <div style="max-height: 400px; overflow-y: auto;">
-                                <div id="pathWalkaroundCosyRes"></div>
-                                <div id="walkaroundModalCosyResponse"></div>
-                            </div>
-                            <hr>
-                            <div class="row">
-                                <div class="col-5">
-                                    <p class="text-light small mb-1">Colors:</p>
-                                    <div id="basicColorsCosyEnd"></div>
-                                </div>
-                                <div class="col-7">
-                                    <p class="text-light small mb-1">Preview Model:</p>
-                                    <div class="d-flex align-items-end mt-2" id="previewCarImageModalCosy"></div>
-                                    <div class="d-flex justify-content-center mt-4 flex-wrap" id="previewCarColorsPicker"></div>
-                                </div>
-                            </div>
-                        </div>
+        <div class="position-relative">
+            <div class="d-flex justify-content-start align-items-stretch gap-2 p-3" id="modelCodesSearch" style=" overflow-x: auto;">
+                <div class="d-flex justify-content-center w-100">
+                    <div class="spinner-border" role="status">
+                        <span class="visually-hidden">Loading...</span>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-<div class="modal fade" id="cosyModalBefore" tabindex="-1" aria-labelledby="cosyModalBeforeLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-fullscreen">
-        <div class="modal-content bg-dark-light">
-            <div class="modal-header">
-                <h5 class="modal-title" id="cosyModalBeforeLabel"><i class="fas fa-image pe-2 text-primary"></i> Cosy</h5>
-                <button type="button" class="btn-close btn-close-white " data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <span class="visually-hidden" id="typeCosyModelSpanbefore"></span>
-                <div class="row mx-0 px-2">
-                    <h6 for="naCodeModelTech">NA Code</h6>
-                    <div class="input-group mb-3">
-                        <span class="input-group-text bg-dark border-0" id="icon-addon"><i class="fas fa-file-code text-primary"></i></span>
-                        <select class="form-select bg-dark border-0 text-light" id="naCodeModelCosysModalBefore">
-                        </select>
-                    </div>
-                </div>
+    <div class="row mx-auto mt-3 align-items-stretch">
+        <div class="col-7 ps-0 d-flex flex-column">
+            <div class="bg-dark rounded-15 w-100 p-3">
+                <small class="d-block small">Color: <span class="fw-bold text-secondary" id="colorCosyModel"><small class="small text-muted text-center m-0">Please Choose a Model</small></span></small>
+                <small class="d-block small">Trim: <span class="fw-bold text-secondary" id="trimCosyModel"><small class="small text-muted text-center m-0">Please Choose a Model</small></span></small>
+                <small class="d-block small">Upholstery: <span class="fw-bold text-secondary" id="upholCosyModel"><small class="small text-muted text-center m-0">Please Choose a Model</small></span></small>
                 <hr>
-                <div class="d-flex justify-content-between w-100">
-                    <div class="bg-dark p-3 rounded-15 h-100 w-100">
+                <div class="d-flex justify-content-between align-items-center">
+                    <small class="d-block small">Path:</small>
+                    <button type="button" class="btn btn-primary btn-xs shadow-none btn-to-clip" data-clipboard-target="#pathCosyModel" id="pathCosyModelBtn"><i class="fas fa-copy"></i> Copy Path</button>
+                </div>
+                <small class="d-block small text-primary"><span id="pathCosyModelContainer"><small class="fw-bold small text-muted text-center m-0">Please Choose a Model</small></span></small>
+                <script>
+                    tippy('#pathCosyModelBtn', {
+                        content: "Copied!",
+                        trigger: 'click',
+                        animation: 'shift-away-extreme',
+                    });
+                </script>
+            </div>
+            <div class="bg-dark rounded-15 w-100 p-3 mt-3">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class="d-flex justify-content-start">
+                        <input type="radio" class="btn-check" name="cosy-background" id="trans-cosy-checkbox-outlined" autocomplete="off" checked>
+                        <label class="btn btn-sm btn-outline-primary-cus ms-2" for="trans-cosy-checkbox-outlined" data-bs-toggle="tooltip" 
+                        data-bs-placement="top" title="Transparent" onclick="changeBackgroundOnPreview('transparent')">
+                            <i class="far fa-square"></i>
+                        </label>
+
+                        <input type="radio" class="btn-check" name="cosy-background" id="white-cosy-checkbox-outlined" autocomplete="off" >
+                        <label class="btn btn-sm btn-outline-primary-cus ms-2" for="white-cosy-checkbox-outlined" data-bs-toggle="tooltip" 
+                        data-bs-placement="top" title="White" onclick="changeBackgroundOnPreview('1')">
+                            <i class="fas fa-square text-white"></i>
+                        </label>
                         
-                        <div class="row mx-0 px-3">
-                            <div class="col-3">
-                                <h4 class="text-center">Model Line Up</h4>
-                                <hr>
-                                <div style="min-height: 150px;">
-                                    <div class="text-center mb-2">
-                                        <span class="text-light eyebrow-2 text-uppercase">Lorem Ipsum</span>
-                                    </div>
-                                    <div id="imagePreviewconfigMLU">
-                                        <img role="button" onmouseenter="changeCosyEnter(this,'GN20')" onmouseleave="changeCosyLeave(this,'GN20')" 
-                                        src="https://cache.bmwusa.com/cosy.arox?pov=walkaround&brand=WBBM&vehicle=223O&client=byo&paint=P0300&fabric=FKHSW&sa=S01T4,S0255,S02TB,S0302,S03MB,S0403,S0430,S0431,S0459,S0465,S0481,S0493,S04KC,S04UR,S0534,S0544,S05A4,S05AC,S05AV,S0676,S06AC,S06AK,S06C4,S06CP,S06U3,S0775,S07AC&date=20210706&quality=hight&bkgnd=transparent&w=9800&h=8000&x=180&y=800&resp=png&angle=40" 
-                                        class="card-img-top" alt="3 Series">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-9">
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <h5>Configuration:</h5>
-                                    <div>
-                                        <h6>Front: 40</h6>
-                                        <h6>Rear: 220</h6>
-                                    </div>
-                                </div>
-                                <div id="configMLU">
-
-                                </div>
-                                <div id="colorsPreviewconfigMLU"></div>
-                            </div>
-                        </div>
-                        <hr>
-                        <div class="row mx-0 px-3">
-                            <div class="col-3">
-                                <h4 class="text-center">Localnav</h4>
-                                <hr>
-                                <div style="min-height: 150px;">
-                                    <div class="text-center mb-2">
-                                        <span class="text-light eyebrow-2 text-uppercase">Lorem Ipsum</span>
-                                    </div>
-                                    <div id="imagePreviewconfigLN">
-                                        <img role="button" onmouseenter="changeCosyEnter(this,'LN')" onmouseleave="changeCosyLeave(this,'LN')" 
-                                        src="https://cache.bmwusa.com/cosy.arox?pov=walkaround&brand=WBBM&vehicle=223O&client=byo&paint=P0300&fabric=FKHSW&sa=S01T4,S0255,S02TB,S0302,S03MB,S0403,S0430,S0431,S0459,S0465,S0481,S0493,S04KC,S04UR,S0534,S0544,S05A4,S05AC,S05AV,S0676,S06AC,S06AK,S06C4,S06CP,S06U3,S0775,S07AC&date=20210706&quality=hight&bkgnd=transparent&w=9800&h=8000&x=180&y=800&resp=png&angle=270" 
-                                        class="card-img-top" alt="3 Series">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-9">
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <h5>Configuration:</h5>
-                                    <div>
-                                        <h6>Side: 270</h6>
-                                        <h6>Front: 320</h6>
-                                    </div>
-                                </div>
-                                <div id="configLN">
-
-                                </div>
-                                <div id="colorsPreviewconfigLN"></div>
+                        <input type="radio" class="btn-check" name="cosy-background" id="black-cosy-checkbox-outlined" autocomplete="off">
+                        <label class="btn btn-sm btn-outline-primary-cus ms-2" for="black-cosy-checkbox-outlined" data-bs-toggle="tooltip" 
+                        data-bs-placement="top" title="Dark" onclick="changeBackgroundOnPreview('2')">
+                            <i class="fas fa-square text-dark"></i>
+                        </label>
+                    </div>
+                    <select class="form-select form-select-sm bg-dark-light" style="width: 200px;" aria-label="Default select example">
+                        <option selected>Select type</option>
+                        <option value="1">Model Lineup</option>
+                        <option value="2">Localnav</option>
+                        <option value="3">Globalnav</option>
+                        <option value="3">All BMWs</option>
+                    </select>
+                </div>
+            </div>
+            <div class="bg-dark rounded-15 w-100 p-3 mt-3 flex-fill d-flex justify-content-center align-items-center" id="imagePreview">
+                <p class="small text-muted text-center mt-3">Please Choose a Model</p>
+            </div>
+            <div id="imagePreviewCache" class="d-none"></div>
+        </div>
+        <div class="col-5 pe-0">
+            <div class="bg-dark rounded-15 w-100 p-3" style="height: calc(100vh - 340px); overflow-y: hidden;">
+                <h6>Colors:</h6>
+                <hr>
+                <div>
+                    <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                        <li class="nav-item me-3" role="presentation">
+                          <button class="nav-link active" id="pills-colorCosy-tab" data-bs-toggle="pill" data-bs-target="#pills-colorCosy" 
+                          type="button" role="tab" aria-controls="pills-colorCosy" aria-selected="true"><i class="far fa-circle"></i> Color</button>
+                        </li>
+                        <li class="nav-item me-3" role="presentation">
+                          <button class="nav-link" id="pills-upholstery-tab" data-bs-toggle="pill" data-bs-target="#pills-upholstery" 
+                          type="button" role="tab" aria-controls="pills-upholstery" aria-selected="false"><i class="fas fa-circle"></i> Upholstery</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                          <button class="nav-link" id="pills-trims-tab" data-bs-toggle="pill" data-bs-target="#pills-trims" 
+                          type="button" role="tab" aria-controls="pills-trims" aria-selected="false"><i class="fas fa-circle"></i> Wheels</button>
+                        </li>
+                    </ul>
+                    <div class="tab-content" id="pills-tabContent">
+                        <div class="tab-pane fade show active" id="pills-colorCosy" role="tabpanel" aria-labelledby="pills-colorCosy-tab" style="height: calc(100vh - 500px); overflow-y: auto;">
+                            <div id="colorsPreview" class="d-flex flex-column">
+                                <p class="small text-muted text-center mt-3">Please Choose a Model</p>
                             </div>
                         </div>
-                        <hr>
-                        <div class="row mx-0 px-3">
-                            <div class="col-3">
-                                <h4 class="text-center">Build your own</h4>
-                                <hr>
-                                <div style="min-height: 150px;">
-                                    <div id="imagePreviewconfigBYO">
-                                        <img role="button" 
-                                        src="https://cache.bmwusa.com/cosy.arox?pov=walkaround&brand=WBBM&vehicle=223O&client=byo&paint=P0300&fabric=FKHSW&sa=S01T4,S0255,S02TB,S0302,S03MB,S0403,S0430,S0431,S0459,S0465,S0481,S0493,S04KC,S04UR,S0534,S0544,S05A4,S05AC,S05AV,S0676,S06AC,S06AK,S06C4,S06CP,S06U3,S0775,S07AC&date=20210706&quality=hight&bkgnd=transparent&w=9800&h=8000&x=180&y=800&resp=png&angle=300" 
-                                        class="card-img-top" alt="3 Series">
-                                    </div>
-                                    <div class="d-flex justify-content-between py-2 border-dark-light border-top border-bottom mt-2">
-                                        <div><small class="fw-bold">RWD &nbsp;</small><small class="text-light">Drivetrain</small></div>
-                                        <div><small class="fw-bold">36 &nbsp;</small><small class="text-light">MPG</small></div>
-                                        <div><small class="fw-bold">5.6 sec &nbsp;</small><small class="text-light">0-60 MPH</small></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-9">
-                                <h5>Configuration:</h5>
-                                <div id="configBYO">
-
-                                </div>
-                                <div id="colorsPreviewconfigBYO"></div>
+                        <div class="tab-pane fade" id="pills-upholstery" role="tabpanel" aria-labelledby="pills-upholstery-tab" style="height: calc(100vh - 500px); overflow-y: auto;">
+                            <div id="upholsteryPreview" class="d-flex flex-column">
+                                <p class="small text-muted text-center mt-3">Please Choose a Model</p>
                             </div>
                         </div>
-                        <hr>
-                        <div class="row mx-0 px-3">
-                            <div class="col-3">
-                                <h4 class="text-center">Model Series List</h4>
-                                <hr>
-                                <div style="min-height: 150px;">
-                                    <p class="fs-6 mb-1 text-light">Lorem Ipsum</p>
-                                    <p class="small mb-0 text-light">Lorem ipsum dolor sit amet, consecte...</p>
-                                    <div class="d-flex flex-column justify-content-center mt-2 border-top border-bottom border-dark-light py-2">
-                                        <div id="imagePreviewconfigMSL">
-                                            <img role="button" 
-                                            src="https://cache.bmwusa.com/cosy.arox?pov=walkaround&brand=WBBM&vehicle=223O&client=byo&paint=P0300&fabric=FKHSW&sa=S01T4,S0255,S02TB,S0302,S03MB,S0403,S0430,S0431,S0459,S0465,S0481,S0493,S04KC,S04UR,S0534,S0544,S05A4,S05AC,S05AV,S0676,S06AC,S06AK,S06C4,S06CP,S06U3,S0775,S07AC&date=20210706&quality=hight&bkgnd=transparent&w=9800&h=8000&x=180&y=800&resp=png&angle=270" 
-                                            class="card-img-top" alt="3 Series">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-9">
-                                <h5>Configuration:</h5>
-                                <div id="configMSL">
-
-                                </div>
-                                <div id="colorsPreviewconfigMSL"></div>
-                            </div>
-                        </div>
-                        <hr>
-                        <div class="row mx-0 px-3">
-                            <div class="col-3">
-                                <h4 class="text-center">All BMWs</h4>
-                                <hr>
-                                <div style="min-height: 150px;">
-                                    <div class="d-flex flex-column justify-content-center position-relative mt-4 border-top border-bottom border-dark-light py-3">
-                                        <div id="imagePreviewconfigAllBMWS">
-                                            <img role="button" style="z-index: 3;" 
-                                            src="https://cache.bmwusa.com/cosy.arox?pov=walkaround&brand=WBBM&vehicle=22TN&client=byo&paint=P0300&fabric=FLKSW&sa=S01T5,S0302,S0319,S0322,S0430,S0431,S0459,S0493,S0494,S04KK,S0508,S0534,S0544,S05AC,S05AS,S0688,S06AC,S06AK,S06C4,S06U3,S0712,S0760,S0775&quality=hight&bkgnd=transparent&w=9800&h=8000&x=180&y=800&resp=png&angle=60" 
-                                            class="card-img-top" alt="M3">
-                                        </div>
-                                        <div class="d-flex justify-content-center mt-2">
-                                            <small>
-                                                <span class="fa-stack">
-                                                <i class="far fa-circle fa-stack-2x"></i>
-                                                <i class="fas fa-plus fa-stack-1x"></i>
-                                            </span>VIEW ALL MODELS</small>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-9">
-                                <h5>Configuration:</h5>
-                                <div id="configAllBMWS">
-
-                                </div>
-                                <div id="colorsPreviewconfigAllBMWS"></div>
-                            </div>
-                        </div>
-                        <hr>
-                        <div class="row mx-0 px-3">
-                            <div class="col-3">
-                                <h4 class="text-center">Globalnav</h4>
-                                <hr>
-                                <div style="min-height: 150px;">
-                                    <div class="d-flex flex-column justify-content-center mt-1 py-2 bg-dark-light shadow">
-                                        <div id="imagePreviewconfigGL">
-                                            <img role="button"  
-                                            src="https://cache.bmwusa.com/cosy.arox?pov=walkaround&brand=WBBM&vehicle=22XL&client=byo&paint=P0300&fabric=FMCSW&sa=S01CE,S01SF,S0255,S0302,S0319,S0322,S03MB,S0402,S0420,S0423,S0459,S0481,S0494,S04KM,S04T8,S04UR,S05AC,S05AS,S05AV,S0676,S06AC,S06AK,S06C4,S06U3,S0775,S07HW&quality=hight&bkgnd=transparent&resp=png&width=450&angle=60" 
-                                            class="card-img-top d-block" alt="M3">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-9">
-                                <h5>Configuration:</h5>
-                                <div id="configGL">
-
-                                </div>
-                                <div id="colorsPreviewconfigGL"></div>
+                        <div class="tab-pane fade" id="pills-trims" role="tabpanel" aria-labelledby="pills-trims-tab" style="height: calc(100vh - 500px); overflow-y: auto;">
+                            <div id="trimsPreview" class="d-flex flex-column">
+                                <p class="small text-muted text-center mt-3">Please Choose a Model</p>
                             </div>
                         </div>
                     </div>
@@ -432,4 +111,4 @@
             </div>
         </div>
     </div>
-  </div>
+</div>

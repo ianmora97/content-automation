@@ -15,7 +15,6 @@ function bringConfluenceContentDeployments() {
 }
 function searchForDeployments(vec) {
     let body = vec.body.view.value;
-    console.log('CONFLUENCE', body)
     let deployTags = body.split('AEMContentReleaseNotes-AEMContentDeployments:')[1].split('<a');
     deployTags.shift();
     deployTags.shift();
@@ -26,7 +25,6 @@ function searchForDeployments(vec) {
 }
 
 function showContentDeployments(id) {
-    console.log('ID', id)
     $.ajax({
         type: "GET",
         url: `https://virtuelle-welt.atlassian.net/wiki/rest/api/content/${id}`,
