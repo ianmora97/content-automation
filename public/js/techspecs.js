@@ -113,6 +113,7 @@ function loadDataListInput(list){
     $('#naCodeModelTech').html('')
     $('#naCodeModelCosysModal').html('')
     $('#naCodeModelCosysModalBefore').html('')
+    buildRowModelCodesSearch(list.filter(filter22ModelsFirst))
     list.filter(filter22ModelsFirst)
     .forEach(element => {
         fillDataList(element)

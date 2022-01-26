@@ -3,6 +3,42 @@
   "description": "Content process automation!",
   "version": "1.0",
   "manifest_version": 3,
+  "content_scripts": [
+    {
+      "matches": ["https://www.bmwusa.com/*", "https://*.bmwusacm.co/*","https://*.atlassian.net/*"],
+      "js": ["content-script.js"]
+    }
+  ],
+  "commands": {
+    "showHeaders": {
+      "suggested_key": {
+          "default": "Ctrl+Shift+4",
+          "mac": "MacCtrl+H"
+      },
+      "description": "Toggle Headers."
+    },
+    "toggleGrid": {
+      "suggested_key": {
+          "default": "Ctrl+Shift+1",
+          "mac": "MacCtrl+G"
+      },
+      "description": "Toggle grid"
+    },
+    "placeholder": {
+      "suggested_key": {
+          "default": "Ctrl+Shift+2",
+          "mac": "MacCtrl+D"
+      },
+      "description": "Toggle UT3 placeholder"
+    },
+    "toggleSpacers": {
+      "suggested_key": {
+          "default": "Ctrl+Shift+3",
+          "mac": "MacCtrl+S"
+      },
+      "description": "Toggle Spacer."
+    }
+  },
   "background": {
     "service_worker": "background.js"
   },

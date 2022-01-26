@@ -27,6 +27,9 @@ function existsDomain(url){
 	return new Promise((resolve, reject)=>{
 		chrome.storage.sync.get("environments", (data) => {
 			if(Object.keys(data).length === 0) resolve(false);
+			console.log(data);
+			// data = Object
+			if(data && Object.keys(data).length === 0 && Object.getPrototypeOf(obj) === Object.prototype) reject("No environments found");
 			let envs = JSON.parse(data.environments);
 			if(url.indexOf("editor.html/") !== -1) resolve(true);
 			for(let i = 0; i < envs.length; i++){
@@ -217,7 +220,8 @@ function getJiraTitle() {
 }
 
 // ! ------------------------------------------ Show spacers ------------------------------------------
-// TODO: WIP
+// * READY TO USE
+// TODO: Show BMW Spacers
 let btnShowSpacers = document.getElementById("btnShowSpacers");
 tippy('#btnShowSpacers', {
 	content: 'Toggle Spacers',
@@ -283,44 +287,65 @@ function showSpacers() {
 }
 
 
-// ! ------------------------------------------ Get Images ------------------------------------------
+// ! ------------------------------------------ GET HEADERS ------------------------------------------
 // * WIP
-// TODO: Get all images from the page and show them on AEM properties
-// let btnImages = document.getElementById("btnImages");
+// TODO: Get all headers from the page and show them in popup
+let btnHeaders = document.getElementById("btnHeaders");
+tippy('#btnHeaders', {
+	content: 'Toggle Spacers',
+});
+btnHeaders.addEventListener("click", async () => {
+	let [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+	chrome.scripting.executeScript({
+		target: { tabId: tab.id },
+		function: showHeaders,
+	});
+});
 
-// btnImages.addEventListener("click", async () => {
-// 	let [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
-// 	chrome.scripting.executeScript({
-// 		target: { tabId: tab.id },
-// 		function: showImages,
-// 	});
-// });
+function showHeaders() {
+	let hsTagNames = new Array();
+	for (let i = 1; i <= 6; i++) {
+		hsTagNames.push(...document.getElementsByTagName('h' + i));
+	}
+	hsTagNames.forEach((hl,i) => {
+		let regexMatch = /(headline|eyebrow|label)/
+		let type = null;
+		[...hl.classList].forEach(a => {
+			type = regexMatch.test(a) ? a : null
+		});
+		if(type){
+			if(document.getElementById("header-element-"+i)){
+				document.getElementById("header-element-"+i).remove();
+			}else{
+				let cords = hl.getBoundingClientRect();
+				let elm = document.createElement("div");
+				elm.id = "header-element-"+i;
+				elm.style.margin = "0px";
+				elm.style.lineHeight = "17px";
+				elm.style.color = "white";
+				elm.style.whiteSpace = "nowrap";
+				elm.style.zIndex = "9999";
+				elm.innerHTML = `<span style="border-radius:2px; padding:2px; font-size:11px; font-weight:bold; vertical-align:middle; background-color:rgba(255, 0, 0, 0.9);">${hl.tagName} - ${type}</span>`;
+				hl.prepend(elm);
+			}
+		}
+	});
+}
 
-// function showImages() {
-// 	window.scrollTo({ left: 0, top: document.body.scrollHeight, behavior: "smooth" });
-// 	setTimeout(() => {
-// 		let imgsTagName = [...document.getElementsByTagName('img')];
-// 		let imgsTagArray = new Array();
-// 		imgsTagArray = imgsTagName.filter(img =>{
-// 			if(img.src.indexOf(".html") === -1){
-// 				if(img.src.indexOf("cosy") === -1){
-// 					if(img.src.indexOf("nav") === -1){
-// 						return img.src;
-// 					}
-// 				}
-// 			}
-// 		}).forEach(img => {
-// 			console.log(img.src)
-// 		});
-// 		window.scrollTo({ left: 0, top: 0, behavior: "smooth" });
-// 	}, 1500);
-
-// 	let images = document.getElementsByTagName('picture')
-// 	let imagesEval = new Array();
-//     for(let i = 0; i < images.length; i++){
-// 		let imgJQ = images[i].getElementsByTagName('source');
-// 		if(imgJQ.length > 0){
-// 			// console.log(imgJQ[0].getAttribute('srcset'))
-// 		}
-//     }
-// }
+// ! ------------------------------------------ UT3 Placeholder ------------------------------------------
+// * WIP
+// TODO: Using the same function for the UT3 placeholder
+let btnUT3 = document.getElementById("btnUT3");
+tippy('#btnUT3', {
+	content: 'Toggle UT3 Placeholder',
+});
+btnUT3.addEventListener("click", async () => {
+	let [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+	chrome.scripting.executeScript({
+		target: { tabId: tab.id },
+		function: ut3PLaceholder,
+	});
+});
+function ut3PLaceholder() {
+	document.querySelector('[id*="bmw-personalization"]').classList.toggle('active-placeholder')
+}
