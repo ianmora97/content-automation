@@ -1,35 +1,12 @@
-
-// All copyrights to PimpTrizkit/PJs
-const pSBC=(p,c0,c1,l)=>{
-    let r,g,b,P,f,t,h,i=parseInt,m=Math.round,a=typeof(c1)=="string";
-    if(typeof(p)!="number"||p<-1||p>1||typeof(c0)!="string"||(c0[0]!='r'&&c0[0]!='#')||(c1&&!a))return null;
-    if(!this.pSBCr)this.pSBCr=(d)=>{
-        let n=d.length,x={};
-        if(n>9){
-            [r,g,b,a]=d=d.split(","),n=d.length;
-            if(n<3||n>4)return null;
-            x.r=i(r[3]=="a"?r.slice(5):r.slice(4)),x.g=i(g),x.b=i(b),x.a=a?parseFloat(a):-1
-        }else{
-            if(n==8||n==6||n<4)return null;
-            if(n<6)d="#"+d[1]+d[1]+d[2]+d[2]+d[3]+d[3]+(n>4?d[4]+d[4]:"");
-            d=i(d.slice(1),16);
-            if(n==9||n==5)x.r=d>>24&255,x.g=d>>16&255,x.b=d>>8&255,x.a=m((d&255)/0.255)/1000;
-            else x.r=d>>16,x.g=d>>8&255,x.b=d&255,x.a=-1
-        }return x};
-    h=c0.length>9,h=a?c1.length>9?true:c1=="c"?!h:false:h,f=this.pSBCr(c0),P=p<0,t=c1&&c1!="c"?this.pSBCr(c1):P?{r:0,g:0,b:0,a:-1}:{r:255,g:255,b:255,a:-1},p=P?p*-1:p,P=1-p;
-    if(!f||!t)return null;
-    if(l)r=m(P*f.r+p*t.r),g=m(P*f.g+p*t.g),b=m(P*f.b+p*t.b);
-    else r=m((P*f.r**2+p*t.r**2)**0.5),g=m((P*f.g**2+p*t.g**2)**0.5),b=m((P*f.b**2+p*t.b**2)**0.5);
-    a=f.a,t=t.a,f=a>=0||t>=0,a=f?a<0?t:t<0?a:a*P+t*p:0;
-    if(h)return"rgb"+(f?"a(":"(")+r+","+g+","+b+(f?","+m(a*1000)/1000:"")+")";
-    else return"#"+(4294967296+r*16777216+g*65536+b*256+(f?m(a*255):0)).toString(16).slice(1,f?undefined:-2)
-}
-// ! ------------------------------------ New ------------------------------------
 var g_cosy_angle = 40;
 var g_cost_typeMime = 'png'
 var g_cosy_bckg = "transparent";
 var g_fetch_options = new Array();
 var g_cosy_wheel = "";
+
+var g_cosy_modelName = "";
+var g_cosy_additional_params = "";
+var g_cosy_additional_styles = "";
 
 function clearSpaces(){
     $('#colorCosyModel').html('')
@@ -39,6 +16,16 @@ function clearSpaces(){
     $('#colorsPreview').html('')
     $('#upholsteryPreview').html('')
     $('#trimsPreview').html('')
+}
+function clearSpacesWP(){
+    $('#colorCosyModel').html(`<small class="small text-muted text-center m-0">Please Choose a Model</small>`)
+    $('#upholCosyModel').html(`<small class="small text-muted text-center m-0">Please Choose a Model</small>`)
+    $('#trimCosyModel').html(`<small class="small text-muted text-center m-0">Please Choose a Model</small>`)
+    $('#pathCosyModelContainer').html(`<small class="fw-bold small text-muted text-center m-0">Please Choose a Model</small>`)
+    $('#colorsPreview').html(`<p class="small text-muted text-center mt-3">Please Choose a Model</p>`)
+    $('#upholsteryPreview').html(`<p class="small text-muted text-center mt-3">Please Choose a Model</p>`)
+    $('#trimsPreview').html(`<p class="small text-muted text-center mt-3">Please Choose a Model</p>`)
+    $('#imagePreview').html(`<p class="small text-muted text-center mt-3">Please Choose a Model</p>`)
 }
 
 function onsearchBaronModelCodesKey(){
@@ -74,7 +61,8 @@ function buildModelCodesSearch(elem){
 }
 function getPathFromNaCode(nacode,name){
     $('#modelCodesSearch').html(`
-        <div id="modelCodeCosy-${nacode}">
+        <div id="modelCodeCosy-${nacode}" class="position-relative">
+            <button class="btn btn-primary no-shadow btn-xs position-absolute top-0 end-0" onclick="closeNACODEsearch()" style="width:20; height:20px;"> <i class="fas fa-times"></i> </button>
             <input type="radio" class="btn-check" name="modelCodesSearch-option" id="modelCodesSearch-option-${nacode}" autocomplete="off" checked>
             <label class="btn btn-outline-primary text-center h-100" for="modelCodesSearch-option-${nacode}" style="width:120px; height:63px !important">
                 <b>${nacode}</b>
@@ -92,6 +80,7 @@ function getImagesCosysByModelAll(model) {
             </div>
         </div>
     `);
+    g_cosy_modelName = model;
     $.ajax({
         type: "GET",
         url: `${cosy_config.ubyo_start}`+model,
@@ -137,13 +126,13 @@ function showimagePathsCosysAll(response,colors,fabric,wheels,current_trim) {
     let paint = colors.filter(obj => {return obj.code == paintName;});
     let uphol = fabric.filter(obj => {return obj.code == upholName;});
     
-    walkaround_path = `${cosy_config.domain}`+walk360+`&quality=high&bkgnd=${g_cosy_bckg}&resp=${g_cost_typeMime}&angle=${g_cosy_angle}`;
+    walkaround_path = `${cosy_config.domain}`+walk360+`&quality=100&bkgnd=${g_cosy_bckg}&resp=${g_cost_typeMime}${g_cosy_additional_params}&angle=${g_cosy_angle}`;
+    showImageCosyAll(walkaround_path);
     bringAllAnglesCache(walkaround_path);
     showPathImageCosyOnLoadAll(walkaround_path);
     showColorsAll(colors);
     showUpholstery(fabric);
     showTrims(wheels);
-    showImageCosyAll(walkaround_path);
 
     g_cosy_wheel = current_trim.code;
 
@@ -160,36 +149,50 @@ function showPathImageCosyOnLoadAll(path){
 function showColorsAll(colors){
     colors.forEach(c => {
         $(`#colorsPreview`).append(`
-            <span class="d-block mb-2" onclick="changePaintOnPreviewAll('${c.code}')" role="button" title="${c.code}">
+            <span class="d-block mb-2" onclick="changePaintOnPreviewAll('${c.code}')" role="button" id="tooltip-code${c.code}">
                 <i class="fas fa-circle me-2 p-1" style="border-radius:100%;border:#fff 1px solid;color:rgb(${c.rgbValues[0]}, ${c.rgbValues[1]}, ${c.rgbValues[2]});"></i> ${c.name}
             </span>
         `)
+        tippy(`#tooltip-code${c.code}`, {
+            content: `${c.code}`,
+            placement: 'left',
+            animation: 'shift-away-extreme',
+        });
     })
-    enableTooltips();
 }
 function showUpholstery(fabric){
     fabric.forEach(c => {
         $(`#upholsteryPreview`).append(`
-            <span class="d-block mb-2" onclick="changeUpholOnPreviewAll('${c.code}')" role="button" title="${c.code}">
+            <span class="d-block mb-2" onclick="changeUpholOnPreviewAll('${c.code}')" role="button" id="tooltip-code${c.code}">
                 <img src="${cosy_config.domain}${c.cosyUrl}&bkgnd=transparent&resp=png" class="img-fluid rounded-circle me-2" style="height:30px; width:30px;"> ${c.name}
             </span>
         `)
+        tippy(`#tooltip-code${c.code}`, {
+            content: `${c.code}`,
+            placement: 'left',
+            animation: 'shift-away-extreme',
+        });
     })
     enableTooltips();
 }
 function showTrims(trims){
     trims.forEach(c => {
         $(`#trimsPreview`).append(`
-            <span class="d-block mb-2" onclick="changeTrimsOnPreviewAll('${c.code}')" role="button" title="${c.code}">
+            <span class="d-block mb-2" onclick="changeTrimsOnPreviewAll('${c.code}')" role="button" id="tooltip-code${c.code}">
                 <img src="${cosy_config.domain}${c.cosyUrl}&bkgnd=transparent&resp=png" class="img-fluid rounded-circle me-2" style="height:30px; width:30px;"> <span class="small">${c.name}</span>
             </span>
         `)
+        tippy(`#tooltip-code${c.code}`, {
+            content: `${c.code}`,
+            placement: 'left',
+            animation: 'shift-away-extreme',
+        });
     })
     enableTooltips();
 }
 function showImageCosyAll(path){
     $(`#imagePreview`).html(`
-        <img src="${path}" class="img-fluid" id="imageCosyPreview_c" width="100%" style="cursor: ew-resize;">
+        <img src="${path}" class="img-fluid imagePreview" id="imageCosyPreview_c" width="100%" style="cursor: ew-resize; ${g_cosy_additional_styles}">
     `)
     DRAGIMAGECOSYFUNC();
 }
@@ -201,6 +204,12 @@ function bringAllAnglesCache(walkaround_path){
         $('#imagePreviewCache').append(`<img src="${new_path}" class="img-fluid" id="cosyImAngle-${i*10}">`)
     }
 }
+function closeNACODEsearch(){
+    clearSpacesWP()
+    buildRowModelCodesSearch(g_modelList.filter(filter22ModelsFirst));
+}
+
+
 var num = 36;
 var swipeOptions = {
     triggerOnTouchEnd : true,
@@ -224,7 +233,6 @@ function changeImg (imgNum) {
     if (imgNum > num) {
     	imgNum -= num;
     }
-    console.log(imgNum);
     let path = $('#pathCosyModel').html().replaceAll('&amp;','&');
     let angle = parseInt(path.split('&angle=')[1]);
     let new_path = path.replace('&angle='+angle, '&angle='+(imgNum*10));
@@ -241,7 +249,6 @@ function changeImgR (imgNum) {
     if (imgNum <= num2) {
     	imgNum += num*2;
     }
-    console.log(imgNum);
     let path = $('#pathCosyModel').html().replaceAll('&amp;','&');
     let angle = parseInt(path.split('&angle=')[1]);
     let new_path = path.replace('&angle='+angle, '&angle='+(imgNum*10));
@@ -252,11 +259,39 @@ function changeImgR (imgNum) {
 
 // ! --------------- changes on parameters ---------------
 
-/**
- * left or right, sum *10 to the current angle
- * @param {String} direction 
- */
-function changeAngleModelCosy(direction){
+function changeCosyType(){
+    let val = parseInt($("#cosyTypeModel").val());
+    switch (val) {
+        case 0:
+            g_cosy_additional_params = "";
+            g_cosy_angle = 40;
+            break;
+        case 1:
+            g_cosy_additional_params = "";
+            g_cosy_angle = 40;
+            break;
+        case 2:
+            g_cosy_additional_params = "&width=560&height=300&w=9800&h=8000&x=180&y=-300";
+            g_cosy_angle = 270;
+            break;
+        case 3:
+            g_cosy_additional_params = "&width=600&width=450";
+            g_cosy_angle = 60;
+            break;
+        case 4:
+            g_cosy_additional_params = "";
+            g_cosy_angle = 60;
+            break;
+        default:
+            g_cosy_additional_params = "";
+            g_cosy_angle = 40;
+            break;
+    }
+    if(g_cosy_modelName != ""){
+        getImagesCosysByModelAll(g_cosy_modelName)
+    }
+}
+function changeAngleModelCosy(direction){ // ! not using
     if((g_cosy_angle >= 0 && direction == 'right' && g_cosy_angle < 360) || (g_cosy_angle <= 360 && direction == 'left' && g_cosy_angle > 0)){
         g_cosy_angle = g_cosy_angle + (direction == 'left' ? -10 : 10);
         $('#angleNameCosyNumber').html(g_cosy_angle);
@@ -318,7 +353,30 @@ function changeBackgroundOnPreview(id){
     showImageCosyAll(new_path);
     bringAllAnglesCache(new_path);
 }
-
+function tabChangeCosy(){
+    var tabs = document.querySelectorAll("#pills-tab-Cosy li button")
+    tabs.forEach(function(tab){
+        tab.addEventListener('shown.bs.tab', function (event) {
+            let newT = event.target // newly activated tab
+            let oldT = event.relatedTarget // previous active tab
+            if(newT.id.split('-')[1] == "trims"){
+                g_cosy_angle = 90;
+                g_cosy_additional_styles = "transform: scale(2.5) translateX(140px) translateY(-30px);"
+            }else{
+                g_cosy_angle = 40;
+                g_cosy_additional_styles = ""
+            }
+            if(g_cosy_modelName != ""){
+                let path = $('#pathCosyModel').html().replaceAll('&amp;','&');
+                let angle = parseInt(path.split('&angle=')[1]);
+                let new_path = path.replace('&angle='+angle, '&angle='+(g_cosy_angle));
+                showPathImageCosyOnLoadAll(new_path);
+                showImageCosyAll(new_path);
+            }
+        })
+    });
+}
+tabChangeCosy();
 document.addEventListener('DOMContentLoaded', function() {
     
 });

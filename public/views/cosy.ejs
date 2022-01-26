@@ -20,8 +20,8 @@
         <div class="col-7 ps-0 d-flex flex-column">
             <div class="bg-dark rounded-15 w-100 p-3">
                 <small class="d-block small">Color: <span class="fw-bold text-secondary" id="colorCosyModel"><small class="small text-muted text-center m-0">Please Choose a Model</small></span></small>
-                <small class="d-block small">Trim: <span class="fw-bold text-secondary" id="trimCosyModel"><small class="small text-muted text-center m-0">Please Choose a Model</small></span></small>
                 <small class="d-block small">Upholstery: <span class="fw-bold text-secondary" id="upholCosyModel"><small class="small text-muted text-center m-0">Please Choose a Model</small></span></small>
+                <small class="d-block small">Trim: <span class="fw-bold text-secondary" id="trimCosyModel"><small class="small text-muted text-center m-0">Please Choose a Model</small></span></small>
                 <hr>
                 <div class="d-flex justify-content-between align-items-center">
                     <small class="d-block small">Path:</small>
@@ -35,30 +35,39 @@
                         animation: 'shift-away-extreme',
                     });
                 </script>
-            </div>
-            <div class="bg-dark rounded-15 w-100 p-3 mt-3">
-                <div class="d-flex justify-content-between align-items-center">
+                <div class="d-flex justify-content-between align-items-center mt-4">
                     <div class="d-flex justify-content-start">
                         <input type="radio" class="btn-check" name="cosy-background" id="trans-cosy-checkbox-outlined" autocomplete="off" checked>
-                        <label class="btn btn-sm btn-outline-primary-cus ms-2" for="trans-cosy-checkbox-outlined" data-bs-toggle="tooltip" 
-                        data-bs-placement="top" title="Transparent" onclick="changeBackgroundOnPreview('transparent')">
+                        <label class="btn btn-sm btn-outline-primary-cus" for="trans-cosy-checkbox-outlined" id="bckgChangetr" onclick="changeBackgroundOnPreview('transparent')">
                             <i class="far fa-square"></i>
                         </label>
 
                         <input type="radio" class="btn-check" name="cosy-background" id="white-cosy-checkbox-outlined" autocomplete="off" >
-                        <label class="btn btn-sm btn-outline-primary-cus ms-2" for="white-cosy-checkbox-outlined" data-bs-toggle="tooltip" 
-                        data-bs-placement="top" title="White" onclick="changeBackgroundOnPreview('1')">
+                        <label class="btn btn-sm btn-outline-primary-cus ms-2" for="white-cosy-checkbox-outlined"  id="bckgChange1" onclick="changeBackgroundOnPreview('1')">
                             <i class="fas fa-square text-white"></i>
                         </label>
                         
                         <input type="radio" class="btn-check" name="cosy-background" id="black-cosy-checkbox-outlined" autocomplete="off">
-                        <label class="btn btn-sm btn-outline-primary-cus ms-2" for="black-cosy-checkbox-outlined" data-bs-toggle="tooltip" 
-                        data-bs-placement="top" title="Dark" onclick="changeBackgroundOnPreview('2')">
+                        <label class="btn btn-sm btn-outline-primary-cus ms-2" for="black-cosy-checkbox-outlined" id="bckgChange2" onclick="changeBackgroundOnPreview('2')">
                             <i class="fas fa-square text-dark"></i>
                         </label>
                     </div>
-                    <select class="form-select form-select-sm bg-dark-light" style="width: 200px;" aria-label="Default select example">
-                        <option selected>Select type</option>
+                    <script>
+                        tippy('#bckgChangetr', {
+                            content: "Transparent",
+                            animation: 'shift-away-extreme',
+                        });
+                        tippy('#bckgChange1', {
+                            content: "White",
+                            animation: 'shift-away-extreme',
+                        });
+                        tippy('#bckgChange2', {
+                            content: "Dark",
+                            animation: 'shift-away-extreme',
+                        });
+                    </script>
+                    <select class="form-select form-select-sm bg-dark-light" style="width: 200px;" id="cosyTypeModel" onchange="changeCosyType(); this.selectedIndex = 0;">
+                        <option value="0" selected>Select type</option>
                         <option value="1">Model Lineup</option>
                         <option value="2">Localnav</option>
                         <option value="3">Globalnav</option>
@@ -66,20 +75,20 @@
                     </select>
                 </div>
             </div>
-            <div class="bg-dark rounded-15 w-100 p-3 mt-3 flex-fill d-flex justify-content-center align-items-center" id="imagePreview">
+            <div class="bg-dark rounded-15 w-100 p-3 mt-3 flex-fill d-flex justify-content-center align-items-center" id="imagePreview" style="overflow: hidden;">
                 <p class="small text-muted text-center mt-3">Please Choose a Model</p>
             </div>
             <div id="imagePreviewCache" class="d-none"></div>
         </div>
         <div class="col-5 pe-0">
-            <div class="bg-dark rounded-15 w-100 p-3" style="height: calc(100vh - 340px); overflow-y: hidden;">
+            <div class="bg-dark rounded-15 w-100 p-3" style="height: calc(100vh - 345px); overflow-y: hidden;">
                 <h6>Colors:</h6>
                 <hr>
                 <div>
-                    <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                    <ul class="nav nav-pills mb-3" id="pills-tab-Cosy" role="tablist">
                         <li class="nav-item me-3" role="presentation">
-                          <button class="nav-link active" id="pills-colorCosy-tab" data-bs-toggle="pill" data-bs-target="#pills-colorCosy" 
-                          type="button" role="tab" aria-controls="pills-colorCosy" aria-selected="true"><i class="far fa-circle"></i> Color</button>
+                          <button class="nav-link active" id="pills-color-tab" data-bs-toggle="pill" data-bs-target="#pills-color" 
+                          type="button" role="tab" aria-controls="pills-color" aria-selected="true"><i class="far fa-circle"></i> Color</button>
                         </li>
                         <li class="nav-item me-3" role="presentation">
                           <button class="nav-link" id="pills-upholstery-tab" data-bs-toggle="pill" data-bs-target="#pills-upholstery" 
@@ -87,11 +96,11 @@
                         </li>
                         <li class="nav-item" role="presentation">
                           <button class="nav-link" id="pills-trims-tab" data-bs-toggle="pill" data-bs-target="#pills-trims" 
-                          type="button" role="tab" aria-controls="pills-trims" aria-selected="false"><i class="fas fa-circle"></i> Wheels</button>
+                          type="button" role="tab" aria-controls="pills-trims" aria-selected="false"><img src="../img/trim-wheel.png" width="20px" height="20px"> Wheels</button>
                         </li>
                     </ul>
-                    <div class="tab-content" id="pills-tabContent">
-                        <div class="tab-pane fade show active" id="pills-colorCosy" role="tabpanel" aria-labelledby="pills-colorCosy-tab" style="height: calc(100vh - 500px); overflow-y: auto;">
+                    <div class="tab-content" id="pills-tab-CosyContent">
+                        <div class="tab-pane fade show active" id="pills-color" role="tabpanel" aria-labelledby="pills-color-tab" style="height: calc(100vh - 500px); overflow-y: auto;">
                             <div id="colorsPreview" class="d-flex flex-column">
                                 <p class="small text-muted text-center mt-3">Please Choose a Model</p>
                             </div>
