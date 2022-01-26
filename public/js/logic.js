@@ -1,5 +1,5 @@
 var clipboard = new ClipboardJS('.btn-to-clip');
-
+var _ = require('lodash');
 
 const animateCSS = (element, animation, prefix = 'animate__', speed = 'no') =>
   new Promise((resolve, reject) => {
