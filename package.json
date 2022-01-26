@@ -7,7 +7,8 @@
     "start": "electron .",
     "dist": "electron-builder",
     "dbwipe": "node ./public/db/wipe.js",
-    "packageOSX": "electron-packager . \"Content Automation\" --overwrite --platform=darwin --arch=x64 --icon=./public/img/logo.icns --prune=true --out=release-builds",
+    "mac-dmg": "electron-installer-dmg ./release-builds/Content-Automation-darwin-x64/Content-Automation.app electron-content-automation",
+    "packageOSX": "electron-packager . \"Content-Automation\" --overwrite --platform=darwin --arch=x64 --icon=./public/img/logo.icns --prune=true --out=release-builds",
     "packageWIN": "electron-packager . Content-Automation --overwrite --platform=win32 --arch=ia32 --icon=/public/img/logo.png --prune=true --out=release-builds"
   },
   "repository": {
@@ -24,6 +25,7 @@
     "electron": "^13.2.2",
     "electron-builder": "^22.11.7",
     "electron-installer-dmg": "^3.0.0",
+    "electron-packager": "^15.4.0",
     "node-sass": "^6.0.1",
     "sass": "^1.38.1"
   },
