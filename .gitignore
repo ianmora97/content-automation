@@ -20,3 +20,14 @@ node_modules/
 .vscode/
 package-lock.json
 release-builds
+
+#Backend
+/backend/node_modules
+/backend/package-lock.json
+/backend/release-builds
+
+#Frontend
+/frontend/node_modules
+/frontend/package-lock.json
+/frontend/release-builds
+

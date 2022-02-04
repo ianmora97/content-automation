@@ -1,0 +1,13 @@
+{
+    "host": "localhost",
+    "port": 8895,
+    "routes": [
+        {
+            "name": "GET CONFIG",
+            "path": "/api/v1/get/config",
+            "method": "GET",
+            "description": "Get basic configuration",
+            "parameters": []
+        }
+    ]
+}
