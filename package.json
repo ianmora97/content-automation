@@ -4,6 +4,7 @@
   "description": "",
   "main": "main.js",
   "scripts": {
+    "local": "sh ./dev.sh",
     "start": "electron .",
     "dist": "electron-builder",
     "dbwipe": "node ./public/db/wipe.js",

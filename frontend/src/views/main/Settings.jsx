@@ -34,8 +34,8 @@ export class Settings extends Component {
         try {
             const res = await axios.post(url, data);
             if (res.status === 200) {
-                sessionStorage.setItem('token_auth', email);
-                sessionStorage.setItem('user_auth', token);
+                localStorage.setItem('token_auth', email);
+                localStorage.setItem('user_auth', token);
             } else {
                 console.log('Error: ', res.status);
             }
@@ -54,15 +54,14 @@ export class Settings extends Component {
     }
     componentDidMount(){
         this.loadConfigDB();
-        this.loadPathsDB();
     }
     loadConfigDB = async () =>{
         const url = 'http://localhost:8895/api/v1/get/config';
         try {
             const res = await axios.get(url);
             if (res.status === 200) {
-                sessionStorage.setItem('email_auth', res.data.data.c_email);
-                sessionStorage.setItem('token_auth', res.data.data.c_token);
+                localStorage.setItem('email_auth', res.data.data.c_email);
+                localStorage.setItem('token_auth', res.data.data.c_token);
                 this.setState({
                     form:{
                         email: res.data.data.c_email,
@@ -71,30 +70,6 @@ export class Settings extends Component {
                     cosyYear: res.data.data.p_year,
                     favView: res.data.data.fav_view,
                 });
-            } else {
-                console.log('Error');
-            }
-        } catch (error) {
-            console.log(error);
-        }
-    }
-    loadPathsDB = async () =>{
-        const url = 'http://localhost:8895/api/v1/get/configPaths';
-        try {
-            const res = await axios.get(url);
-            if (res.status === 200) {
-                this.setState({
-                    domain: res.data.data.domain,
-                    modelList: res.data.data.modelList,
-                    start: res.data.data.start,
-                    options: res.data.data.options,
-                    specs: res.data.data.specs,
-                });
-                sessionStorage.setItem('domain', res.data.data.domain);
-                sessionStorage.setItem('modelList', res.data.data.modelList);
-                sessionStorage.setItem('start', res.data.data.start);
-                sessionStorage.setItem('options', res.data.data.options);
-                sessionStorage.setItem('specs', res.data.data.specs);
             } else {
                 console.log('Error');
             }
@@ -142,33 +117,6 @@ export class Settings extends Component {
                         }
                     </select>
                 </div>
-                <div className="py-2">
-                    <hr/>
-                </div>
-                <h4 className="pb-2">CoSy</h4>
-                <div className="mb-3">
-                    <label htmlFor="cosyDomain" className="form-label text-light small mb-1">Domain</label>
-                    <input type="text" className="form-control bg-dark border-0" name="domain" onChange={this.handleChange} placeholder="Cosy domain..." value={this.state.domain}/>
-                </div>
-                <div className="mb-3">
-                    <label htmlFor="cosyModelList" className="form-label text-light small mb-1">Model Images List</label>
-                    <input type="text" className="form-control bg-dark border-0" name="modelList" onChange={this.handleChange} placeholder="Model Images List..." value={this.state.modelList}/>
-                </div>
-                <div className="mb-3">
-                    <label htmlFor="cosyStart" className="form-label text-light small mb-1">Image API</label>
-                    <input type="text" className="form-control bg-dark border-0" name="start" onChange={this.handleChange} placeholder="Image API..." value={this.state.start}/>
-                </div>
-                <div className="mb-3">
-                    <label htmlFor="cosyOptions" className="form-label text-light small mb-1">Image API Options</label>
-                    <input type="text" className="form-control bg-dark border-0" name="options" onChange={this.handleChange} placeholder="Image API Options..." value={this.state.options}/>
-                </div>
-                <div className="mb-3">
-                    <label htmlFor="techspecsApi" className="form-label text-light small mb-1">Techspecs API</label>
-                    <input type="text" className="form-control bg-dark border-0" name="specs" onChange={this.handleChange} placeholder="Techspecs API..." value={this.state.specs}/>
-                </div>
-                <button type="button" className="btn btn-primary"  id="validateButtonCosy">
-                    <i className="fas " id="validateButtonCosyIcon"></i><span>Save</span>
-                </button>
             </div>
         );
     }
