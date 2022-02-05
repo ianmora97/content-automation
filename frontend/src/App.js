@@ -5,6 +5,7 @@ import Menu from "./views/components/Menu.jsx";
 import MainContainer from "./views/components/MainContainer.jsx";
 import Cosy from "./views/main/Cosy.jsx";
 import Offers from "./views/main/Offers.jsx";
+import Settings from "./views/main/Settings.jsx";
 
 class App extends Component {
 	render() {
@@ -24,6 +25,14 @@ class App extends Component {
 							<Menu location={"offers"}/>
 							<MainContainer headline={"Offers"}>
 								<Offers/>
+							</MainContainer>
+						</div>
+					}/>
+					<Route path="/settings" element={
+						<div id="wrapper">
+							<Menu location={"settings"}/>
+							<MainContainer headline={"Settings"}>
+								<Settings/>
 							</MainContainer>
 						</div>
 					}/>
