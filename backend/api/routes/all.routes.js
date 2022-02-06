@@ -11,13 +11,17 @@ router.get("/api/v1/get/config", config.getConfig);
 // TODO: get paths config from DB
 router.get("/api/v1/get/configPaths", config.getConfigPaths);
 
-// ?@route POST /api/v1/set/setJira
+// ?@route POST /api/v1/set/jira
 // TODO: get basic config from DB
 router.post("/api/v1/set/jira", config.setConfigJira);
 
 // ?@route GET /api/v1/get/nacodes
 // TODO: get basic config from endpoint
 router.get("/api/v1/get/nacodes", nacodes.getNACodes);
+
+// ?@route GET /api/v1/get/cosy/info
+// TODO: get basic config from endpoint
+router.get("/api/v1/get/cosy/info", nacodes.getInfo);
 
 
 module.exports = router;

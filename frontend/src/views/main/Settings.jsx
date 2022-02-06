@@ -60,8 +60,6 @@ export class Settings extends Component {
         try {
             const res = await axios.get(url);
             if (res.status === 200) {
-                localStorage.setItem('email_auth', res.data.data.c_email);
-                localStorage.setItem('token_auth', res.data.data.c_token);
                 this.setState({
                     form:{
                         email: res.data.data.c_email,

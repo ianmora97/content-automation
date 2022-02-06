@@ -51,6 +51,25 @@ h6{
 small{
     font-size: 0.5rem !important;
 }
+.curtain{
+    background-color: #0e0e0e;
+    transition: all 0.8s cubic-bezier(1, 0, 1, 1);
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    z-index: 9999;
+    transform: translate(-100%, -150%);
+    &.active{
+        transform: translate(0, 0);
+    }
+}
+.hoverImageIcon{
+    transition: all 0.3s ease-in-out;
+    &:hover{
+        transform: scale(1.2);
+        box-shadow: rgba(70, 89, 228, 0.08) 0px 0px 20px 3px, 
+    }
+}
 .label-2{
     font-size: 13px;
     line-height: 16px;
@@ -225,19 +244,19 @@ small{
 }
 .animate_delay_t1{
     animation-delay:0.2s;
-  }
-  
-  .animate_delay_t2{
+}
+
+.animate_delay_t2{
     animation-delay:0.7s;
-  }
-  
-  .animate_delay_t3{
+}
+
+.animate_delay_t3{
     animation-delay:1.2s;
-  }
-  
-  .animate_delay_t4{
+}
+
+.animate_delay_t4{
     animation-delay:1.7s;
-  }
+}
 // ! Buttons
 
 .btn-primary{
