@@ -10,6 +10,24 @@ body{
 .wrapper-800{
   width:800px;
 }
+.inline-item{
+  text-decoration: none !important;
+  font-size: 13px;
+  background-color: #1A1A1A;
+  color: #4659e4;
+  cursor: pointer;
+}
+/* .inline-item::before{
+  content: "\2B55";
+  padding-right: 5px;
+} */
+.inline-item.active{
+  color: #ffc107;
+}
+/* .inline-item.active::before{
+  content: "\2705";
+  padding-right: 5px;
+} */
 .apart{
   display: flex;
   justify-content: space-between;
@@ -73,12 +91,26 @@ h6{
   display: inline-block;
 }
 
-a{
+a, .a{
   color:#4659e4;
+  text-decoration: underline;
+  cursor: pointer;
   font-size:15px;
+}
+.link{
+  color:#4659e4;
+  text-decoration: underline;
+  cursor: pointer;
+  font-size:13px;
+}
+.text-white{
+  color:#fff;
 }
 .bold{
   font-weight: bold;
+}
+.ms-2{
+  margin-left: .2rem;
 }
 .ms-3{
   margin-left:.5rem;
@@ -193,24 +225,21 @@ button.current {
   background-color: transparent;
   color: #ffffff;
 }
+.btn-sm-primary{
+  padding: 3px 5px;
+  font-size: 10px;
+  min-height: min-content;
+  background-color: #4659e4;
+  color:#fff;
+}
+.btn-sm-primary:hover{
+  background-color: #333f99;
+}
 .btn-min{
   min-width: 45px;
 }
 .btn-sm{
   height: 30px;
-}
-.show-bmw-grid-overlay:before {
-  content: "";
-  position: fixed;
-  margin: 0 auto;
-  width: calc(100vw - var(--scrollbar-width));
-  height: 100vh;
-  background-image: repeating-linear-gradient(
-90deg
-,transparent,transparent calc(calc(100vw - var(--scrollbar-width)) / 25),rgba(126,195,241,.25) calc(calc(100vw - var(--scrollbar-width)) / 25),rgba(126,195,241,.25) calc(calc(calc(100vw - var(--scrollbar-width)) / 25) * 2));
-  background-size: calc(100vw - var(--scrollbar-width)) 100%;
-  z-index: 1000;
-  pointer-events: none;
 }
 .d-block{
   display: block;
