@@ -2,7 +2,6 @@
   "name": "Content Automation",
   "description": "Content process automation!",
   "version": "1.0",
-  "id": "nplcpnknfeobdjhdcloeemnicpafjkbl",
   "manifest_version": 3,
   "content_scripts": [
     {
