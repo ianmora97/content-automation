@@ -3,6 +3,7 @@ var g_cost_typeMime = 'png'
 var g_cosy_bckg = "transparent";
 var g_fetch_options = new Array();
 var g_cosy_wheel = "";
+var g_cosy_quality = '70';
 
 var g_cosy_modelName = "";
 var g_cosy_additional_params = "";
@@ -35,6 +36,8 @@ function onsearchBaronModelCodesKey(){
             if(obj.code.toLowerCase().includes(search)){
                 return true;
             }else if(obj.name.toLowerCase().includes(search)){
+                return true;
+            }else if(obj.series.name.toLowerCase().includes(search)){
                 return true;
             }
         });
@@ -126,7 +129,7 @@ function showimagePathsCosysAll(response,colors,fabric,wheels,current_trim) {
     let paint = colors.filter(obj => {return obj.code == paintName;});
     let uphol = fabric.filter(obj => {return obj.code == upholName;});
     
-    walkaround_path = `${cosy_config.domain}`+walk360+`&quality=100&bkgnd=${g_cosy_bckg}&resp=${g_cost_typeMime}${g_cosy_additional_params}&angle=${g_cosy_angle}`;
+    walkaround_path = `${cosy_config.domain}`+walk360+`&quality=${g_cosy_quality}&bkgnd=${g_cosy_bckg}&resp=${g_cost_typeMime}${g_cosy_additional_params}&angle=${g_cosy_angle}`;
     showImageCosyAll(walkaround_path);
     bringAllAnglesCache(walkaround_path);
     showPathImageCosyOnLoadAll(walkaround_path);
@@ -140,6 +143,15 @@ function showimagePathsCosysAll(response,colors,fabric,wheels,current_trim) {
     $('#upholCosyModel').html(`${uphol[0].code} - ${uphol[0].name}`);
     $('#trimCosyModel').html(`${current_trim.code} - ${current_trim.name}`);
 }
+
+function statsImage(url){
+    fetch(url).then(resp => resp.blob())
+    .then(blob => {
+        let kb = parseInt(blob.size / 1024) + 'Kb';
+        $("#sizeCosyModel").html(kb);
+    });
+}
+
 function showPathImageCosyOnLoadAll(path){
     $(`#pathCosyModelContainer`).html(`
         <span class="user-select-all text-break" data-clipboard-text="${path}" id="pathCosyModel">${path}</span>
@@ -192,8 +204,9 @@ function showTrims(trims){
 }
 function showImageCosyAll(path){
     $(`#imagePreview`).html(`
-        <img src="${path}" class="img-fluid imagePreview" id="imageCosyPreview_c" width="100%" style="cursor: ew-resize; ${g_cosy_additional_styles}">
+        <img src="${path}" class="img-fluid imagePreview border border-dark-light" id="imageCosyPreview_c" width="100%" style="cursor: ew-resize; ${g_cosy_additional_styles}">
     `)
+    statsImage(path);
     DRAGIMAGECOSYFUNC();
 }
 function bringAllAnglesCache(walkaround_path){

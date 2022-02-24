@@ -1,28 +1,37 @@
 <h2 class="fw-bold mb-0">CoSy Images</h2>
 <hr>
 <div style="height: calc(100vh - 140px); overflow-y: auto;">
-    <div class="bg-dark rounded-15 w-100 my-2" style="height: 180px; overflow: auto;">
-        <div class="px-3">
-            <label for="searchBaronModelCodes" class="my-2">Search model</label>
-            <input class="form-control bg-dark-light" style="width: 400px;" id="searchBaronModelCodes" type="text" placeholder="Search" aria-label="Search Tab">
-        </div>
-        <div class="position-relative">
-            <div class="d-flex justify-content-start align-items-stretch gap-2 p-3" id="modelCodesSearch" style=" overflow-x: auto;">
-                <div class="d-flex justify-content-center w-100">
-                    <div class="spinner-border" role="status">
-                        <span class="visually-hidden">Loading...</span>
+    <div class="row mx-0">
+        <div class="col-6 ps-0">
+            <div class="bg-dark rounded-15 w-100 my-2 px-3 pt-3" style="height: 180px; overflow: hidden;">
+                <div class="">
+                    <input class="form-control bg-dark-light" style="width: 80%;" id="searchBaronModelCodes" type="text" placeholder="Search" aria-label="Search Tab">
+                </div>
+                <div class="position-relative">
+                    <div class="d-flex justify-content-start align-items-stretch gap-2 pt-3" id="modelCodesSearch" style=" overflow-x: auto;">
+                        <div class="d-flex justify-content-center w-100">
+                            <div class="spinner-border" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="row mx-auto mt-3 align-items-stretch">
-        <div class="col-7 ps-0 d-flex flex-column">
-            <div class="bg-dark rounded-15 w-100 p-3">
+        <div class="col-6 pe-0">
+            <div class="bg-dark rounded-15 w-100 my-2 p-3" style="height: 180px; overflow: auto;">
                 <small class="d-block small">Color: <span class="fw-bold text-secondary" id="colorCosyModel"><small class="small text-muted text-center m-0">Please Choose a Model</small></span></small>
                 <small class="d-block small">Upholstery: <span class="fw-bold text-secondary" id="upholCosyModel"><small class="small text-muted text-center m-0">Please Choose a Model</small></span></small>
                 <small class="d-block small">Trim: <span class="fw-bold text-secondary" id="trimCosyModel"><small class="small text-muted text-center m-0">Please Choose a Model</small></span></small>
                 <hr>
+                <small class="d-block small">Size: <span class="fw-bold text-secondary" id="sizeCosyModel"><small class="small text-muted text-center m-0">Please Choose a Model</small></span></small>
+            </div>
+        </div>
+    </div>
+    <div class="row mx-auto mt-2 align-items-stretch">
+        <div class="col-7 ps-0 d-flex flex-column">
+            <div class="bg-dark rounded-15 w-100 p-3">
+                
                 <div class="d-flex justify-content-between align-items-center">
                     <small class="d-block small">Path:</small>
                     <button type="button" class="btn btn-primary btn-xs shadow-none btn-to-clip" data-clipboard-target="#pathCosyModel" id="pathCosyModelBtn"><i class="fas fa-copy"></i> Copy Path</button>
@@ -82,8 +91,6 @@
         </div>
         <div class="col-5 pe-0">
             <div class="bg-dark rounded-15 w-100 p-3" style="height: calc(100vh - 345px); overflow-y: hidden;">
-                <h6>Colors:</h6>
-                <hr>
                 <div>
                     <ul class="nav nav-pills mb-3" id="pills-tab-Cosy" role="tablist">
                         <li class="nav-item me-3" role="presentation">

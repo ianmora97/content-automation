@@ -103,8 +103,7 @@ function showEngineType(models) {
 
 
 function filter22ModelsFirst(a,b){
-    let regx = new RegExp(`${json_config.p_year}([0-9]|[A-Za-z])`)
-    if(a.code.match(regx)){
+    if(a.code.substr(0,2) == json_config.p_year){
         return 1;
     }
     return 0;
