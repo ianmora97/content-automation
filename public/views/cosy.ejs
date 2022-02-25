@@ -2,7 +2,7 @@
 <hr>
 <div style="height: calc(100vh - 140px); overflow-y: auto;">
     <div class="row mx-0">
-        <div class="col-6 ps-0">
+        <div class="col-7 ps-0">
             <div class="bg-dark rounded-15 w-100 my-2 px-3 pt-3" style="height: 180px; overflow: hidden;">
                 <div class="">
                     <input class="form-control bg-dark-light" style="width: 80%;" id="searchBaronModelCodes" type="text" placeholder="Search" aria-label="Search Tab">
@@ -18,13 +18,19 @@
                 </div>
             </div>
         </div>
-        <div class="col-6 pe-0">
+        <div class="col-5 pe-0">
             <div class="bg-dark rounded-15 w-100 my-2 p-3" style="height: 180px; overflow: auto;">
-                <small class="d-block small">Color: <span class="fw-bold text-secondary" id="colorCosyModel"><small class="small text-muted text-center m-0">Please Choose a Model</small></span></small>
-                <small class="d-block small">Upholstery: <span class="fw-bold text-secondary" id="upholCosyModel"><small class="small text-muted text-center m-0">Please Choose a Model</small></span></small>
-                <small class="d-block small">Trim: <span class="fw-bold text-secondary" id="trimCosyModel"><small class="small text-muted text-center m-0">Please Choose a Model</small></span></small>
+                <small class="d-block small"><span class="fw-bold">Color:</span> <span class="text-light" id="colorCosyModel"><small class="small text-muted text-center m-0">Please Choose a Model</small></span></small>
+                <small class="d-block small"><span class="fw-bold">Upholstery:</span> <span class="text-light" id="upholCosyModel"><small class="small text-muted text-center m-0">Please Choose a Model</small></span></small>
+                <small class="d-block small"><span class="fw-bold">Trim:</span> <span class="text-light" id="trimCosyModel"><small class="small text-muted text-center m-0">Please Choose a Model</small></span></small>
                 <hr>
-                <small class="d-block small">Size: <span class="fw-bold text-secondary" id="sizeCosyModel"><small class="small text-muted text-center m-0">Please Choose a Model</small></span></small>
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <small class="d-block small"><span class="fw-bold">Size:</span> <span class="text-light" id="sizeCosyModel"><small class="small text-muted text-center m-0">Please Choose a Model</small></span></small>
+                        <small class="d-block small"><span class="fw-bold">Width:</span> <span class="text-light" id="widthCosyModel"><small class="small text-muted text-center m-0">Please Choose a Model</small></span></small>
+                        <small class="d-block small"><span class="fw-bold">Height:</span> <span class="text-light" id="heightCosyModel"><small class="small text-muted text-center m-0">Please Choose a Model</small></span></small>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -34,7 +40,10 @@
                 
                 <div class="d-flex justify-content-between align-items-center">
                     <small class="d-block small">Path:</small>
-                    <button type="button" class="btn btn-primary btn-xs shadow-none btn-to-clip" data-clipboard-target="#pathCosyModel" id="pathCosyModelBtn"><i class="fas fa-copy"></i> Copy Path</button>
+                    <div>
+                        <button type="button" class="btn btn-outline-primary btn-xs shadow-none me-2" onclick="downloadImage()"><i class="fa-solid fa-download"></i> Download</button>
+                        <button type="button" class="btn btn-outline-primary btn-xs shadow-none btn-to-clip" data-clipboard-target="#pathCosyModel" id="pathCosyModelBtn"><i class="fas fa-copy"></i> Copy Path</button>
+                    </div>
                 </div>
                 <small class="d-block small text-primary"><span id="pathCosyModelContainer"><small class="fw-bold small text-muted text-center m-0">Please Choose a Model</small></span></small>
                 <script>
@@ -44,44 +53,60 @@
                         animation: 'shift-away-extreme',
                     });
                 </script>
-                <div class="d-flex justify-content-between align-items-center mt-4">
-                    <div class="d-flex justify-content-start">
-                        <input type="radio" class="btn-check" name="cosy-background" id="trans-cosy-checkbox-outlined" autocomplete="off" checked>
-                        <label class="btn btn-sm btn-outline-primary-cus" for="trans-cosy-checkbox-outlined" id="bckgChangetr" onclick="changeBackgroundOnPreview('transparent')">
-                            <i class="far fa-square"></i>
-                        </label>
+                <hr>
+                <div class="d-flex justify-content-start align-items-center mt-1">
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-sm btn-dark-light dropdown-toggle" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">
+                            <span class="text-light"><i class="fas fa-square text-white"></i> Background</span>
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-start dropdown-menu-dark">
+                            <button class="dropdown-item" for="trans-cosy-checkbox-outlined" id="bckgChangetr" onclick="changeBackgroundOnPreview('transparent')">
+                                <i class="far fa-square"></i> Transparent
+                            </button>
 
-                        <input type="radio" class="btn-check" name="cosy-background" id="white-cosy-checkbox-outlined" autocomplete="off" >
-                        <label class="btn btn-sm btn-outline-primary-cus ms-2" for="white-cosy-checkbox-outlined"  id="bckgChange1" onclick="changeBackgroundOnPreview('1')">
-                            <i class="fas fa-square text-white"></i>
-                        </label>
-                        
-                        <input type="radio" class="btn-check" name="cosy-background" id="black-cosy-checkbox-outlined" autocomplete="off">
-                        <label class="btn btn-sm btn-outline-primary-cus ms-2" for="black-cosy-checkbox-outlined" id="bckgChange2" onclick="changeBackgroundOnPreview('2')">
-                            <i class="fas fa-square text-dark"></i>
-                        </label>
+                            <button class="dropdown-item" for="white-cosy-checkbox-outlined"  id="bckgChange1" onclick="changeBackgroundOnPreview('1')">
+                                <i class="fas fa-square text-white"></i> White
+                            </button>
+                            
+                            <button class="dropdown-item" for="black-cosy-checkbox-outlined" id="bckgChange2" onclick="changeBackgroundOnPreview('2')">
+                                <i class="fas fa-square text-dark"></i> Black
+                            </button>
+                        </div>
                     </div>
-                    <script>
-                        tippy('#bckgChangetr', {
-                            content: "Transparent",
-                            animation: 'shift-away-extreme',
-                        });
-                        tippy('#bckgChange1', {
-                            content: "White",
-                            animation: 'shift-away-extreme',
-                        });
-                        tippy('#bckgChange2', {
-                            content: "Dark",
-                            animation: 'shift-away-extreme',
-                        });
-                    </script>
-                    <select class="form-select form-select-sm bg-dark-light" style="width: 200px;" id="cosyTypeModel" onchange="changeCosyType(); this.selectedIndex = 0;">
-                        <option value="0" selected>Select type</option>
-                        <option value="1">Model Lineup</option>
-                        <option value="2">Localnav</option>
-                        <option value="3">Globalnav</option>
-                        <option value="3">All BMWs</option>
-                    </select>
+                    <div class="btn-group ms-2">
+                        <button type="button" class="btn btn-sm btn-dark-light dropdown-toggle" id="cosyTypeModel" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">
+                            <span class="text-light"><i class="fa-solid fa-circle-dot"></i> Type</span>
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-start dropdown-menu-dark">
+                            <button class="dropdown-item" for="trans-cosy-checkbox-outlined" id="bckgChangetr" onclick="changeCosyType('0')">
+                                <i class="fa-solid fa-circle-dot"></i> Basic
+                            </button>
+
+                            <button class="dropdown-item" for="trans-cosy-checkbox-outlined" id="bckgChangetr" onclick="changeCosyType('1')">
+                                <i class="fa-solid fa-circle-dot"></i> Model Lineup
+                            </button>
+
+                            <button class="dropdown-item" for="white-cosy-checkbox-outlined"  id="bckgChange1" onclick="changeCosyType('2')">
+                                <i class="fa-solid fa-circle-dot"></i> Localnav
+                            </button>
+
+                            <button class="dropdown-item" for="white-cosy-checkbox-outlined"  id="bckgChange1" onclick="changeCosyType('6')">
+                                <i class="fa-solid fa-circle-dot"></i> BYO
+                            </button>
+                            
+                            <button class="dropdown-item" for="black-cosy-checkbox-outlined" id="bckgChange2" onclick="changeCosyType('3')">
+                                <i class="fa-solid fa-circle-dot"></i> Globalnav
+                            </button>
+                            
+                            <button class="dropdown-item" for="black-cosy-checkbox-outlined" id="bckgChange2" onclick="changeCosyType('4')">
+                                <i class="fa-solid fa-circle-dot"></i> All BMWs
+                            </button>
+                            
+                            <button class="dropdown-item" for="black-cosy-checkbox-outlined" id="bckgChange2" onclick="changeCosyType('5')">
+                                <i class="fa-solid fa-circle-dot"></i> Make it Yours
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="bg-dark rounded-15 w-100 p-3 mt-3 flex-fill d-flex justify-content-center align-items-center" id="imagePreview" style="overflow: hidden;">
