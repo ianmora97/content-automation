@@ -327,7 +327,6 @@ function dragMoveListener (event) {
 function moveTicketToTicketDeploy(ticket) {
     let ticketId = ticket.split('-')[2];
     let ticketName = g_Tickets.find(ticket => ticket.code == ticketId);
-    console.log(ticketName);
     $('#deploymentticketsList').append(`
     <div class="p-2 bg-dark mb-2" id="deploy-cont-${ticketName.code}">
         <div class="d-flex justify-content-start align-items-center">

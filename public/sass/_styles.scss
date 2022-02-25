@@ -3,10 +3,11 @@ $secondary:#F2CC39;
 $success:#28a745;
 $info:#3076f8;
 $warning:#fdb00c;
-$danger:#dc3545;
+$danger:#eb4a5a;
 $light:#cfcece;
 $dark:#1A1A1A;
 $dark-light:#242424;
+$white:#fff;
 
 $theme-colors: (
     "primary":    $primary,
@@ -22,6 +23,12 @@ $theme-colors: (
 
 $list-group-color: white;
 $list-group-bg: $dark;
+
+$table-cell-padding-y-sm: .15rem;
+$table-cell-padding-x-sm: .15rem;
+$table-hover-color: $light;
+$table-hover-bg-factor: .075;
+$table-hover-bg: rgba($dark-light, $table-hover-bg-factor);
 
 body{
     background-color: $dark !important;
@@ -48,6 +55,18 @@ h6{
 
 small{
     font-size: 0.5rem !important;
+}
+.table-custom{
+    color: #ffffff !important;
+    tr{
+        border: none !important;
+        th{
+            font-size: 13px !important;
+        }
+        td{
+            font-size: 12px !important;
+        }
+    }
 }
 .label-2{
     font-size: 13px;
@@ -88,7 +107,16 @@ small{
 ::placeholder {
     font-size: 12px;
 }
-
+.textHoverAria{
+    transition: all .5s;
+    .ariaText{
+        transition: all .5s;
+    }
+    &:hover{
+        transition: all .5s;
+        
+    }
+}
 .form-control, .form-select{
     outline: none !important;
     border: none !important;
@@ -284,7 +312,24 @@ small{
         background-color: $warning;
     }
 }
-
+.btn-undeline-primary{
+    background-color: transparent !important;
+    border-bottom: 1px solid $primary !important;
+    color: $primary !important;
+    border-radius: 0px !important;
+    &:hover, &:focus{
+        color: $white !important;
+    }
+}
+.btn-undeline-light{
+    background-color: transparent !important;
+    border-bottom: 1px solid $success !important;
+    color: $success !important;
+    border-radius: 0px !important;
+    &:hover, &:focus{
+        color: $white !important;
+    }
+}
 // ! ---------------------- nav --------------------
 
 // ! ---------------------- Modals --------------------

@@ -304,7 +304,6 @@ var g_sitemap_sites = new Array()
 function sitemapFetch(){
     sitemap.fetch('https://www.bmwusa.com/sitemap.xml').then(function(sites) {
         g_sitemap_sites = sites.sites;
-        console.log(g_sitemap_sites);
     });
 }
 

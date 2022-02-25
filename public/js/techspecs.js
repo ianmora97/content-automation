@@ -51,7 +51,6 @@ async function getTechSpecsApiV2(model){
 function printNaCodeSpecs(model,code){
     $('#techSpecsfromNaCode').html('')
     let template = g_mapTemplates_techspecs.get(code);
-    console.log(template, code, model)
     if(template != undefined){
         if(template.name == "SAV"){ //SAV Template
             $('#techSpecsfromNaCode').html(template_SAV(model))

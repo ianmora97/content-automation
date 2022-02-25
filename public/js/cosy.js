@@ -157,22 +157,44 @@ function showimagePathsCosysAll(response,colors,fabric,wheels,current_trim) {
 
     g_cosy_wheel = current_trim.code;
 
-    $('#colorCosyModel').html(`${paint[0].code} - ${paint[0].name}`);
-    $('#upholCosyModel').html(`${uphol[0].code} - ${uphol[0].name}`);
-    $('#trimCosyModel').html(`${current_trim.code} - ${current_trim.name}`);
+    $('#colorCosyModel').html(`<span id="paintCodeCosy">${paint[0].code}</span> - ${paint[0].name}`);
+    $('#upholCosyModel').html(`<span id="fabricCodeCosy">${uphol[0].code}</span> - ${uphol[0].name}`);
+    $('#trimCosyModel').html(`<span id="trimCodeCosy">${current_trim.code}</span> - ${current_trim.name}`);
+    tippy('#paintCodeCosy', {
+        content: "Copied!",
+        trigger: 'click',
+        animation: 'shift-away-extreme',
+    });
+    tippy('#fabricCodeCosy', {
+        content: "Copied!",
+        trigger: 'click',
+        animation: 'shift-away-extreme',
+    });
+    tippy('#trimCodeCosy', {
+        content: "Copied!",
+        trigger: 'click',
+        animation: 'shift-away-extreme',
+    });
+    $("#qualityRangeLabel").html(`${g_cosy_quality}%`);
 }
 
 function statsImage(url){
     fetch(url).then(resp => resp.blob())
     .then(blob => {
-        let kb = parseInt(blob.size / 1024);
-        $("#sizeCosyModel").html(`<span class="text-${kb < 70 ? "success": kb == 70 ? "warning" : "danger"}">${kb} Kb</span>`);
+        let bo = parseInt(blob.size / 1024) <= 70;
+        $("#sizeCosyModel").html(`<span id="qualityIconText" class="text-${bo ? "success": "danger"}">${parseInt(blob.size / 1024)} Kb ${bo ? `<i class="fa-solid fa-circle-check text-success"></i>` : `<i class="fa-solid fa-circle-xmark text-danger"></i>`}</span>`);
+        tippy('#qualityIconText', {
+            content: `${bo ? "Cosy Optimized" : "Cosy Not Optimized"}`,
+            placement: 'top',
+            animation: 'shift-away-extreme',
+        });
     });
     var image = new Image();
     image.src = url;
     image.onload = function() {
-        $("#widthCosyModel").html(`<span class="text-${image.width <= 600 ? "success": "danger"}">${image.width} px</span>`);
+        $("#widthCosyModel").html(`<span class="text-${image.width <= 600 ? "success": "danger"}">${image.width} px ${image.width <= 600 ? `<i class="fa-solid fa-circle-check text-success"></i>` : `<i class="fa-solid fa-circle-xmark text-danger"></i>`}</span>`);
         $("#heightCosyModel").html(`${image.height} px`);
+        // tooltip
     }
 }
 function showPathImageCosyOnLoadAll(path){
@@ -379,7 +401,12 @@ function changePaintOnPreviewAll(paint){
     showImageCosyAll(new_path);
     bringAllAnglesCache(new_path);
     let paintf = _.find(g_fetch_options, ['code', paint]);
-    $('#colorCosyModel').html(`${paintf.code} - ${paintf.name}`);
+    $('#colorCosyModel').html(`<span id="paintCodeCosy">${paintf.code}</span> - ${paintf.name}`);
+    tippy('#paintCodeCosy', {
+        content: "Copied!",
+        trigger: 'click',
+        animation: 'shift-away-extreme',
+    });
 }
 function changeUpholOnPreviewAll(fabric){
     let walkaround_path = $('#pathCosyModel').html().replaceAll('&amp;','&');
@@ -390,7 +417,12 @@ function changeUpholOnPreviewAll(fabric){
     showImageCosyAll(new_path);
     bringAllAnglesCache(new_path);
     let frabicf = _.find(g_fetch_options, ['code', fabric]);
-    $('#upholCosyModel').html(`${frabicf.code} - ${frabicf.name}`);
+    $('#upholCosyModel').html(`<span id="fabricCodeCosy">${frabicf.code}</span> - ${frabicf.name}`);
+    tippy('#fabricCodeCosy', {
+        content: "Copied!",
+        trigger: 'click',
+        animation: 'shift-away-extreme',
+    });
 }
 function changeTrimsOnPreviewAll(wheel){
     let walkaround_path = $('#pathCosyModel').html().replaceAll('&amp;','&');
@@ -400,7 +432,27 @@ function changeTrimsOnPreviewAll(wheel){
     bringAllAnglesCache(new_path);
     g_cosy_wheel = wheel;
     let wheelf = _.find(g_fetch_options, ['code', wheel]);
-    $('#trimCosyModel').html(`${wheelf.code} - ${wheelf.name}`);
+    $('#trimCosyModel').html(`<span id="trimCodeCosy">${wheelf.code}</span> - ${wheelf.name}`);
+    tippy('#trimCodeCosy', {
+        content: "Copied!",
+        trigger: 'click',
+        animation: 'shift-away-extreme',
+    });
+}
+function changeQualityImage(){
+    let quali = $("#rangeQuality").val();
+    $("#qualityRangeLabel").html(`${quali}%`);
+    g_cosy_quality = quali;
+    let _path = $('#pathCosyModel').html();
+    console.log(_path);
+    if(g_cosy_modelName != ""){
+        let walkaround_path = _path.replaceAll('&amp;','&');
+        let b = walkaround_path.split('&quality=')[1].split('&')[0];
+        let new_path = walkaround_path.replace("&quality="+b, "&quality="+quali);
+        showPathImageCosyOnLoadAll(new_path);
+        showImageCosyAll(new_path);
+        bringAllAnglesCache(new_path);
+    }
 }
 function changeBackgroundOnPreview(id){
     let path = $('#pathCosyModel').html().replaceAll('&amp;','&');
