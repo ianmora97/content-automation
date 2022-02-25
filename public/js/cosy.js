@@ -100,13 +100,13 @@ function getImagesCosysByModelAll(model) {
     g_cosy_modelName = model;
     $.ajax({
         type: "GET",
-        url: `${cosy_config.ubyo_start}`+model,
+        url: `${cosy_config.ubyo}/v1/configuration/start/`+model,
         contentType: "application/json",
     }).then((config) => {
         let current_config = config.configuration.selectedOptions;
         $.ajax({
             type: "GET",
-            url: `${cosy_config.ubyo_options}`+model,
+            url: `${cosy_config.ubyo}/v4/BM/options/`+model,
             contentType: "application/json",
         }).then((colors) => {
             g_fetch_options = colors;
@@ -184,17 +184,21 @@ function statsImage(url){
         let bo = parseInt(blob.size / 1024) <= 70;
         $("#sizeCosyModel").html(`<span id="qualityIconText" class="text-${bo ? "success": "danger"}">${parseInt(blob.size / 1024)} Kb ${bo ? `<i class="fa-solid fa-circle-check text-success"></i>` : `<i class="fa-solid fa-circle-xmark text-danger"></i>`}</span>`);
         tippy('#qualityIconText', {
-            content: `${bo ? "Cosy Optimized" : "Cosy Not Optimized"}`,
-            placement: 'top',
+            content: `${bo ? "Cosy Optimized" : "Should be less than 70 Kb"}`,
+            placement: 'right',
             animation: 'shift-away-extreme',
         });
     });
     var image = new Image();
     image.src = url;
     image.onload = function() {
-        $("#widthCosyModel").html(`<span class="text-${image.width <= 600 ? "success": "danger"}">${image.width} px ${image.width <= 600 ? `<i class="fa-solid fa-circle-check text-success"></i>` : `<i class="fa-solid fa-circle-xmark text-danger"></i>`}</span>`);
+        $("#widthCosyModel").html(`<span id="widthQualityIcon" class="text-${image.width <= 600 ? "success": "danger"}">${image.width} px ${image.width <= 600 ? `<i class="fa-solid fa-circle-check text-success"></i>` : `<i class="fa-solid fa-circle-xmark text-danger"></i>`}</span>`);
         $("#heightCosyModel").html(`${image.height} px`);
-        // tooltip
+        tippy('#widthQualityIcon', {
+            content: `${image.width <= 600 ? "Cosy Optimized" : "Should be less than 600px"}`,
+            placement: 'right',
+            animation: 'shift-away-extreme',
+        });
     }
 }
 function showPathImageCosyOnLoadAll(path){
@@ -372,6 +376,8 @@ function changeCosyType(val){
             g_cosy_angle = 40;
             break;
     }
+    $("#rangeQuality").val(g_cosy_quality)
+    $("#qualityRangeLabel").html(`${g_cosy_quality}%`);
     if(g_cosy_modelName != ""){
         localStorage.setItem("angleCosy", g_cosy_angle);
         getImagesCosysByModelAll(g_cosy_modelName)

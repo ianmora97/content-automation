@@ -87,16 +87,10 @@ function getCosyConfig(params) {
             // TODO: decrypt all the cosy urls
             cosy_config = rows;
             cosy_config.domain = decrypt(rows.domain);
-            cosy_config.ubyo_start = decrypt(rows.ubyo_start);
-            cosy_config.ubyo_options = decrypt(rows.ubyo_options);
-            cosy_config.ubyo_modelList = decrypt(rows.ubyo_modelList);
-            cosy_config.ubyo_specs = decrypt(rows.ubyo_specs);
+            cosy_config.ubyo = decrypt(rows.ubyo_start);
 
             $('#cosyDomain').val(cosy_config.domain);
-            $('#cosyModelList').val(cosy_config.ubyo_modelList);
-            $('#cosyStart').val(cosy_config.ubyo_start);
-            $('#cosyOptions').val(cosy_config.ubyo_options);
-            $('#techspecsApi').val(cosy_config.ubyo_specs);
+            $('#cosyStart').val(cosy_config.ubyo);
 
             getAllModelsList();
         }
@@ -107,13 +101,10 @@ getCosyConfig()
 function setConfigCosyJira(){
     let m = {
         domain: encrypt($('#cosyDomain').val()),
-        modellist: encrypt($('#cosyModelList').val()),
-        start: encrypt($('#cosyStart').val()),
-        options: encrypt($('#cosyOptions').val()),
-        specs: encrypt($('#techspecsApi').val())
+        start: encrypt($('#cosyStart').val())
     }
-    db.run(`UPDATE cosyConfig set domain = ?, ubyo_modelList = ?, ubyo_start = ?, ubyo_options = ?, ubyo_specs = ? WHERE id = 1`, 
-    [m.domain, m.modellist, m.start, m.options, m.specs], function(err) {
+    db.run(`UPDATE cosyConfig set domain = ?, ubyo_start = ? WHERE id = 1`, 
+    [m.domain, m.start], function(err) {
         if (err) {
             console.log(err.message);
         }else{

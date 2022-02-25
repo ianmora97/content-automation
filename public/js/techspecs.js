@@ -27,7 +27,7 @@ function validateModel(json) {
 function getTechSpecsApi(model) {
     $.ajax({
         type: "GET",
-        url: `${cosy_config.ubyo_specs}`+model,
+        url: `${cosy_config.ubyo}/v4/BM/techspecs/`+model,
         contentType: "application/json",
     }).then((response) => {
         printNaCodeSpecs(response,model)
@@ -39,7 +39,7 @@ async function getTechSpecsApiV2(model){
     return new Promise((resolve,reject)=>{
         $.ajax({
             type: "GET",
-            url: `${cosy_config.ubyo_specs}`+model,
+            url: `${cosy_config.ubyo}/v4/BM/techspecs/`+model,
             contentType: "application/json",
         }).then((response) => {
             resolve(response);
@@ -85,7 +85,7 @@ function showEngineType(models) {
                 if(model.code != '22ST'){
                     $.ajax({
                         type: "GET",
-                        url: `${cosy_config.ubyo_specs}`+model.code,
+                        url: `${cosy_config.ubyo}/v4/BM/techspecs/`+model.code,
                         contentType: "application/json",
                     }).then((response) => {
                         let text = response.hasOwnProperty();
@@ -306,7 +306,7 @@ function checkKeyFromModelsFromList(value,mod){
         if(model.name.match(regexCheckModel(mod))){
             $.ajax({
                 type: "GET",
-                url: `${cosy_config.ubyo_specs}`+model.code,
+                url: `${cosy_config.ubyo}/v4/BM/techspecs/`+model.code,
                 contentType: "application/json",
             }).then((response) => {
                 printTechSpecsHas(model,response,value)
