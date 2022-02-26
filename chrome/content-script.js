@@ -1,8 +1,10 @@
 chrome.runtime.onMessage.addListener((data, sender, sendResponse) => {
+	
     if (data.msg == 'toggleGrid') {
         toogleGrid();
     }else if(data.msg == 'toggleSpacers'){
         showSpacers();
+		sendResponse({res: "goodbye"});
     }else if(data.msg == 'showHeaders'){
         showHeaders();
     }else if(data.msg == 'placeholder'){
@@ -45,10 +47,13 @@ function showSpacers() {
 			return !spacerDOM.classList.contains(`${bp.ex}`);
 		}).forEach(spacerDOM => { 
 			if(spacerDOM.style.backgroundColor == `rgba(${spacer[Object.keys(spacer)[0]].bg})`){
-				spacerDOM.style.backgroundColor = "rgb(0, 0, 0)";
-				spacerDOM.style.height = "0px";
+				spacerDOM.style.backgroundColor = null;
+				spacerDOM.style.height = null;
 				spacerDOM.style.marginBottom = null;
-				spacerDOM.style.borderLeft = "0px solid rgba(0, 0, 0, 0)";
+				spacerDOM.style.borderLeft = null;
+				spacerDOM.style.display = null;
+				spacerDOM.style.justifyContent = null;
+				spacerDOM.style.alignItems = null;
 				spacerDOM.innerHTML = "";
 			}else{
 				spacerDOM.style.backgroundColor = `rgba(${spacer[Object.keys(spacer)[0]].bg})`;
@@ -62,7 +67,7 @@ function showSpacers() {
 				spacerDOM.style.display = "flex";
 				spacerDOM.style.justifyContent = "center";
 				spacerDOM.style.alignItems = "center";
-				spacerDOM.innerHTML = `<span class="h-center" style="font-weight:bold;font-size:${spacer[Object.keys(spacer)[0]].fs};display:block;">${spacer[Object.keys(spacer)[0]].height} - ${Object.keys(spacer)[0].split("spacer-")[1]}</span>`
+				spacerDOM.innerHTML = `<span class="h-center" style="font-weight:bold;font-size:calc(${spacer[Object.keys(spacer)[0]].fs} - 4px);display:block;">${spacer[Object.keys(spacer)[0]].height} - ${Object.keys(spacer)[0].split("spacer-")[1]}</span>`
 			}
 		});
 	});
@@ -90,7 +95,7 @@ function showHeaders() {
 				elm.style.color = "white";
 				elm.style.whiteSpace = "nowrap";
 				elm.style.zIndex = "9999";
-				elm.innerHTML = `<span style="border-radius:2px; padding:2px; font-size:11px; font-weight:bold; vertical-align:middle; background-color:rgba(255, 0, 0, 0.9);">${hl.tagName} - ${type}</span>`;
+				elm.innerHTML = `<span style="border-radius:2px; padding:2px; font-size:13px; font-weight:bold; vertical-align:middle; background-color:rgba(255, 0, 0, 0.9);">${hl.tagName} - ${type}</span>`;
 				hl.prepend(elm);
 			}
 		}

@@ -19,15 +19,17 @@ let db = new sqlite3.Database(path.join(__dirname,'../db/database.db'), (err) =>
 var g_modelList = new Array();
 
 function getAllModelsList() {
+    clearSpaces();
+    clearSpacesWP();
     $.ajax({
         type: "GET",
-        url: `${cosy_config.ubyo_modelList}`,
+        url: `${cosy_config.ubyo}/v1/static/BM/modellist?loadtype=full`,
         contentType: "application/json",
     }).then((response) => {
         g_modelList = response;
         loadDataListInput(response);
     }, (error) => {
-    
+        checkError("modellist", error.status);
     });
 }
 
@@ -327,7 +329,6 @@ function dragMoveListener (event) {
 function moveTicketToTicketDeploy(ticket) {
     let ticketId = ticket.split('-')[2];
     let ticketName = g_Tickets.find(ticket => ticket.code == ticketId);
-    console.log(ticketName);
     $('#deploymentticketsList').append(`
     <div class="p-2 bg-dark mb-2" id="deploy-cont-${ticketName.code}">
         <div class="d-flex justify-content-start align-items-center">

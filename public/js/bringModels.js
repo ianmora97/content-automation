@@ -1,3 +1,6 @@
+const Sitemapper = require('sitemapper');
+const sitemap = new Sitemapper();
+
 function xmlToJson( xml ) { 
     // Create the return object
     var obj = {};
@@ -57,7 +60,6 @@ function bringModelsFromJSON() {
         
     });
 }
-bringModelsFromJSON()
 
 function addToModalDeploymentD() {
     $("#dropdownselectModeldd").append(`
@@ -292,11 +294,24 @@ function bringModelsfromBMW(){
             }            
         });
     }, (error) => {
-    
+        checkError("sitemap",error.status)
     });
 }
-bringModelsfromBMW()
 
+var g_sitemap_sites = new Array()
+
+function sitemapFetch(){
+    sitemap.fetch('https://www.bmwusa.com/sitemap.xml').then(function(sites) {
+        g_sitemap_sites = sites.sites;
+    });
+}
+
+function bringAllData(){
+    bringModelsfromBMW();
+    sitemapFetch();
+    bringModelsFromJSON();
+}
 document.addEventListener('DOMContentLoaded', function() {
     searchByModel();
+    bringAllData();
 });

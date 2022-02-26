@@ -131,7 +131,6 @@ function bringEpicJiraTicket(cont){
             "Authorization": "Basic " + btoa(json_config.c_email + ":" + json_config.c_token)
         },
     }).then((response) => {
-        console.log(response)
         // let release = response.fields.labels.filter(e=> e.match('release'))[0]
         // release = release.slice(release.length - 8,release.length).replace(/\./g, '/');
         // gt_ticket = {

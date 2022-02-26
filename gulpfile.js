@@ -7,8 +7,7 @@ var browserSync = require('browser-sync').create();
 gulp.task('sass', function() {
     return gulp.src("./public/sass/*.scss")
         .pipe(sass())
-        .pipe(gulp.dest("./public/css"))
-        .pipe(browserSync.stream());
+        .pipe(gulp.dest("./public/css"));
 });
 
 // move animate.css to web/css
@@ -20,9 +19,10 @@ gulp.task('animate', function() {
 
 // move fontawesome.css to web/css
 gulp.task('fontawesome', function() {
-    return gulp.src('node_modules/@fortawesome/fontawesome-free/css/all.css')
+    return gulp.src('node_modules/@fortawesome/fontawesome-free/scss/fontawesome.scss')
+        .pipe(sass())
         .pipe(concat('fontawesome.css'))
-        .pipe(gulp.dest("../css"));
+        .pipe(gulp.dest("./public/css"));
 });
 
 // move bootstrap JS and Jquery
@@ -39,6 +39,9 @@ gulp.task('js', function() {
 gulp.task('serve', gulp.series('sass','js','animate','fontawesome', function() {
     gulp.watch("../sass/*.scss", gulp.series('sass'));
 }));
+
+// compile Fontawesome
+gulp.task('fonta', gulp.series('fontawesome'));
 
 // watching only scss task
 gulp.task('styles', gulp.series('sass', function() {

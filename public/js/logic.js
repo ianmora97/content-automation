@@ -22,10 +22,6 @@ function loaded() {
     seeTabs()
     ctrlFind()
     clipboard.on('success', function(e) {
-        console.info('Trigger:', e.trigger);
-        // $(e.trigger).tooltip('hide')
-        //             .attr('data-original-title', 'Copied')
-        //             .tooltip('show');
         e.clearSelection();
     });
     
