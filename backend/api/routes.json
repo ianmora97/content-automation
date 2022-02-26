@@ -1,0 +1,27 @@
+{
+    "host": "localhost",
+    "port": 8895,
+    "routes": [
+        {
+            "name": "GET CONFIG",
+            "path": "/api/v1/get/config",
+            "method": "GET",
+            "description": "Get basic configuration",
+            "parameters": []
+        },
+        {
+            "name": "GET CONFIG PATHS",
+            "path": "/api/v1/get/configPaths",
+            "method": "GET",
+            "description": "Get urls paths configuration",
+            "parameters": []
+        },
+        {
+            "name": "GET NA CODES",
+            "path": "/api/v1/get/nacodes",
+            "method": "GET",
+            "description": "Get NA Codes Full Models list",
+            "parameters": []
+        }
+    ]
+}

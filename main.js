@@ -1,5 +1,4 @@
 const { app, BrowserWindow, shell, ipcMain, Menu } = require('electron')
-const ejse = require('ejs-electron')
 const path = require('path')
 
 require('update-electron-app')({
@@ -26,7 +25,7 @@ function createWindow () {
     })
     win.setIcon(path.join(__dirname, '/public/img/logo.png'));
     win.removeMenu();
-    win.loadFile('public/views/index.ejs')
+    win.loadURL('http://localhost:3000/cosy')
 }
 // menu
 const isMac = process.platform === 'darwin'
