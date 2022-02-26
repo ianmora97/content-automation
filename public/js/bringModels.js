@@ -60,7 +60,6 @@ function bringModelsFromJSON() {
         
     });
 }
-bringModelsFromJSON()
 
 function addToModalDeploymentD() {
     $("#dropdownselectModeldd").append(`
@@ -295,21 +294,24 @@ function bringModelsfromBMW(){
             }            
         });
     }, (error) => {
-    
+        checkError("sitemap",error.status)
     });
 }
-bringModelsfromBMW();
+
 var g_sitemap_sites = new Array()
 
 function sitemapFetch(){
     sitemap.fetch('https://www.bmwusa.com/sitemap.xml').then(function(sites) {
         g_sitemap_sites = sites.sites;
-        console.log(g_sitemap_sites);
     });
 }
 
-sitemapFetch();
-
+function bringAllData(){
+    bringModelsfromBMW();
+    sitemapFetch();
+    bringModelsFromJSON();
+}
 document.addEventListener('DOMContentLoaded', function() {
     searchByModel();
+    bringAllData();
 });

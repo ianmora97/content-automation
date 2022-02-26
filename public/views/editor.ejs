@@ -1,0 +1,33 @@
+<h2 class="fw-bold mb-0">Text Editor</h2>
+<hr>
+<div class="p-2" style="height: calc(100vh - 140px);overflow-y: auto;">
+    <div class="bg-dark rounded-15 p-3 mb-3">
+        <div class="d-flex justify-content-start py-2">
+            <button type="button" class="btn btn-primary btn-sm" onclick="formatLinks()"><i class="fa-solid fa-link"></i> Generate Links</button>
+        </div>
+        <hr class="my-1">
+        <textarea class="form-control bg-dark" id="urlsTextarea" rows="8" placeholder="Links"></textarea>
+        <div class="d-flex justify-content-end py-2">
+            <button type="button" class="btn btn-danger btn-xs" onclick="clearTextareaUrls()"><i class="fa-solid fa-delete-left"></i> Clear</button>
+        </div>
+    </div>
+    <div class="bg-dark rounded-15 p-3" style="min-height: 400px; max-height: 500px; overflow-y: auto;">
+        <div class="d-flex justify-content-between align-items-center py-1">
+            <h5 class="m-0">Links</h5>
+            <button type="button" class="btn btn-primary btn-xs btn-to-clip" data-clipboard-target="#buildOutput" id="urlstextEditorCopy">
+                <i class="fa-solid fa-copy"></i> Copy
+            </button>
+        </div>
+        <hr>
+        <div id="buildOutput">
+
+        </div>
+    </div>
+    <script>
+        tippy('#urlstextEditorCopy', {
+            content: "Copied!",
+            trigger: 'click',
+            animation: 'shift-away-extreme',
+        });
+    </script>
+</div>

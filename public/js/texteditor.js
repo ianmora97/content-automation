@@ -14,6 +14,18 @@ function onKeyTextArea() {
         }
     })
 }
+function formatLinks(){
+    $('#buildOutput').html('');
+    var text = $("#urlsTextarea").val();
+    var urls = text.match(/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g);
+    if (urls != null) {
+        var urls_unique = urls.filter(function (elem, index, self) {
+            return index == self.indexOf(elem);
+        });
+        $('#urlsTextarea').val(urls_unique.join('\n'));
+        buildURLs(urls_unique)
+    }
+}
 function buildURLs(urls) {
     let urls1 = new Array();
     let urls2 = new Array();

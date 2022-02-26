@@ -3,10 +3,12 @@ $secondary:#F2CC39;
 $success:#28a745;
 $info:#3076f8;
 $warning:#fdb00c;
-$danger:#dc3545;
+$danger:#eb4a5a;
+$danger-light:#f5b8b8;
 $light:#cfcece;
 $dark:#1A1A1A;
 $dark-light:#242424;
+$white:#fff;
 
 $theme-colors: (
     "primary":    $primary,
@@ -22,6 +24,12 @@ $theme-colors: (
 
 $list-group-color: white;
 $list-group-bg: $dark;
+
+$table-cell-padding-y-sm: .15rem;
+$table-cell-padding-x-sm: .15rem;
+$table-hover-color: $light;
+$table-hover-bg-factor: .075;
+$table-hover-bg: rgba($dark-light, $table-hover-bg-factor);
 
 body{
     background-color: $dark !important;
@@ -48,6 +56,18 @@ h6{
 
 small{
     font-size: 0.5rem !important;
+}
+.table-custom{
+    color: #ffffff !important;
+    tr{
+        border: none !important;
+        th{
+            font-size: 13px !important;
+        }
+        td{
+            font-size: 12px !important;
+        }
+    }
 }
 .label-2{
     font-size: 13px;
@@ -88,7 +108,16 @@ small{
 ::placeholder {
     font-size: 12px;
 }
-
+.textHoverAria{
+    transition: all .5s;
+    .ariaText{
+        transition: all .5s;
+    }
+    &:hover{
+        transition: all .5s;
+        
+    }
+}
 .form-control, .form-select{
     outline: none !important;
     border: none !important;
@@ -122,7 +151,7 @@ small{
 }
 
 .nav-pills .nav-link.active, .nav-pills .show > .nav-link{
-    box-shadow: 0 4px 15px 0 rgba(70, 89, 228,.40) !important;
+    box-shadow: 0 4px 15px 0 rgba(70, 89, 228, 0.2) !important;
     border-radius: 10px !important;
     width: 100%;
     
@@ -221,23 +250,51 @@ small{
 }
 .animate_delay_t1{
     animation-delay:0.2s;
-  }
+}
   
-  .animate_delay_t2{
+.animate_delay_t2{
     animation-delay:0.7s;
-  }
+}
   
-  .animate_delay_t3{
+.animate_delay_t3{
     animation-delay:1.2s;
-  }
+}
   
-  .animate_delay_t4{
+.animate_delay_t4{
     animation-delay:1.7s;
-  }
-// ! Buttons
+}
+.alert{
+    &.alert-default{
+        background-color: $dark-light !important;
+        border-radius: 5px !important;
+        border: none !important;
+        padding: 0 !important;
+        box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.4) !important;
+        .alert-content{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        &.alert-type-danger{
+            div div .alert-title{
+                background-color: $danger-light !important;
+                color: $danger;
+                padding: 0.8rem 1.2rem !important;
+            }
+        }
+    }
+    div div .alert-body{
+        padding: 1rem !important;
+        color: $light !important;
+    }
+    &.alert-dismissible{
+        padding: 0 !important;
+    }
+}
+// ! --------------------------- Buttons ---------------------------------
 
 .btn-primary{
-    box-shadow: 0 4px 15px 0 rgba(70, 89, 228,.40) !important;
+    box-shadow: 0 4px 15px 0 rgba(70, 89, 228, 0.2) !important;
     outline: none !important;
     &:focus{
         box-shadow: none !important;
@@ -273,7 +330,7 @@ small{
 .btn-check:checked + .btn-outline-primary-cus{
     background-color: $primary;
     color:$light;
-    box-shadow: 0 3px 7px 0 rgba(70, 89, 228,.40) !important;
+    box-shadow: 0 3px 7px 0 rgba(70, 89, 228, 0.2) !important;
     font-weight: bold;
 }
 .btn-check:not(:checked) + .btn-outline-primary-cus{
@@ -284,7 +341,24 @@ small{
         background-color: $warning;
     }
 }
-
+.btn-undeline-primary{
+    background-color: transparent !important;
+    border-bottom: 1px solid $primary !important;
+    color: $primary !important;
+    border-radius: 0px !important;
+    &:hover, &:focus{
+        color: $white !important;
+    }
+}
+.btn-undeline-light{
+    background-color: transparent !important;
+    border-bottom: 1px solid $success !important;
+    color: $success !important;
+    border-radius: 0px !important;
+    &:hover, &:focus{
+        color: $white !important;
+    }
+}
 // ! ---------------------- nav --------------------
 
 // ! ---------------------- Modals --------------------

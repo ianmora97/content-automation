@@ -31,7 +31,7 @@
     "sass": "^1.38.1"
   },
   "dependencies": {
-    "@fortawesome/fontawesome-free": "^5.15.4",
+    "@fortawesome/fontawesome-free": "^6.0.0",
     "animate.css": "^4.1.1",
     "bootstrap": "^5.1.0",
     "browser-sync": "^2.27.5",
@@ -49,7 +49,8 @@
     "lodash": "^4.17.21",
     "path": "^0.12.7",
     "sitemapper": "^3.2.2",
-    "sqlite3": "^5.0.2"
+    "sqlite3": "^5.0.2",
+    "update-electron-app": "^2.0.1"
   },
   "build": {
     "appId": "com.content_automation.app",

@@ -1,6 +1,11 @@
 const { app, BrowserWindow, shell, ipcMain, Menu } = require('electron')
 const path = require('path')
 
+require('update-electron-app')({
+  repo: 'ianmora97/content-automation',
+  updateInterval: '1 hour'
+})
+
 function createWindow () {
     const win = new BrowserWindow({
         width: 1500,

@@ -1,33 +1,67 @@
 <h2 class="fw-bold mb-0">CoSy Images</h2>
 <hr>
 <div style="height: calc(100vh - 140px); overflow-y: auto;">
-    <div class="bg-dark rounded-15 w-100 my-2" style="height: 180px; overflow: auto;">
-        <div class="px-3">
-            <label for="searchBaronModelCodes" class="my-2">Search model</label>
-            <input class="form-control bg-dark-light" style="width: 400px;" id="searchBaronModelCodes" type="text" placeholder="Search" aria-label="Search Tab">
-        </div>
-        <div class="position-relative">
-            <div class="d-flex justify-content-start align-items-stretch gap-2 p-3" id="modelCodesSearch" style=" overflow-x: auto;">
-                <div class="d-flex justify-content-center w-100">
-                    <div class="spinner-border" role="status">
-                        <span class="visually-hidden">Loading...</span>
+    <div class="row mx-0">
+        <div class="col-7 ps-0">
+            <div class="bg-dark rounded-15 w-100 my-2 px-3 pt-3" 
+            style="height: 180px; overflow: hidden;">
+                <div class="">
+                    <input class="form-control bg-dark-light" style="width: 80%;" id="searchBaronModelCodes" type="text" placeholder="Search" aria-label="Search Tab">
+                </div>
+                <div class="position-relative">
+                    <div class="d-flex justify-content-start align-items-stretch gap-2 py-3" id="modelCodesSearch" style=" overflow-x: auto;">
+                        <div class="d-flex justify-content-center w-100">
+                            <div class="spinner-border" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
+        <div class="col-5 pe-0">
+            <div class="bg-dark rounded-15 w-100 my-2 p-3" style="height: 180px;">
+                <table class="table table-hover table-borderless table-custom table-sm">
+                    <tr>
+                        <th style="width: 85px;" scope="row">Color</th>
+                        <td><span role="button" id="colorCosyModel" class="btn-to-clip" data-clipboard-target="#paintCodeCosy"><small class="small text-muted text-center m-0">Please Choose a Model</small></span></td>
+                    </tr>
+                    <tr>
+                        <th style="width: 85px;" scope="row">Upholstery</th>
+                        <td><span role="button" id="upholCosyModel" class="btn-to-clip" data-clipboard-target="#fabricCodeCosy"><small class="small text-muted text-center m-0">Please Choose a Model</small></span></td>
+                    </tr>
+                    <tr>
+                        <th style="width: 85px;" scope="row">Trim</th>
+                        <td><span role="button" id="trimCosyModel" class="btn-to-clip" data-clipboard-target="#trimCodeCosy"><small class="small text-muted text-center m-0">Please Choose a Model</small></span></td>
+                    </tr>
+                    <tr>
+                        <th style="width: 85px;" scope="row">Size</th>
+                        <td><span id="sizeCosyModel"><small class="small text-muted text-center m-0">Please Choose a Model</small></span></td>
+                    </tr>
+                    <tr>
+                        <th style="width: 85px;" scope="row">Width</th>
+                        <td><span id="widthCosyModel"><small class="small text-muted text-center m-0">Please Choose a Model</small></span></td>
+                    </tr>
+                    <tr>
+                        <th style="width: 85px;" scope="row">Height</th>
+                        <td><span id="heightCosyModel"><small class="small text-muted text-center m-0">Please Choose a Model</small></span></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
     </div>
-    <div class="row mx-auto mt-3 align-items-stretch">
+    <div class="row mx-auto mt-2 align-items-stretch">
         <div class="col-7 ps-0 d-flex flex-column">
             <div class="bg-dark rounded-15 w-100 p-3">
-                <small class="d-block small">Color: <span class="fw-bold text-secondary" id="colorCosyModel"><small class="small text-muted text-center m-0">Please Choose a Model</small></span></small>
-                <small class="d-block small">Upholstery: <span class="fw-bold text-secondary" id="upholCosyModel"><small class="small text-muted text-center m-0">Please Choose a Model</small></span></small>
-                <small class="d-block small">Trim: <span class="fw-bold text-secondary" id="trimCosyModel"><small class="small text-muted text-center m-0">Please Choose a Model</small></span></small>
-                <hr>
+                
                 <div class="d-flex justify-content-between align-items-center">
                     <small class="d-block small">Path:</small>
-                    <button type="button" class="btn btn-primary btn-xs shadow-none btn-to-clip" data-clipboard-target="#pathCosyModel" id="pathCosyModelBtn"><i class="fas fa-copy"></i> Copy Path</button>
+                    <div>
+                        <button type="button" class="btn btn-danger btn-xs shadow-none me-2" onclick="downloadImage()"><i class="fa-solid fa-download"></i> <span class="ariaText">Download</span></button>
+                        <button type="button" class="btn btn-primary btn-xs shadow-none text-white btn-to-clip" data-clipboard-target="#pathCosyModel" id="pathCosyModelBtn"><i class="fas fa-copy"></i> <span class="ariaText">Copy</span></button>
+                    </div>
                 </div>
-                <small class="d-block small text-primary"><span id="pathCosyModelContainer"><small class="fw-bold small text-muted text-center m-0">Please Choose a Model</small></span></small>
+                <small class="d-block small text-primary"><span id="pathCosyModelContainer"><small class="small text-muted text-center m-0">Please Choose a Model</small></span></small>
                 <script>
                     tippy('#pathCosyModelBtn', {
                         content: "Copied!",
@@ -35,57 +69,221 @@
                         animation: 'shift-away-extreme',
                     });
                 </script>
-                <div class="d-flex justify-content-between align-items-center mt-4">
-                    <div class="d-flex justify-content-start">
-                        <input type="radio" class="btn-check" name="cosy-background" id="trans-cosy-checkbox-outlined" autocomplete="off" checked>
-                        <label class="btn btn-sm btn-outline-primary-cus" for="trans-cosy-checkbox-outlined" id="bckgChangetr" onclick="changeBackgroundOnPreview('transparent')">
-                            <i class="far fa-square"></i>
-                        </label>
+                <hr>
+                <div class="d-flex justify-content-start align-items-center mt-1">
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-sm btn-dark-light dropdown-toggle" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">
+                            <span class="text-light"><i class="fas fa-square text-white"></i> Background</span>
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-start dropdown-menu-dark">
+                            <button class="dropdown-item" for="trans-cosy-checkbox-outlined" id="bckgChangetr" onclick="changeBackgroundOnPreview('transparent')">
+                                <i class="far fa-square"></i> Transparent
+                            </button>
 
-                        <input type="radio" class="btn-check" name="cosy-background" id="white-cosy-checkbox-outlined" autocomplete="off" >
-                        <label class="btn btn-sm btn-outline-primary-cus ms-2" for="white-cosy-checkbox-outlined"  id="bckgChange1" onclick="changeBackgroundOnPreview('1')">
-                            <i class="fas fa-square text-white"></i>
-                        </label>
-                        
-                        <input type="radio" class="btn-check" name="cosy-background" id="black-cosy-checkbox-outlined" autocomplete="off">
-                        <label class="btn btn-sm btn-outline-primary-cus ms-2" for="black-cosy-checkbox-outlined" id="bckgChange2" onclick="changeBackgroundOnPreview('2')">
-                            <i class="fas fa-square text-dark"></i>
-                        </label>
+                            <button class="dropdown-item" for="white-cosy-checkbox-outlined"  id="bckgChange1" onclick="changeBackgroundOnPreview('1')">
+                                <i class="fas fa-square text-white"></i> White
+                            </button>
+                            
+                            <button class="dropdown-item" for="black-cosy-checkbox-outlined" id="bckgChange2" onclick="changeBackgroundOnPreview('2')">
+                                <i class="fas fa-square text-dark"></i> Black
+                            </button>
+                        </div>
+                    </div>
+                    <div class="btn-group ms-2">
+                        <button type="button" class="btn btn-sm btn-dark-light dropdown-toggle" id="cosyTypeModel" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">
+                            <span class="text-light"><i class="fa-solid fa-circle-dot"></i> Type</span>
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-start dropdown-menu-dark">
+                            <button class="dropdown-item" for="trans-cosy-checkbox-outlined" id="dropdown_cosy_custom" onclick="changeCosyType('0')">
+                                <i class="fa-solid fa-circle-dot fa-xs"></i> Custom
+                            </button>
+                            
+                            <button class="dropdown-item" for="white-cosy-checkbox-outlined"  id="dropdown_cosy_localnav" onclick="changeCosyType('2')">
+                                <i class="fa-solid fa-circle-dot fa-xs"></i> Localnav
+                            </button>
+                            <div id="template-localnav" style="display: none;">
+                                <div class="d-flex flex-column text-center p-3" style="width:250px;">
+                                    <small class="text-light d-block mb-2 fw-light" style="letter-spacing: 1px;">CORE MODELS</small>
+                                    <img src="https://cache.bmwusa.com/cosy.arox?pov=walkaround&brand=WBBM&vehicle=22XO&client=byo&paint=P0300&fabric=FK8SW&sa=S01CE,S01SB,S0255,S02TB,S0302,S0319,S03AT,S03MB,S0402,S0420,S0423,S0459,S0481,S0494,S04AW,S04KR,S04T8,S04UR,S0552,S05AC,S05AS,S0676,S06AC,S06AK,S06C4,S06U3,S0775,S07HW&bkgnd=transparent&quality=70&resp=png&angle=270" alt="X5 Cosy">
+                                    <p class="mb-0 fw-bold">X5 sDrive40i <i class="fa-solid fa-chevron-right text-primary"></i></p>
+                                </div>
+                            </div>
+                            <script>
+                                tippy('#dropdown_cosy_localnav', {
+                                    content: document.getElementById('template-localnav').innerHTML,
+                                    allowHTML: true,
+                                    theme: 'bmw',
+                                    arrow: true,
+                                    placement: 'left',
+                                    animation: 'shift-away-extreme',
+                                });
+                            </script>
+
+                            <button class="dropdown-item" for="trans-cosy-checkbox-outlined" id="dropdown_cosy_modellineup" onclick="changeCosyType('1')">
+                                <i class="fa-solid fa-circle-dot fa-xs"></i> Model Lineup
+                            </button>
+                            <div id="template-modellineup" style="display: none;">
+                                <div class="d-flex flex-column text-center p-3" style="width:250px;">
+                                    <small class="text-light d-block mb-1 fw-light" style="letter-spacing: 1px;">CORE MODELS</small>
+                                    <img src="https://cache.bmwusa.com/cosy.arox?pov=walkaround&brand=WBBM&vehicle=22XO&client=byo&paint=P0300&fabric=FK8SW&sa=S01CE,S01SB,S0255,S02TB,S0302,S0319,S03AT,S03MB,S0402,S0420,S0423,S0459,S0481,S0494,S04AW,S04KR,S04T8,S04UR,S0552,S05AC,S05AS,S0676,S06AC,S06AK,S06C4,S06U3,S0775,S07HW&bkgnd=transparent&quality=70&resp=png&angle=40" alt="X5 Cosy">
+                                    <p class="mb-0 fw-bold">X5 sDrive40i <i class="fa-solid fa-chevron-right text-primary"></i></p>
+                                    <span class="small text-light d-block lead">Starting MSRP $60,600 <i class="fa-regular fa-circle-question"></i></span>
+                                </div>
+                            </div>
+                            <script>
+                                tippy('#dropdown_cosy_modellineup', {
+                                    content: document.getElementById('template-modellineup').innerHTML,
+                                    allowHTML: true,
+                                    theme: 'bmw',
+                                    arrow: true,
+                                    placement: 'left',
+                                    animation: 'shift-away-extreme',
+                                });
+                            </script>
+
+                            <button class="dropdown-item" for="white-cosy-checkbox-outlined"  id="dropdown_cosy_byo" onclick="changeCosyType('6')">
+                                <i class="fa-solid fa-circle-dot fa-xs"></i> BYO
+                            </button>
+                            <div id="template-byo" style="display: none;">
+                                <div class="d-flex flex-column text-start p-3" style="width:250px;">
+                                    <small class="text-light d-block mb-1" style="letter-spacing: 1px;"><span id="yearDynaCosy"></span> MODEL YEAR<span class="hl-light"></span></small>
+                                    <h5 class="mb-0 fw-bold">X5 sDrive40i</h5>
+                                    <img src="https://cache.bmwusa.com/cosy.arox?pov=walkaround&brand=WBBM&vehicle=22XO&client=byo&paint=P0300&fabric=FK8SW&sa=S01CE,S01SB,S0255,S02TB,S0302,S0319,S03AT,S03MB,S0402,S0420,S0423,S0459,S0481,S0494,S04AW,S04KR,S04T8,S04UR,S0552,S05AC,S05AS,S0676,S06AC,S06AK,S06C4,S06U3,S0775,S07HW&bkgnd=transparent&quality=70&x=1100&y=-200&resp=png&angle=300" alt="X5 Cosy">
+                                    <hr class="mb-2 mt-0">
+                                    <small class="d-flex justify-content-between">
+                                        <span class="d-block"><b>RWD</b> Drivetrain</span>
+                                        <span class="d-block"><b>26</b> MPG</span>
+                                        <span class="d-block"><b>5.3 sec</b> 0-60 MPH</span>
+                                    </small>
+                                    <hr class="my-2">
+                                    <small class="d-flex justify-content-between">
+                                        <span class="d-block">3.0-liter BMW M TwinPower<br>Rear-wheel drive</span>
+                                        <span class="d-block"><b>$60,600</b><br>Starting MSRP</span>
+                                    </small>
+                                </div>
+                            </div>
+                            <script>
+                                $("#yearDynaCosy").append(`${moment().year()}`);
+                                tippy('#dropdown_cosy_byo', {
+                                    content: document.getElementById('template-byo').innerHTML,
+                                    allowHTML: true,
+                                    theme: 'bmw',
+                                    arrow: true,
+                                    placement: 'left',
+                                    animation: 'shift-away-extreme',
+                                });
+                            </script>
+                            
+                            <button class="dropdown-item" for="black-cosy-checkbox-outlined" id="dropdown_cosy_globalnav" onclick="changeCosyType('3')">
+                                <i class="fa-solid fa-circle-dot fa-xs"></i> Globalnav
+                            </button>
+                            <div id="template-globalnav" style="display: none;">
+                                <div class="d-flex flex-column text-center p-3" style="width:250px;">
+                                    <img src="https://cache.bmwusa.com/cosy.arox?pov=walkaround&brand=WBBM&vehicle=22XO&client=byo&paint=P0300&fabric=FK8SW&sa=S01CE,S01SB,S0255,S02TB,S0302,S0319,S03AT,S03MB,S0402,S0420,S0423,S0459,S0481,S0494,S04AW,S04KR,S04T8,S04UR,S0552,S05AC,S05AS,S0676,S06AC,S06AK,S06C4,S06U3,S0775,S07HW&bkgnd=transparent&quality=70&resp=png&angle=60" alt="X5 Cosy">
+                                    <h4 class="m-0 fw-bold">X5</h4>
+                                </div>
+                            </div>
+                            <script>
+                                tippy('#dropdown_cosy_globalnav', {
+                                    content: document.getElementById('template-globalnav').innerHTML,
+                                    allowHTML: true,
+                                    theme: 'bmw',
+                                    arrow: true,
+                                    placement: 'left',
+                                    animation: 'shift-away-extreme',
+                                });
+                            </script>
+                            
+                            <button class="dropdown-item" for="black-cosy-checkbox-outlined" id="dropdown_cosy_allbmws" onclick="changeCosyType('4')">
+                                <i class="fa-solid fa-circle-dot fa-xs"></i> All BMWs
+                            </button>
+                            <div id="template-allbmws" style="display: none;">
+                                <div>
+                                    <div class="position-relative" style="width:250px; height: 110px;">
+                                        <h1 class="m-0 fw-bold text-light">X5</h1>
+                                        <div class="position-absolute" style="width: 230px;  left: 5px; top: 10%;">
+                                            <img class="w-100" src="https://cache.bmwusa.com/cosy.arox?pov=walkaround&brand=WBBM&vehicle=22XO&client=byo&paint=P0300&fabric=FK8SW&sa=S01CE,S01SB,S0255,S02TB,S0302,S0319,S03AT,S03MB,S0402,S0420,S0423,S0459,S0481,S0494,S04AW,S04KR,S04T8,S04UR,S0552,S05AC,S05AS,S0676,S06AC,S06AK,S06C4,S06U3,S0775,S07HW&bkgnd=transparent&quality=70&resp=png&angle=60" alt="X5 Cosy">
+                                        </div>
+                                    </div>
+                                    <div class="text-center pb-2">
+                                        <span class="border border-light rounded-pill" style="width: 25px; height: 25px; font-size: 11px;padding: 0 2.8px;"><i class="fa-solid fa-plus fa-xs"></i></span>
+                                        <small class="fw-lighter" style="letter-spacing: 2.5px;"> VIEW ALL MODELS</small>
+                                    </div>
+                                </div>
+                            </div>
+                            <script>
+                                tippy('#dropdown_cosy_allbmws', {
+                                    content: document.getElementById('template-allbmws').innerHTML,
+                                    allowHTML: true,
+                                    theme: 'bmw',
+                                    arrow: true,
+                                    placement: 'left',
+                                    animation: 'shift-away-extreme',
+                                });
+                            </script>
+                            
+                            <button class="dropdown-item" for="black-cosy-checkbox-outlined" id="dropdown_cosy_makeityours" onclick="changeCosyType('5')">
+                                <i class="fa-solid fa-circle-dot fa-xs"></i> Make it Yours
+                            </button>
+                            <div id="template-makeityours" style="display: none;">
+                                <div style="width: 280px;">
+                                    <div class="text-center py-3 rounded-15" style="background-size: cover; background-repeat: no-repeat; background-image: url(https://www.bmwusa.com/content/dam/bmwusa/global/2021/desktop/BMW-MY21-7-Series-DP-MakeItYours-Background-Desktop-2000px.jpeg);">
+                                        <p class="m-0 text-white small fw-light pb-1">MAKE IT YOURS</p>
+                                        <small class="text-light mb-0 d-block">Lorem, ipsum dolor sit Cumque ducimus vel.</small>
+                                        <div class="d-flex justify-content-center align-items-center" style="transform: scale(0.4);">
+                                            <button type="button" class="btn btn-primary no-shadow me-2" style="width: 180px;">Start Shopping</button>
+                                            <button type="button" class="btn btn-light no-shadow" style="width: 180px;">Test Drive</button>
+                                        </div>
+                                        <img style="width:60%;" src="https://cache.bmwusa.com/cosy.arox?pov=walkaround&brand=WBBM&vehicle=228F&client=byo&paint=P0C1K&fabric=FLKSW&sa=S01MA,S01TH,S0302,S0319,S0322,S0453,S04GQ,S04HB,S04MC,S05AC,S05AZ,S06AC,S06AE,S06AK,S06C4,S06NW,S06U3,S06WD,S0712,S0760,S0776,S07M9,S07MA&quality=90&bkgnd=transparent&resp=png&width=560&w=9800&h=8000&x=100&y=600&angle=40" alt="M8 competition coupe">
+                                    </div>
+                                </div>
+                            </div>
+                            <script>
+                                tippy('#dropdown_cosy_makeityours', {
+                                    content: document.getElementById('template-makeityours').innerHTML,
+                                    allowHTML: true,
+                                    theme: 'bmw',
+                                    arrow: true,
+                                    placement: 'left',
+                                    animation: 'shift-away-extreme',
+                                });
+                            </script>
+                        </div>
+                    </div>
+                    <div class="ms-2 rounded bg-dark-light d-flex justify-content-start" style="height:31px; padding: 3.4px 8px;">
+                        <label for="rangeQuality" class="form-label mb-0 me-2" id="qualityRangeLabel">70%</label>
+                        <input type="range" class="form-range" value="70" min="0" max="100" step="10" id="rangeQuality" onchange="changeQualityImage()">
                     </div>
                     <script>
-                        tippy('#bckgChangetr', {
-                            content: "Transparent",
-                            animation: 'shift-away-extreme',
-                        });
-                        tippy('#bckgChange1', {
-                            content: "White",
-                            animation: 'shift-away-extreme',
-                        });
-                        tippy('#bckgChange2', {
-                            content: "Dark",
+                        tippy('#qualityRangeLabel', {
+                            content: "Quality",
+                            placement: 'top',
                             animation: 'shift-away-extreme',
                         });
                     </script>
-                    <select class="form-select form-select-sm bg-dark-light" style="width: 200px;" id="cosyTypeModel" onchange="changeCosyType(); this.selectedIndex = 0;">
-                        <option value="0" selected>Select type</option>
-                        <option value="1">Model Lineup</option>
-                        <option value="2">Localnav</option>
-                        <option value="3">Globalnav</option>
-                        <option value="3">All BMWs</option>
-                    </select>
                 </div>
             </div>
+            <style>
+                /* tippy theme for preview models */
+                .tippy-box[data-theme~='bmw'] {
+                    background-color: #242424;
+                    border-radius: 15px;
+                    box-shadow: 0 0 10px rgba(0, 0, 0, 0.14);
+                    color: #fff;
+                }
+                .tippy-box[data-theme~='bmw'][data-placement^='left'] > .tippy-arrow::before {
+                    border-left-color: #242424;
+                }
+            </style>
             <div class="bg-dark rounded-15 w-100 p-3 mt-3 flex-fill d-flex justify-content-center align-items-center" id="imagePreview" style="overflow: hidden;">
                 <p class="small text-muted text-center mt-3">Please Choose a Model</p>
             </div>
             <div id="imagePreviewCache" class="d-none"></div>
         </div>
         <div class="col-5 pe-0">
-            <div class="bg-dark rounded-15 w-100 p-3" style="height: calc(100vh - 345px); overflow-y: hidden;">
-                <h6>Colors:</h6>
-                <hr>
+            <div class="bg-dark rounded-15 w-100 px-3 pt-1" style="height: calc(100vh - 345px); overflow-y: hidden;">
                 <div>
-                    <ul class="nav nav-pills mb-3" id="pills-tab-Cosy" role="tablist">
+                    <ul class="nav nav-pills mb-2" id="pills-tab-Cosy" role="tablist">
                         <li class="nav-item me-3" role="presentation">
                           <button class="nav-link active" id="pills-color-tab" data-bs-toggle="pill" data-bs-target="#pills-color" 
                           type="button" role="tab" aria-controls="pills-color" aria-selected="true"><i class="far fa-circle"></i> Color</button>
@@ -99,6 +297,7 @@
                           type="button" role="tab" aria-controls="pills-trims" aria-selected="false"><img src="../img/trim-wheel.png" width="20px" height="20px"> Wheels</button>
                         </li>
                     </ul>
+                    <hr class="mt-1 mb-3">
                     <div class="tab-content" id="pills-tab-CosyContent">
                         <div class="tab-pane fade show active" id="pills-color" role="tabpanel" aria-labelledby="pills-color-tab" style="height: calc(100vh - 500px); overflow-y: auto;">
                             <div id="colorsPreview" class="d-flex flex-column">

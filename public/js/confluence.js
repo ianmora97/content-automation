@@ -11,7 +11,7 @@ function bringConfluenceContentDeployments() {
     }).then((res) => {
         searchForDeployments(res)
     }, (error) => {
-    
+        checkError("deployments", error.status);
     });
 }
 async function searchForDeployments(vec) {
@@ -40,6 +40,7 @@ function fetchContentbyID(id) {
             g_confluence_deployments.push(res)
             resolve(res)
         }, (error) => {
+            checkError("deployment", error.status);
         });
     });
 }
@@ -51,8 +52,9 @@ function showContentDeployments(){
         return (daA > daB) - (daA < daB);
     })
     .forEach(e => {
+        
         let bodyvalue = e.body.storage.value;
-        let time = bodyvalue.split('Deployment Time:</h3><ul class=\"ak-ul\"><li><p>')[1].split('</p>')[0];
+        let time = bodyvalue.split('Deployment Time:</h3>')[1].split('<p>')[1].split('</p>')[0];
         let date = moment(e.title.split(' ')[0]);
         let isthesame = e.history.createdBy.profilePicture.path != e.version.by.profilePicture.path;
         $('#deployments').append(`
