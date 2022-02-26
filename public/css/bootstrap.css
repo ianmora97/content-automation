@@ -139,7 +139,7 @@ small, .small {
 }
 
 .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
-  box-shadow: 0 4px 15px 0 rgba(70, 89, 228, 0.4) !important;
+  box-shadow: 0 4px 15px 0 rgba(70, 89, 228, 0.2) !important;
   border-radius: 10px !important;
   width: 100%;
 }
@@ -263,8 +263,33 @@ small, .small {
   animation-delay: 1.7s;
 }
 
+.alert.alert-default {
+  background-color: #242424 !important;
+  border-radius: 5px !important;
+  border: none !important;
+  padding: 0 !important;
+  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.4) !important;
+}
+.alert.alert-default .alert-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.alert.alert-default.alert-type-danger div div .alert-title {
+  background-color: #f5b8b8 !important;
+  color: #eb4a5a;
+  padding: 0.8rem 1.2rem !important;
+}
+.alert div div .alert-body {
+  padding: 1rem !important;
+  color: #cfcece !important;
+}
+.alert.alert-dismissible {
+  padding: 0 !important;
+}
+
 .btn-primary {
-  box-shadow: 0 4px 15px 0 rgba(70, 89, 228, 0.4) !important;
+  box-shadow: 0 4px 15px 0 rgba(70, 89, 228, 0.2) !important;
   outline: none !important;
 }
 .btn-primary:focus {
@@ -305,7 +330,7 @@ small, .small {
 .btn-check:checked + .btn-outline-primary-cus {
   background-color: #4659e4;
   color: #cfcece;
-  box-shadow: 0 3px 7px 0 rgba(70, 89, 228, 0.4) !important;
+  box-shadow: 0 3px 7px 0 rgba(70, 89, 228, 0.2) !important;
   font-weight: bold;
 }
 

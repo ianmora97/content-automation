@@ -4,6 +4,7 @@ $success:#28a745;
 $info:#3076f8;
 $warning:#fdb00c;
 $danger:#eb4a5a;
+$danger-light:#f5b8b8;
 $light:#cfcece;
 $dark:#1A1A1A;
 $dark-light:#242424;
@@ -150,7 +151,7 @@ small{
 }
 
 .nav-pills .nav-link.active, .nav-pills .show > .nav-link{
-    box-shadow: 0 4px 15px 0 rgba(70, 89, 228,.40) !important;
+    box-shadow: 0 4px 15px 0 rgba(70, 89, 228, 0.2) !important;
     border-radius: 10px !important;
     width: 100%;
     
@@ -249,23 +250,51 @@ small{
 }
 .animate_delay_t1{
     animation-delay:0.2s;
-  }
+}
   
-  .animate_delay_t2{
+.animate_delay_t2{
     animation-delay:0.7s;
-  }
+}
   
-  .animate_delay_t3{
+.animate_delay_t3{
     animation-delay:1.2s;
-  }
+}
   
-  .animate_delay_t4{
+.animate_delay_t4{
     animation-delay:1.7s;
-  }
-// ! Buttons
+}
+.alert{
+    &.alert-default{
+        background-color: $dark-light !important;
+        border-radius: 5px !important;
+        border: none !important;
+        padding: 0 !important;
+        box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.4) !important;
+        .alert-content{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        &.alert-type-danger{
+            div div .alert-title{
+                background-color: $danger-light !important;
+                color: $danger;
+                padding: 0.8rem 1.2rem !important;
+            }
+        }
+    }
+    div div .alert-body{
+        padding: 1rem !important;
+        color: $light !important;
+    }
+    &.alert-dismissible{
+        padding: 0 !important;
+    }
+}
+// ! --------------------------- Buttons ---------------------------------
 
 .btn-primary{
-    box-shadow: 0 4px 15px 0 rgba(70, 89, 228,.40) !important;
+    box-shadow: 0 4px 15px 0 rgba(70, 89, 228, 0.2) !important;
     outline: none !important;
     &:focus{
         box-shadow: none !important;
@@ -301,7 +330,7 @@ small{
 .btn-check:checked + .btn-outline-primary-cus{
     background-color: $primary;
     color:$light;
-    box-shadow: 0 3px 7px 0 rgba(70, 89, 228,.40) !important;
+    box-shadow: 0 3px 7px 0 rgba(70, 89, 228, 0.2) !important;
     font-weight: bold;
 }
 .btn-check:not(:checked) + .btn-outline-primary-cus{

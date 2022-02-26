@@ -48,7 +48,8 @@
     "lodash": "^4.17.21",
     "path": "^0.12.7",
     "sitemapper": "^3.2.2",
-    "sqlite3": "^5.0.2"
+    "sqlite3": "^5.0.2",
+    "update-electron-app": "^2.0.1"
   },
   "build": {
     "appId": "com.content_automation.app",

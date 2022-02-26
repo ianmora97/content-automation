@@ -3,12 +3,13 @@
 <div style="height: calc(100vh - 140px); overflow-y: auto;">
     <div class="row mx-0">
         <div class="col-7 ps-0">
-            <div class="bg-dark rounded-15 w-100 my-2 px-3 pt-3" style="height: 180px; overflow: hidden;">
+            <div class="bg-dark rounded-15 w-100 my-2 px-3 pt-3" 
+            style="height: 180px; overflow: hidden;">
                 <div class="">
                     <input class="form-control bg-dark-light" style="width: 80%;" id="searchBaronModelCodes" type="text" placeholder="Search" aria-label="Search Tab">
                 </div>
                 <div class="position-relative">
-                    <div class="d-flex justify-content-start align-items-stretch gap-2 pt-3" id="modelCodesSearch" style=" overflow-x: auto;">
+                    <div class="d-flex justify-content-start align-items-stretch gap-2 py-3" id="modelCodesSearch" style=" overflow-x: auto;">
                         <div class="d-flex justify-content-center w-100">
                             <div class="spinner-border" role="status">
                                 <span class="visually-hidden">Loading...</span>
@@ -226,10 +227,14 @@
                             </button>
                             <div id="template-makeityours" style="display: none;">
                                 <div style="width: 280px;">
-                                    <div class="text-center py-3" style="background-size: contain; background-repeat: no-repeat; background-image: url(https://www.bmwusa.com/content/dam/bmwusa/global/2021/desktop/BMW-MY21-7-Series-DP-MakeItYours-Background-Desktop-2000px.jpeg);">
+                                    <div class="text-center py-3 rounded-15" style="background-size: cover; background-repeat: no-repeat; background-image: url(https://www.bmwusa.com/content/dam/bmwusa/global/2021/desktop/BMW-MY21-7-Series-DP-MakeItYours-Background-Desktop-2000px.jpeg);">
                                         <p class="m-0 text-white small fw-light pb-1">MAKE IT YOURS</p>
-                                        <small class="text-light mb-0 d-block">Lorem, ipsum dolor sit Cumque ducimus vel<br>sapiente sit.</small>
-                                        <img class="w-75" src="https://cache.bmwusa.com/cosy.arox?pov=walkaround&brand=WBBM&vehicle=228F&client=byo&paint=P0C1K&fabric=FLKSW&sa=S01MA,S01TH,S0302,S0319,S0322,S0453,S04GQ,S04HB,S04MC,S05AC,S05AZ,S06AC,S06AE,S06AK,S06C4,S06NW,S06U3,S06WD,S0712,S0760,S0776,S07M9,S07MA&quality=90&bkgnd=transparent&resp=png&angle=40" alt="M8 competition coupe">
+                                        <small class="text-light mb-0 d-block">Lorem, ipsum dolor sit Cumque ducimus vel.</small>
+                                        <div class="d-flex justify-content-center align-items-center" style="transform: scale(0.4);">
+                                            <button type="button" class="btn btn-primary no-shadow me-2" style="width: 180px;">Start Shopping</button>
+                                            <button type="button" class="btn btn-light no-shadow" style="width: 180px;">Test Drive</button>
+                                        </div>
+                                        <img style="width:60%;" src="https://cache.bmwusa.com/cosy.arox?pov=walkaround&brand=WBBM&vehicle=228F&client=byo&paint=P0C1K&fabric=FLKSW&sa=S01MA,S01TH,S0302,S0319,S0322,S0453,S04GQ,S04HB,S04MC,S05AC,S05AZ,S06AC,S06AE,S06AK,S06C4,S06NW,S06U3,S06WD,S0712,S0760,S0776,S07M9,S07MA&quality=90&bkgnd=transparent&resp=png&width=560&w=9800&h=8000&x=100&y=600&angle=40" alt="M8 competition coupe">
                                     </div>
                                 </div>
                             </div>
@@ -249,6 +254,13 @@
                         <label for="rangeQuality" class="form-label mb-0 me-2" id="qualityRangeLabel">70%</label>
                         <input type="range" class="form-range" value="70" min="0" max="100" step="10" id="rangeQuality" onchange="changeQualityImage()">
                     </div>
+                    <script>
+                        tippy('#qualityRangeLabel', {
+                            content: "Quality",
+                            placement: 'top',
+                            animation: 'shift-away-extreme',
+                        });
+                    </script>
                 </div>
             </div>
             <style>
@@ -269,9 +281,9 @@
             <div id="imagePreviewCache" class="d-none"></div>
         </div>
         <div class="col-5 pe-0">
-            <div class="bg-dark rounded-15 w-100 p-3" style="height: calc(100vh - 345px); overflow-y: hidden;">
+            <div class="bg-dark rounded-15 w-100 px-3 pt-1" style="height: calc(100vh - 345px); overflow-y: hidden;">
                 <div>
-                    <ul class="nav nav-pills mb-3" id="pills-tab-Cosy" role="tablist">
+                    <ul class="nav nav-pills mb-2" id="pills-tab-Cosy" role="tablist">
                         <li class="nav-item me-3" role="presentation">
                           <button class="nav-link active" id="pills-color-tab" data-bs-toggle="pill" data-bs-target="#pills-color" 
                           type="button" role="tab" aria-controls="pills-color" aria-selected="true"><i class="far fa-circle"></i> Color</button>
@@ -285,6 +297,7 @@
                           type="button" role="tab" aria-controls="pills-trims" aria-selected="false"><img src="../img/trim-wheel.png" width="20px" height="20px"> Wheels</button>
                         </li>
                     </ul>
+                    <hr class="mt-1 mb-3">
                     <div class="tab-content" id="pills-tab-CosyContent">
                         <div class="tab-pane fade show active" id="pills-color" role="tabpanel" aria-labelledby="pills-color-tab" style="height: calc(100vh - 500px); overflow-y: auto;">
                             <div id="colorsPreview" class="d-flex flex-column">

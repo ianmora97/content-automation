@@ -19,27 +19,17 @@ let db = new sqlite3.Database(path.join(__dirname,'../db/database.db'), (err) =>
 var g_modelList = new Array();
 
 function getAllModelsList() {
+    clearSpaces();
+    clearSpacesWP();
     $.ajax({
         type: "GET",
         url: `${cosy_config.ubyo}/v1/static/BM/modellist?loadtype=full`,
         contentType: "application/json",
     }).then((response) => {
-        console.log(response);
         g_modelList = response;
         loadDataListInput(response);
     }, (error) => {
-        if(error.status == 404){
-        }
-        $("#feedbackAlert").html(`
-        <div class="alert alert-danger alert-dismissible fade show d-flex align-items-center" role="alert">
-            <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:"><use xlink:href="#exclamation-triangle-fill"/></svg>
-            <div>
-                <strong>Error!</strong> Endpoint not found or URL is wrong.
-            </div>
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-        `);
-
+        checkError("modellist", error.status);
     });
 }
 

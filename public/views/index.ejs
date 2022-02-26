@@ -47,7 +47,7 @@
             <div id="mainContent">
                 <%- include("jira") %>
                 <div class="bg-dark-light rounded-15 w-100 h-100">
-                    <div id="feedbackAlert" class="position-absolute" style="width: 70%; left: 15%; top: 20px; z-index: 99999;"></div>
+                    <div id="feedbackAlert" class="position-absolute" style="width: 40%; left: 0%; top: 10%; z-index: 99999;"></div>
                     <div class="tab-content m-0 p-0 h-100 position-relative" id="v-pills-tabContent">
                         <div class="tab-pane h-100 p-3 fade" id="v-pills-myu" role="tabpanel" aria-labelledby="v-pills-myu-tab">
                             <h2 class="fw-bold mb-0">Model Year Updates</h2>
@@ -100,14 +100,15 @@
                             <%- include("config") %>
                         </div>
                         <div class="tab-pane h-100 p-3 fade" id="v-pills-textEditor" role="tabpanel" aria-labelledby="v-pills-textEditor-tab">
-                            
+                            <%- include("editor") %>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <%- include("modalEditor") %>
+        
 
+        <script src="../js/errors.js"></script>
         <script src="../js/templates.js"></script>
         <script src="../js/electron-f.js"></script>
         <script src="../js/clipboard.min.js"></script>

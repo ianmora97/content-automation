@@ -1,4 +1,6 @@
 var g_cosy_angle = 40;
+localStorage.setItem('angleCosy',40);
+
 var g_cosy_angleTemp = 40;
 var g_cost_typeMime = 'png'
 var g_cosy_bckg = "transparent";
@@ -7,6 +9,9 @@ var g_cosy_wheel = "";
 var g_cosy_quality = '70';
 var g_cosy_color = "";
 var g_cosy_upholstery = "";
+
+var g_imagepreview_temp = "";
+var g_cosy_driverDoor = "";
 
 var g_cosy_modelName = "";
 var g_cosy_additional_params = "&width=600";
@@ -128,20 +133,23 @@ function getImagesCosysByModelAll(model) {
             }
             showimagePathsCosysAll(config,colors_filter,fabricCodes,wheels,current_trim);
         }, (error) => {
-        
+            checkError("optionsCosy", error.status);
         });
     }, (error) => {
-    
+        checkError("modelnotfound", error.status);
     });
 }
 function showimagePathsCosysAll(response,colors,fabric,wheels,current_trim) {
     clearSpaces();
+    g_cosy_driverDoor = response.configuration.driverSideViewUrlPart;
+
     let walk360 = response.configuration.walkaround360DegViewUrlPart;
     let paintName = walk360.split('&paint=')[1].split('&')[0];
     let upholName = walk360.split('&fabric=')[1].split('&')[0];
 
     let paint = colors.filter(obj => {return obj.code == paintName;});
     let uphol = fabric.filter(obj => {return obj.code == upholName;});
+    g_cosy_upholstery = uphol[0].code;
 
     walk360 = walk360.split('&date=')[0];
     walk360 = g_cosy_color != "" ? walk360.split('&paint=')[0] + '&paint=' + g_cosy_color + walk360.split('&paint=')[1].substr(5, walk360.length) : walk360;
@@ -418,9 +426,13 @@ function changeUpholOnPreviewAll(fabric){
     let walkaround_path = $('#pathCosyModel').html().replaceAll('&amp;','&');
     let b = walkaround_path.split('&fabric=')[1].split('&')[0];
     let new_path = walkaround_path.replace(b,fabric);
+    g_imagepreview_temp = g_imagepreview_temp.replace(b,fabric);
+
     g_cosy_upholstery = fabric;
     showPathImageCosyOnLoadAll(new_path);
-    showImageCosyAll(new_path);
+    showImageCosyAll(g_imagepreview_temp);
+    console.log(g_imagepreview_temp);
+
     bringAllAnglesCache(new_path);
     let frabicf = _.find(g_fetch_options, ['code', fabric]);
     $('#upholCosyModel').html(`<span id="fabricCodeCosy">${frabicf.code}</span> - ${frabicf.name}`);
@@ -433,6 +445,7 @@ function changeUpholOnPreviewAll(fabric){
 function changeTrimsOnPreviewAll(wheel){
     let walkaround_path = $('#pathCosyModel').html().replaceAll('&amp;','&');
     let new_path = walkaround_path.replace(g_cosy_wheel, wheel);
+    console.log(g_cosy_wheel, wheel)
     showPathImageCosyOnLoadAll(new_path);
     showImageCosyAll(new_path);
     bringAllAnglesCache(new_path);
@@ -487,17 +500,42 @@ function tabChangeCosy(){
             if(newT.id.split('-')[1] == "trims"){
                 g_cosy_angle = 90;
                 g_cosy_additional_styles = "transform: scale(2.5) translateX(140px) translateY(-30px);"
+                if(g_cosy_modelName != ""){
+                    let path = $('#pathCosyModel').html().replaceAll('&amp;','&');
+                    let angle = parseInt(path.split('&angle=')[1]);
+                    let new_path = path.replace('&angle='+angle, '&angle='+(g_cosy_angle));
+                    showPathImageCosyOnLoadAll(new_path);
+                    showImageCosyAll(new_path);
+                }
+            }
+            else if(newT.id.split('-')[1] == "upholstery"){
+                let path = `${cosy_config.domain}${g_cosy_driverDoor}&quality=100&bkgnd=transparent&resp=png`;
+                let b = path.split('&fabric=')[1].split('&')[0];
+                path = path.replace(b,g_cosy_upholstery);
+                let c = path.split('&paint=')[1].split('&')[0];
+                path = path.replace(c,g_cosy_color);
+
+                g_imagepreview_temp = path;
+                g_cosy_additional_styles = ""
+
+                $(`#imagePreview`).html(`
+                    <img src="${path}" class="img-fluid imagePreview border border-dark-light" id="imageCosyPreview_c" width="100%">
+                `)
             }else{
+                $(`#imagePreview`).html(`
+                    <img src="${g_cosy_path_image}" class="img-fluid imagePreview border border-dark-light" id="imageCosyPreview_c" width="100%" style="cursor: ew-resize; ${g_cosy_additional_styles}">
+                `)
                 g_cosy_angle = parseInt(localStorage.getItem('angleCosy'));
                 g_cosy_additional_styles = ""
+                if(g_cosy_modelName != ""){
+                    let path = $('#pathCosyModel').html().replaceAll('&amp;','&');
+                    let angle = parseInt(path.split('&angle=')[1]);
+                    let new_path = path.replace('&angle='+angle, '&angle='+(g_cosy_angle));
+                    showPathImageCosyOnLoadAll(new_path);
+                    showImageCosyAll(new_path);
+                }
             }
-            if(g_cosy_modelName != ""){
-                let path = $('#pathCosyModel').html().replaceAll('&amp;','&');
-                let angle = parseInt(path.split('&angle=')[1]);
-                let new_path = path.replace('&angle='+angle, '&angle='+(g_cosy_angle));
-                showPathImageCosyOnLoadAll(new_path);
-                showImageCosyAll(new_path);
-            }
+            
         })
     });
 }

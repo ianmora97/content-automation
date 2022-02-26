@@ -11,7 +11,7 @@ function bringConfluenceContentDeployments() {
     }).then((res) => {
         searchForDeployments(res)
     }, (error) => {
-    
+        checkError("deployments", error.status);
     });
 }
 async function searchForDeployments(vec) {
@@ -40,6 +40,7 @@ function fetchContentbyID(id) {
             g_confluence_deployments.push(res)
             resolve(res)
         }, (error) => {
+            checkError("deployment", error.status);
         });
     });
 }
