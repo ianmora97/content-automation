@@ -1,6 +1,6 @@
 {
   "name": "content-automation",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "",
   "main": "main.js",
   "scripts": {
@@ -9,7 +9,7 @@
     "dist": "electron-builder",
     "dbwipe": "node ./public/db/wipe.js",
     "mac-dmg": "electron-installer-dmg ./release-builds/Content-Automation-darwin-x64/Content-Automation.app electron-content-automation",
-    "packageOSX": "electron-packager . \"Content-Automation\" --overwrite --platform=darwin --arch=x64 --icon=./public/img/logo.icns --prune=true --out=release-builds",
+    "packageOSX": "electron-packager . \"Content Automation\" --overwrite --platform=darwin --arch=x64 --icon=./public/img/logo.icns --prune=true --out=release-builds",
     "packageWIN": "electron-packager . Content-Automation --overwrite --platform=win32 --arch=ia32 --icon=/public/img/logo.png --prune=true --out=release-builds"
   },
   "repository": {
