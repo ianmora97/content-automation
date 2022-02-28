@@ -398,3 +398,23 @@ $modal-fade-transform: scaleY(.01) scaleX(0);
         box-shadow: none !important;
     }
 }
+
+// ! ------- aditional --------
+.curtain{
+    background-color: #0e0e0e;
+    transition: all 0.8s cubic-bezier(1, 0, 1, 1);
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    z-index: 9999;
+    transform: translate(-100%, -150%);
+    &.active{
+        transform: translate(0, 0);
+    }
+}
+.hoverImageIcon{
+    transition: all 0.3s ease-in-out;
+    &:hover{
+        box-shadow: rgba(70, 89, 228, 0.08) 0px 0px 20px 3px, 
+    }
+}

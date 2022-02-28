@@ -426,13 +426,10 @@ function changeUpholOnPreviewAll(fabric){
     let walkaround_path = $('#pathCosyModel').html().replaceAll('&amp;','&');
     let b = walkaround_path.split('&fabric=')[1].split('&')[0];
     let new_path = walkaround_path.replace(b,fabric);
-    g_imagepreview_temp = g_imagepreview_temp.replace(b,fabric);
 
     g_cosy_upholstery = fabric;
     showPathImageCosyOnLoadAll(new_path);
-    showImageCosyAll(g_imagepreview_temp);
-    console.log(g_imagepreview_temp);
-
+    showImageCosyAll(new_path);
     bringAllAnglesCache(new_path);
     let frabicf = _.find(g_fetch_options, ['code', fabric]);
     $('#upholCosyModel').html(`<span id="fabricCodeCosy">${frabicf.code}</span> - ${frabicf.name}`);
@@ -491,6 +488,7 @@ function changeBackgroundOnPreview(id){
     showImageCosyAll(new_path);
     bringAllAnglesCache(new_path);
 }
+
 function tabChangeCosy(){
     var tabs = document.querySelectorAll("#pills-tab-Cosy li button")
     tabs.forEach(function(tab){
@@ -539,7 +537,7 @@ function tabChangeCosy(){
         })
     });
 }
-tabChangeCosy();
+// tabChangeCosy();
 document.addEventListener('DOMContentLoaded', function() {
     
 });
