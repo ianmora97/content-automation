@@ -8,10 +8,10 @@
     "start": "electron .",
     "dist": "electron-builder",
     "dbwipe": "node ./public/db/wipe.js",
-    "mac-dmg": "electron-installer-dmg ./release-builds/Content-Automation-darwin-x64/Content Automation.app electron-content-automation",
+    "mac-dmg": "electron-installer-dmg ./release-builds/Content Automation-darwin-x64/Content Automation.app electron-content-automation",
     "packageOSX": "electron-packager . \"Content Automation\" --overwrite --platform=darwin --arch=x64 --icon=./public/img/logo.icns --prune=true --out=release-builds",
     "packageWIN": "electron-packager . Content-Automation --overwrite --platform=win32 --arch=ia32 --icon=/public/img/logo.png --prune=true --out=release-builds",
-    "installerZip:mac": "electron-installer-zip ./release-builds/Content-Automation-darwin-x64/Content Automation.app electron-content-automation"
+    "installerZip:mac": "electron-installer-zip release-builds/Content Automation-darwin-x64/Content Automation.app release-builds/electron-content-automation-mac.zip"
   },
   "repository": {
     "type": "git",
@@ -42,6 +42,7 @@
     "dotenv": "^10.0.0",
     "ejs-electron": "^2.1.1",
     "electron-find": "^1.0.7",
+    "electron-installer-zip": "^0.1.2",
     "fs": "0.0.1-security",
     "gulp": "^4.0.2",
     "gulp-concat": "^2.6.1",
