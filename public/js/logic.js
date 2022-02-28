@@ -22,7 +22,7 @@ function loaded() {
     seeTabs()
     ctrlFind()
     clipboard.on('success', function(e) {
-        e.clearSelection();
+        console.log(e);
     });
     
 }

@@ -37,13 +37,13 @@
                             Links <i class="fas fa-angle-right"></i>
                         </p>
                         <div style="min-height: 47px;">
-                            <div class="collapse collapse-horizontal" id="collapseCentral">
+                            <div class="collapse collapse-horizontal show" id="collapseCentral">
                                 <div class="d-flex justify-content-end" style="width: 232px;">
                                     <div class="d-flex flex-column justify-content-start ms-3">
                                         <small class="fst-italic mb-1">Staging</small>
                                         <div class="btn-group" role="group" aria-label="Basic example">
-                                            <button type="button" class="btn no-shadow btn-primary btn-sm" disabled><i
-                                                    class="far fa-copy"></i></button>
+                                            <button type="button" class="btn no-shadow btn-primary btn-sm btn-to-clip" 
+                                            data-clipboard-target="#central-OffersLinks-Staging" ><i class="far fa-copy"></i></button>
                                             <button type="button" class="btn no-shadow btn-primary btn-sm"
                                                 onclick="openMacoLinks('central','s')"><i
                                                     class="fab fa-safari"></i></button>
@@ -52,7 +52,8 @@
                                     <div class="d-flex flex-column justify-content-start ms-3">
                                         <small class="fst-italic mb-1">Prod</small>
                                         <div class="btn-group" role="group" aria-label="Basic example">
-                                            <button type="button" class="btn no-shadow btn-primary btn-sm" disabled><i
+                                            <button type="button" class="btn no-shadow btn-primary btn-sm btn-to-clip" 
+                                            data-clipboard-target="#central-OffersLinks-Prod" ><i
                                                     class="far fa-copy"></i></button>
                                             <button type="button" class="btn no-shadow btn-primary btn-sm"
                                                 onclick="openMacoLinks('central','p')"><i
@@ -62,7 +63,8 @@
                                     <div class="d-flex flex-column justify-content-start ms-3">
                                         <small class="fst-italic mb-1">Live</small>
                                         <div class="btn-group" role="group" aria-label="Basic example">
-                                            <button type="button" class="btn no-shadow btn-primary btn-sm" disabled><i
+                                            <button type="button" class="btn no-shadow btn-primary btn-sm btn-to-clip" 
+                                            data-clipboard-target="#central-OffersLinks-Live"  ><i
                                                     class="far fa-copy"></i></button>
                                             <button type="button" class="btn no-shadow btn-primary btn-sm"
                                                 onclick="openMacoLinks('central','l')"><i
@@ -71,6 +73,9 @@
                                     </div>
                                 </div>
                             </div>
+                            <div id="central-OffersLinks-Staging" ></div>
+                            <div id="central-OffersLinks-Prod" ></div>
+                            <div id="central-OffersLinks-Live" ></div>
                         </div>
                     </div>
                 </div>

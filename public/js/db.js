@@ -80,6 +80,7 @@ function getMacos() {
                 g_Macos.push(row);
                 g_mapMacos.set(row.id, row);
                 appendMacosURLs(`#macourl-${row.region_name}`,row)
+                fillLoadLinksforCopy();
             });
         }
     });
@@ -110,6 +111,16 @@ function getMacosbyRegion(){
             });
         })
     })
+}
+function fillLoadLinksforCopy(){
+    g_Macos.forEach((maco) => {
+        loadLinkstoCopyonOffers(maco);
+    })
+}
+function loadLinkstoCopyonOffers(maco){
+    $(`#${maco.region_name}-OffersLinks-Staging`).append(`https://www.staging.bmwusacm.co/home.html?maco=${maco.code}<br>`);
+    $(`#${maco.region_name}-OffersLinks-Prod`).append(`https://www.prod.bmwusacm.co/home.html?maco=${maco.code}<br>`);
+    $(`#${maco.region_name}-OffersLinks-Live`).append(`https://www.bmwusa.com/home.html?maco=${maco.code}<br>`);
 }
 function appendURLmacoModal(maco,region,env) {
     if(env.code == "l"){
