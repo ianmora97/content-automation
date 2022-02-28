@@ -154,7 +154,6 @@ small{
     box-shadow: 0 4px 15px 0 rgba(70, 89, 228, 0.2) !important;
     border-radius: 10px !important;
     width: 100%;
-    
 }
 .nav-pills .nav-link {
     color: $light;
@@ -357,6 +356,25 @@ small{
     border-radius: 0px !important;
     &:hover, &:focus{
         color: $white !important;
+    }
+}
+.btn-transparent{
+    box-shadow: none !important;
+    &.text-primary{
+        box-shadow: none !important;
+        &:hover, &:focus, &:active{
+            box-shadow: none !important;
+            background-color: $primary !important;
+            color: $white !important;
+        }
+    }
+    &.text-danger{
+        box-shadow: none !important;
+        &:hover, &:focus, &:active{
+            box-shadow: none !important;
+            background-color: $danger !important;
+            color: $white !important;
+        }
     }
 }
 // ! ---------------------- nav --------------------

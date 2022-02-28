@@ -1,3 +1,6 @@
+require('colors');
+const Diff = require('diff');
+
 function onKeyTextArea() {
     $('#urlsTextarea').on('keyup', function (event) {
         if(event.keyCode == 13){
@@ -52,6 +55,46 @@ function buildURLs(urls) {
 function clearTextareaUrls() {
     $('#buildOutput').html('');
     $('#urlsTextarea').val('');
+}
+function clearTextcompareOutputs(){
+    $('#outputTextarea1').html('');
+    $('#outputTextarea2').html('');
+
+}
+function textCompare(){
+    clearTextcompareOutputs();
+
+    let text1 = $('#textCompareTextarea1').val();
+    let text2 = $('#textCompareTextarea2').val();
+    $("#bottomTextCompare").show();
+
+    if(_.isEqual(text1, text2)){
+        $('#outputTextarea1').html('<p class="text-success">Texts are equal</p>');
+        $('#outputTextarea2').html('<p class="text-success">Texts are equal</p>');
+    }else{
+        const diff = Diff.diffWords(text1, text2);
+        let diffs = new Array();
+        fragment = document.createDocumentFragment();
+        diff.forEach(function (part) {
+            if(part.added){
+                diffs.push(`<span class="text-success">${part.value}</span>`);
+            }else if(part.removed){
+                diffs.push(`<span class="text-danger">${part.value}</span>`);
+            }else{
+                diffs.push(part.value);
+            }
+        });
+        $('#outputTextarea1').html(text1);
+        $('#outputTextarea2').html(diffs.join(''));
+
+    }
+}
+function clearTextareaTextCompare() {
+    $("#bottomTextCompare").hide();
+    $('#outputTextarea1').html('');
+    $('#outputTextarea2').html('');
+    $('#textCompareTextarea1').val('');
+    $('#textCompareTextarea2').val('');
 }
 
 document.addEventListener('DOMContentLoaded', function() {

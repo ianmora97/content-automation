@@ -363,6 +363,26 @@ small, .small {
   color: #fff !important;
 }
 
+.btn-transparent {
+  box-shadow: none !important;
+}
+.btn-transparent.text-primary {
+  box-shadow: none !important;
+}
+.btn-transparent.text-primary:hover, .btn-transparent.text-primary:focus, .btn-transparent.text-primary:active {
+  box-shadow: none !important;
+  background-color: #4659e4 !important;
+  color: #fff !important;
+}
+.btn-transparent.text-danger {
+  box-shadow: none !important;
+}
+.btn-transparent.text-danger:hover, .btn-transparent.text-danger:focus, .btn-transparent.text-danger:active {
+  box-shadow: none !important;
+  background-color: #eb4a5a !important;
+  color: #fff !important;
+}
+
 .card-nacode {
   background-color: #1A1A1A !important;
   width: 100px !important;
