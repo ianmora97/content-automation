@@ -139,6 +139,7 @@ small{
     height: 100%;
     display: flex;
     justify-content: space-between;
+    overflow: hidden;
 }
 #menuTabs{
     width: 325px;
@@ -301,8 +302,9 @@ small{
     }
 }
 .btn-success{
-    box-shadow: 0 4px 15px 0 rgba(70, 228, 131, 0.4) !important;
+    box-shadow: none !important;
     outline: none !important;
+    color: #ffffff !important;
     &:focus{
         box-shadow: none !important;
         outline: none !important;

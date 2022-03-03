@@ -80,8 +80,8 @@ function getMacos() {
                 g_Macos.push(row);
                 g_mapMacos.set(row.id, row);
                 appendMacosURLs(`#macourl-${row.region_name}`,row)
-                fillLoadLinksforCopy();
             });
+            fillLoadLinksforCopy();
         }
     });
 }
@@ -113,14 +113,19 @@ function getMacosbyRegion(){
     })
 }
 function fillLoadLinksforCopy(){
-    g_Macos.forEach((maco) => {
-        loadLinkstoCopyonOffers(maco);
+    let regions = ['central','east','west','south'];
+    let envs = [{name:'Staging',code:'s'},{name:'Prod',code:'p'},{name:'Live',code:'l'}];
+    envs.forEach((env)=>{
+        regions.forEach((region) => {
+            g_Macos.filter(maco => maco.region_name == region).forEach((maco) => {
+                if(env.code == "l"){
+                    $(`#${maco.region_name}-OffersLinks-${env.name}`).append(`https://www.bmwusa.com/home.html?maco=${maco.code}<br>`);
+                }else{
+                    $(`#${maco.region_name}-OffersLinks-${env.name}`).append(`https://www.${env.name.toLowerCase()}.bmwusacm.co/home.html?maco=${maco.code}<br>`);
+                }
+            })
+        });
     })
-}
-function loadLinkstoCopyonOffers(maco){
-    $(`#${maco.region_name}-OffersLinks-Staging`).append(`https://www.staging.bmwusacm.co/home.html?maco=${maco.code}<br>`);
-    $(`#${maco.region_name}-OffersLinks-Prod`).append(`https://www.prod.bmwusacm.co/home.html?maco=${maco.code}<br>`);
-    $(`#${maco.region_name}-OffersLinks-Live`).append(`https://www.bmwusa.com/home.html?maco=${maco.code}<br>`);
 }
 function appendURLmacoModal(maco,region,env) {
     if(env.code == "l"){

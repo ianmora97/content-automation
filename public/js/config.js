@@ -6,7 +6,7 @@ var json_config;
  * @param cosy_config cosy domains list Configuration
  */
 var cosy_config;
-function loadUserConfig(){
+async function loadUserConfig(){
     db.get("SELECT * FROM config WHERE id = 1", (err, rows) => {
         if (err) {
             console.log(err);
@@ -33,7 +33,10 @@ function loadUserConfig(){
             if(json_config.c_email != '' && json_config.c_token != ''){
                 $('#ticketJiraWarning').remove();
             }
-            bringConfluenceContentDeployments()
+            getCurrentUserAltassian().then(res => {
+                bringConfluenceContentDeployments();
+                bringJiraTicketsRelated();
+            });
         }
     });
 }
