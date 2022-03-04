@@ -139,45 +139,137 @@ function bringJiraTicketsRelated() {
             "Authorization": "Basic " + btoa(json_config.c_email + ":" + json_config.c_token)
         },
     }).then((res) => {
-        console.log(`https://virtuelle-welt.atlassian.net/rest/api/3/search?jql=assignee="${g_user_atlasian.publicName}"`,res);
         g_tickets_related = res;
-        $('#ticketsRelated').html('');
-        res.issues.forEach(e => {
-            let flagStatus = e.fields.status.name.match(/approved/gi) != null ? true : false;
-            $('#ticketsRelated').append(`
-                <li class="list-group-item bg-dark mb-3 rounded-15 p-3">
-                    <div class="d-flex justify-content-between align-items-start mb-2">
-                        <h4><span class="me-2" style="font-size:20px;">📥</span> ${e.fields.summary}</h4>
-                        <div class="d-flex justify-content-end align-items-center">
-                            <img width="30px" height="30px" class="rounded-circle" id="createdBy-${e.id}" src="${e.fields.creator.avatarUrls['48x48']}">
-                        </div>
-                    </div>
-                    <div class="d-flex justify-content-between align-items-start mb-2">
-                        <div>
-                            <p class="mb-1 text-light">
-                                <button type="button" class="btn btn-${flagStatus > 0 ? "primary" : "light"} btn-xs">
-                                    ${e.fields.status.name}
-                                </button>
-                            </p>
-                            <p class="mb-1"><span class="text-light">${e.fields.priority.name}</span> <img width="16px" height="16px" src="${e.fields.priority.iconUrl}"></p>
-                            <div class="d-flex justify-content-between">
-                                <h6 class="text-primary mb-0 mt-2" role="button" onclick="openExternalLink('${e.self}')"><u>See Ticket</u></h6>
-                            </div>
-                        </div>
-                        <div class="d-flex flex-column mt-auto">
-                            <p class="mb-1"><span class="text-light small">${e.fields.labels.join(", ")}</span></p>
-                        </div>
-                    </div>
-                    
-                </li>
-            `)
-            tippy(`#createdBy-${e.id}`, {
-                content: `${e.fields.creator.displayName}`,
-                placement: 'top',
-                animation: 'shift-away-extreme',
-            });
-        });
+        getAllJiraStatus();
+        bringJiraTicketsRelatedShow(res.issues);
     }, (error) => {
         checkError("deployments", error.status);
     });
 }
+function bringJiraTicketsRelatedShow(tickets){
+    $('#ticketsRelated').html('');
+    tickets.forEach(e => {
+        let flagStatus = e.fields.status.name.match(/approved/gi) != null ? "success" : "light";
+        flagStatus = e.fields.status.name.match(/failed/gi) != null ? "danger" : flagStatus;
+        $('#ticketsRelated').append(`
+            <tr>
+                <td><i class="fa-brands fa-jira text-primary pe-2"></i> ${e.key}</td>
+                <td>${e.fields.summary}</td>
+                <td>
+                    <button type="button" class="btn btn-${flagStatus} btn-xs">
+                        ${e.fields.status.name}
+                    </button>
+                </td>
+                <td><span class="visually-hidden-focusable">${e.fields.creator.displayName}</span><img width="30px" height="30px" class="rounded-circle" id="createdBy-${e.id}" src="${e.fields.creator.avatarUrls['48x48']}"></td>
+                <td>${e.fields.priority.name} <img width="16px" height="16px" src="${e.fields.priority.iconUrl}"></td>
+                <td><p class="btn btn-xs btn-outline-primary mb-0 mt-2" role="button" onclick="openExternalLink('https://virtuelle-welt.atlassian.net/browse/${e.key}')"><i class="fa-solid fa-arrow-up-right-from-square"></i> Open</p></td>
+            </tr>
+        `)
+        tippy(`#createdBy-${e.id}`, {
+            content: `${e.fields.creator.displayName}`,
+            placement: 'top',
+            animation: 'shift-away-extreme',
+        });
+    });
+    $('#JiraTable').DataTable({
+        // "dom": 'Qfrtip',
+        "paging": true,
+        "info": true,
+        "searching": true,
+        "language": {
+            "lengthMenu": "_MENU_" ,
+            "paginate": {
+                "first": '<i class="fas fa-angle-double-left"></i>',
+                "previous": '<i class="fas fa-angle-left"></i>',
+                "next": '<i class="fas fa-angle-right"></i>',
+                "last": '<i class="fas fa-angle-double-right"></i>'
+            },
+            "aria": {
+                "paginate": {
+                    "first": '<i class="fas fa-angle-double-left"></i>',
+                    "previous": '<i class="fas fa-angle-left"></i>',
+                    "next": '<i class="fas fa-angle-right"></i>',
+                    "last": '<i class="fas fa-angle-double-right"></i>'
+                }
+            }
+        },
+        "order": [[ 2, "desc" ]],
+        "columnDefs": [
+            { "orderable": false, "targets": [5] }
+        ]
+    });
+    $('#lengthJiraTable').html('');
+    $('#infoJiraTable').html('');
+    $('#paginationJiraTable').html('');
+    
+    $('#JiraTable_wrapper').addClass('px-0')
+    let a = $('#JiraTable_wrapper').find('.row')[1];
+    $(a).addClass('mx-0')
+    $(a).find('.col-sm-12').addClass('px-0');
+
+    $('#JiraTable_filter').css('display', 'none');
+
+    $('#JiraTable_length').find('label').find('select').addClass("bg-dark-light");
+    $('#JiraTable_length').find('label').appendTo('#lengthJiraTable');
+    $('#table_length').html('');
+
+    $('#JiraTable_info').appendTo('#infoJiraTable');
+    $('#JiraTable_paginate').appendTo('#paginationJiraTable');
+}
+var g_allJira_status = new Array();
+function getAllJiraStatus(){
+    $.ajax({
+        type: "GET",
+        url: `https://virtuelle-welt.atlassian.net/rest/api/3/status`,
+        contentType: "application/json",
+        headers: {
+            "Authorization": "Basic " + btoa(json_config.c_email + ":" + json_config.c_token)
+        },
+    }).then((response) => {
+        g_allJira_status = response;
+        getAllJiraStatusShow(response);
+    }, (error) => {
+        checkError("jirastatus", error.status);
+    });
+}
+function getAllJiraStatusShow(status){
+    $("#ulJirastatusLis").html('');
+    $("#ulJirastatusLis").append(`<li class="dropdown-item" onclick="jiraStatusFilter('all')">All</li>`);
+    status.forEach(e =>{
+        $("#ulJirastatusLis").append(`
+            <li role="button" class="dropdown-item" onclick="jiraStatusFilter('${e.name}')">${e.name}</li>
+        `);
+    });
+}
+function searchonKeyUpJiraTickets() {
+    var table = $('#JiraTable').DataTable();
+    let val = $('#searchTicketsonTable').val();
+    let result = table.search(val).draw();
+}
+function jiraStatusFilter(name){
+    $("#jira-status-label").html(name);
+    var table = $('#JiraTable').DataTable();
+    if(name == "all"){
+        let result = table.search("").draw();
+    }else{
+        let result = table.search(name).draw();
+    }
+}
+function formSerachonstatus(){
+    $('#ulJirastatusList-input').on('keyup',function(e){
+        e.preventDefault();
+        let status = $('#ulJirastatusList-input').val();
+        let reg = new RegExp(status, 'gi');
+        let ticket = g_allJira_status.filter(e => e.name.match(reg) != null);
+        getAllJiraStatusShow(ticket);
+    });
+}
+function checksend(){
+    $("#ulJirastatusList-form").submit(function(e) {
+        e.preventDefault();
+    });
+}
+document.addEventListener("DOMContentLoaded", function(event) {
+    checksend();
+    formSerachonstatus();
+});

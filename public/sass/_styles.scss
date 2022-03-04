@@ -31,6 +31,15 @@ $table-hover-color: $light;
 $table-hover-bg-factor: .075;
 $table-hover-bg: rgba($dark-light, $table-hover-bg-factor);
 
+$pagination-padding-y: .2rem;
+$pagination-padding-x: .65rem;
+
+$pagination-bg: $dark-light;
+$pagination-border-width:0;
+$pagination-border-color: transparent;
+
+$pagination-disabled-bg: $dark;
+
 body{
     background-color: $dark !important;
     color: white !important;
@@ -294,7 +303,7 @@ small{
 // ! --------------------------- Buttons ---------------------------------
 
 .btn-primary{
-    box-shadow: 0 4px 15px 0 rgba(70, 89, 228, 0.2) !important;
+    box-shadow: none !important;
     outline: none !important;
     &:focus{
         box-shadow: none !important;
@@ -311,11 +320,17 @@ small{
     }
 }
 .btn-danger{
-    box-shadow: 0 4px 15px 0 rgba(228, 70, 70, 0.4) !important;
+    box-shadow: none !important;
     outline: none !important;
     color:white !important;
     font-weight: 600 !important;
     &:focus{
+        box-shadow: none !important;
+        outline: none !important;
+    }
+}
+.btn-outline-primary{
+    &:focus, &:active, &:hover, &:visited, &:link, &:active{
         box-shadow: none !important;
         outline: none !important;
     }
@@ -437,4 +452,7 @@ $modal-fade-transform: scaleY(.01) scaleX(0);
     &:hover{
         box-shadow: rgba(70, 89, 228, 0.08) 0px 0px 20px 3px, 
     }
+}
+.pagination{
+    margin-bottom: 0 !important;
 }

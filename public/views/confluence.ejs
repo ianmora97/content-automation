@@ -2,7 +2,7 @@
     <h2 class="fw-bold mb-0">Dashboard</h2>
     <button type="button" class="btn btn-primary btn-sm" onclick="bringConfluenceContentDeployments()"><i class="fas fa-sync-alt"></i></button>
 </div>
-<hr>
+<hr class="mb-1">
 <div class="mx-0" style="height: calc(100vh - 140px); overflow-y: auto;">
     <div >
         <ul class="nav nav-pills" id="atlassian-tab" role="tablist">
@@ -15,11 +15,50 @@
                     aria-controls="confluence" aria-selected="false"><i class="fa-brands fa-confluence pe-2"></i> Confluence</button>
             </li>
         </ul>
+        <hr class="my-1">
         <div class="tab-content pt-2" id="atlassianContent-Tabspane">
             <div class="tab-pane fade show active" id="tickets" role="tabpanel" aria-labelledby="tickets-tab">
-                <ul class="list-group" id="ticketsRelated">
+                <div class="d-flex justify-content-start align-items-center my-2 bg-dark rounded-15 p-3">
+                    <input type="text" class="form-control form-control-sm bg-dark-light" id="searchTicketsonTable" onkeyup="searchonKeyUpJiraTickets()" placeholder="Search...">
                     
-                </ul>
+                    <div class="dropdown">
+                        <button class="btn btn-dark-light btn-sm dropdown-toggle" type="button" id="jira-status-filter" data-bs-toggle="dropdown" aria-expanded="false">
+                            Status: <span id="jira-status-label">All</span>
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-dark" aria-labelledby="jira-status-filter">
+                            <form class="px-2" id="ulJirastatusList-form">
+                                <input type="text" id="ulJirastatusList-input" class="form-control form-control-sm bg-dark-light">
+                            </form>
+                            <ul id="ulJirastatusLis" class="mt-3 px-0 mb-1" style="height: 300px; overflow-y: auto;">
+                               
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div style="min-height: calc(100vh - 500px); overflow-y: auto;" class="bg-dark rounded-15">
+                    <table class="table table-borderless table-hover table-responsive" id="JiraTable">
+                        <thead class="">
+                            <tr class="text-light">
+                                <th>Key</th>
+                                <th>Title</th>
+                                <th>Status</th>
+                                <th>Reporter</th>
+                                <th>Priority</th>
+                                <th>Ticket</th>
+                            </tr>
+                            </thead>
+                            <tbody id="ticketsRelated" class="text-light"></tbody>
+                    </table>
+                </div>
+                <div class="d-flex justify-content-between align-items-center bg-dark rounded-15 p-3 mt-2">
+                    <div id="infoJiraTable"></div>
+                    <div class="d-flex justify-content-start align-items-center">
+                        <div class="d-flex justify-content-start align-items-center me-2">
+                            <div id="lengthJiraTable"></div>
+                        </div>
+                        <div id="paginationJiraTable"></div>
+                    </div>
+                </div>
             </div>
             <div class="tab-pane fade" id="confluence" role="tabpanel" aria-labelledby="confluence-tab">
                 <ul class="list-group" id="deployments">
