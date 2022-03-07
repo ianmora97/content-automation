@@ -1,6 +1,14 @@
 var g_confluence_deployments = new Array();
 var g_tickets_related;
 
+function getDataFromAtlassian(){
+    destroyTable();
+    bringConfluenceContentDeployments();
+    bringJiraTicketsRelated();
+}
+function destroyTable(){
+    $('#JiraTable').DataTable().destroy();
+}
 
 function bringConfluenceContentDeployments() {
     $.ajax({
@@ -153,16 +161,15 @@ function bringJiraTicketsRelatedShow(tickets){
         flagStatus = e.fields.status.name.match(/failed/gi) != null ? "danger" : flagStatus;
         $('#ticketsRelated').append(`
             <tr>
-                <td><i class="fa-brands fa-jira text-primary pe-2"></i> ${e.key}</td>
-                <td>${e.fields.summary}</td>
+                <td><i class="fa-brands fa-jira text-primary pe-2"></i> ${e.key} - ${e.fields.summary}</td>
                 <td>
-                    <button type="button" class="btn btn-${flagStatus} btn-xs">
+                    <button type="button" class="btn btn-${flagStatus} btn-xs w-100">
                         ${e.fields.status.name}
                     </button>
                 </td>
+                <td><span class="visually-hidden-focusable">${e.fields.priority.name}</span><img width="16px" height="16px" src="${e.fields.priority.iconUrl}"></td>
                 <td><span class="visually-hidden-focusable">${e.fields.creator.displayName}</span><img width="30px" height="30px" class="rounded-circle" id="createdBy-${e.id}" src="${e.fields.creator.avatarUrls['48x48']}"></td>
-                <td>${e.fields.priority.name} <img width="16px" height="16px" src="${e.fields.priority.iconUrl}"></td>
-                <td><p class="btn btn-xs btn-outline-primary mb-0 mt-2" role="button" onclick="openExternalLink('https://virtuelle-welt.atlassian.net/browse/${e.key}')"><i class="fa-solid fa-arrow-up-right-from-square"></i> Open</p></td>
+                <td><p class="btn btn-xs btn-primary mb-0 mt-2" role="button" onclick="openExternalLink('https://virtuelle-welt.atlassian.net/browse/${e.key}')"><i class="fa-solid fa-arrow-up-right-from-square"></i> Open</p></td>
             </tr>
         `)
         tippy(`#createdBy-${e.id}`, {
@@ -172,7 +179,7 @@ function bringJiraTicketsRelatedShow(tickets){
         });
     });
     $('#JiraTable').DataTable({
-        // "dom": 'Qfrtip',
+        responsive: false,
         "paging": true,
         "info": true,
         "searching": true,
@@ -193,10 +200,10 @@ function bringJiraTicketsRelatedShow(tickets){
                 }
             }
         },
-        "order": [[ 2, "desc" ]],
+        "order": [[ 1, "desc" ]],
         "columnDefs": [
-            { "orderable": false, "targets": [5] }
-        ]
+            { "orderable": false, "targets": [3,4] },
+        ],
     });
     $('#lengthJiraTable').html('');
     $('#infoJiraTable').html('');

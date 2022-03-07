@@ -66,14 +66,19 @@ h6{
 small{
     font-size: 0.5rem !important;
 }
+th, td{
+    white-space: nowrap !important;
+}
 .table-custom{
     color: #ffffff !important;
     tr{
         border: none !important;
         th{
+            white-space: nowrap !important;
             font-size: 13px !important;
         }
         td{
+            white-space: nowrap !important;
             font-size: 12px !important;
         }
     }
@@ -429,11 +434,15 @@ $modal-fade-transform: scaleY(.01) scaleX(0);
     }
 }
 .form-select{
+    background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><path fill='none' stroke='%234659e4' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/></svg>") !important;
     &:focus{
         box-shadow: none !important;
     }
 }
-
+                    
+.dropdown-toggle::after{
+    color: $primary !important;
+}
 // ! ------- aditional --------
 .curtain{
     background-color: #0e0e0e;
