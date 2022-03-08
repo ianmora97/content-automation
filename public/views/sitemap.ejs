@@ -3,12 +3,31 @@
 <div style="height: calc(100vh - 140px); overflow-y: auto;">
     <div class="d-flex flex-column">
         <div>
-            
+            <div class="d-flex justify-content-start">
+                <h4 class="me-2">Page Name:</h4><span id="pageNameCy"></span>
+            </div>
+            <div id="canvas" style="width: 100%; height: calc(100vh - 300px);"></div>
         </div>
         <div class="mt-auto">
             <span class="small">
                 <span id="sitemap_totalSites"></span> pages found.
             </span>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="sitemap_modal" tabindex="-1" aria-labelledby="sitemap_modalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header pb-0">
+                <h4><div id="sitemap_id"></div></h4>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="text-center bg-dark-light rounded-15 p-3">
+                    <h4 id="sitemap_name" class="text-capitalize"></h4>
+                    <div id="sitemap_url"></div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
