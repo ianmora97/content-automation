@@ -1,5 +1,10 @@
 <h2 class="fw-bold mb-0">Standard Features & Specifications</h2>
 <hr>
+<div class="position-absolute" style="top: 15px; right: 1rem;">
+    <button type="button" class="btn btn-primary btn-sm rounded-15" data-bs-toggle="modal" data-bs-target="#standSpecsProccess">
+        <i class="fas fa-question-circle"></i>
+    </button>
+</div>
 <ul class="nav nav-pills mb-3" id="pills-tab-techspecs" role="tablist">
     <li class="nav-item" role="presentation">
         <button class="nav-link active" id="pills-standardFeatures-tab" data-bs-toggle="pill" data-bs-target="#pills-standardFeatures" 
@@ -61,6 +66,29 @@
             <hr>
             <div id="featuresfromNaCode">
                 
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="standSpecsProccess" tabindex="-1" aria-labelledby="offersProcessLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="cosyProcessLabel"><i class="fas fa-question-circle pe-2 text-light"></i> MTC Process</h4>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="d-flex justify-content-center align-items-end">
+                    <a class="btn btn-primary btn-sm" role="button"
+                        onclick="openExternalLink('https://virtuelle-welt.atlassian.net/wiki/spaces/BMW/pages/5117743/DC4+-+Model+Data')"><i
+                            class="fab fa-confluence pe-1"></i> DC4 - Model Data</a>
+                    <a class="btn btn-primary btn-sm ms-2" role="button"
+                        onclick="openExternalLink('https://virtuelle-welt.atlassian.net/wiki/spaces/BMW/pages/4377130/Standard+Features+and+Tech+Specs+Discovery')"><i
+                            class="fab fa-confluence pe-1"></i> Explained Process</a>
+                    <a class="btn btn-primary btn-sm ms-2" role="button"
+                        onclick="openExternalLink('https://virtuelle-welt.atlassian.net/wiki/spaces/BMW/pages/637239639/Tech+Specs+Editor')"><i
+                            class="fab fa-confluence pe-1"></i> Tech Specs Editor</a>
+                </div>
             </div>
         </div>
     </div>
