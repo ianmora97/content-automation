@@ -1,110 +1,66 @@
-<h2 class="fw-bold mb-0">Tech-Specs Templates</h2>
+<h2 class="fw-bold mb-0">Standard Features & Specifications</h2>
 <hr>
 <ul class="nav nav-pills mb-3" id="pills-tab-techspecs" role="tablist">
     <li class="nav-item" role="presentation">
-      <button class="nav-link active" id="pills-keyvalues-tab" data-bs-toggle="pill" data-bs-target="#pills-keyvalues" 
-      type="button" role="tab" aria-controls="pills-keyvalues" aria-selected="true"><i class="fas fa-file-code pe-2"></i> Values</button>
+        <button class="nav-link active" id="pills-standardFeatures-tab" data-bs-toggle="pill" data-bs-target="#pills-standardFeatures" 
+        type="button" role="tab" aria-controls="pills-standardFeatures" aria-selected="true"><i class="fas fa-file-code pe-2"></i> Standard Features</button>
     </li>
     <li class="nav-item ms-4" role="presentation">
-      <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" 
-      type="button" role="tab" aria-controls="pills-profile" aria-selected="false"><i class="fas fa-qrcode pe-2"></i> Specifications</button>
+        <button class="nav-link " id="pills-specifications-tab" data-bs-toggle="pill" data-bs-target="#pills-specifications" 
+        type="button" role="tab" aria-controls="pills-specifications" aria-selected="false"><i class="fas fa-qrcode pe-2"></i> Specifications</button>
     </li>
-    <!-- <li class="nav-item ms-4" role="presentation">
-      <button class="nav-link" id="pills-templates-v-tab" data-bs-toggle="pill" data-bs-target="#pills-templates-v" 
-      type="button" role="tab" aria-controls="pills-templates-v" aria-selected="false"><i class="fas fa-th-large pe-2"></i> Templates</button>
-    </li> -->
 </ul>
 <div class="tab-content" id="pills-tab-techspecsContent">
-    <div class="tab-pane fade show active" id="pills-keyvalues" role="tabpanel" aria-labelledby="pills-keyvalues-tab">
-        <div class="row">
-            <div class="col-6">
-                <h5 for="modelchoosevalueModelTech">Type</h5>
-                <div class="input-group mb-3">
-                    <span class="input-group-text bg-dark border-0" id="icon-addon"><i class="fas fa-filter text-primary"></i></span>
-                    <select class="form-select bg-dark border-0 text-light" id="modelchoosevalueModelTech">
-                        <option value="x">X Models</option>
-                        <option value="m">M Models</option>
-                        <option value="sedans">Sedans non-electric</option>
-                        <option value="all">All Models</option>
-                    </select>
-                </div>
-            </div>
-            <div class="col-6">
-                <h5 for="keyvalueModelTech">Key</h5>
-                <div class="input-group mb-3">
-                    <span class="input-group-text bg-dark border-0" id="icon-addon"><i class="fas fa-file-code text-primary"></i></span>
-                    <select class="form-select bg-dark border-0 text-light" id="keyvalueModelTech">
-                        <option selected="selected">Select a Key</option>
-                    </select>
-                </div>
+    <div class="tab-pane fade " id="pills-specifications" role="tabpanel" aria-labelledby="pills-specifications-tab">
+        <div class="bg-dark rounded-15 p-3">
+            <div style="width: 400px;">
+                <h5 for="specsInputList">NA Code</h5>
+                <input class="form-control bg-dark-light" list="specsDataListNACodes" id="specsInputList" placeholder="Type to search...">
+                <datalist id="specsDataListNACodes"></datalist>
             </div>
         </div>
-    
-        <div class="bg-dark h-100 w-100 rounded-15 p-3">
-            <div class="d-flex justify-content-start">
-                <h5>Models</h5>
+        <div class="bg-dark rounded-15 p-3 mt-2 position-relative" id="canvasBGTechspecs" style="overflow-y: auto; height: calc(100vh - 320px);">
+            <div class="d-flex justify-content-between">
+                <button type="button" class="btn btn-sm btn-primary" onclick="formatTechSpecs()"
+                ><i class="fa-solid fa-table-columns"></i> Format</button>
+                <button class="btn btn-sm btn-danger rounded-circle" id="missingBtnTech" style="display: none;" 
+                type="button" onclick="toggleOffCanvas()"><i class="fa-solid fa-triangle-exclamation"></i></button>
             </div>
             <hr>
-            <div class="row">
-                <div class="col-6" class="mb-3">
-                    <div id="buildTechspecsValuesidhave" class="" style="height: calc(100vh - 390px); overflow-y: auto;">
-
-                    </div>
-                </div>
-                <div class="col-6" class="mb-3">
-                    <div id="buildTechspecsValuesidnohave" class="" style="height: calc(100vh - 390px); overflow-y: auto;">
-
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
-        <h5 for="naCodeModelTech">NA Code</h5>
-        <div class="input-group mb-3">
-            <span class="input-group-text bg-dark border-0" id="icon-addon"><i class="fas fa-file-code text-primary"></i></span>
-            <select class="form-select bg-dark border-0 text-light" id="naCodeModelTech" aria-label="22XR" 
-            placeholder="22XR">
-            </select>
-        </div>
-    
-        <div class="bg-dark h-100 w-100 rounded-15 p-3">
-            <div class="d-flex justify-content-start">
-                <h5>Specifications</h5>
-            </div>
-            <hr>
-            <div class="row mx-0 px-3" id="techSpecsfromNaCode" style="height: calc(80vh - 240px); overflow-y: auto;">
+            <div id="techSpecsfromNaCode">
                 
             </div>
-        </div>
-    </div>
-    <div class="tab-pane fade" id="pills-templates-v" role="tabpanel" aria-labelledby="pills-templates-v-tab">
-        <div class="bg-dark h-100 w-100 rounded-15 p-3">
-            <div class="d-flex justify-content-between">
-                <h5>Variations</h5>
-                <div>
-                    <small>Sort by:</small>
-                    <button type="button" class="btn btn-dark-light btn-sm" 
-                    onclick="changeViewTemplatesBtn('list')"><i class="fas fa-list"></i></button>
-                    <button type="button" class="btn btn-dark-light btn-sm" 
-                    onclick="changeViewTemplatesBtn('card')"><i class="fas fa-th"></i></button>
+            <div id="offcanvasBg"></div>
+            <div class="offcanvas-custom-end animate__faster" tabindex="-1" id="offcanvasMissingValues" aria-labelledby="offcanvasMissingValuesLabel">
+                <div class="offcanvas-header">
+                    <h5 id="offcanvasMissingValuesLabel">Missing Values:</h5>
+                    <button type="button" class="btn-close btn-close-white" onclick="closeOffCavas()" aria-label="Close"></button>
+                </div>
+                <hr class="mt-0 mb-1 mx-3">
+                <div class="offcanvas-body">
+                    <div id="techSpecsfromNaCodeEmptyValues">
+
+                    </div>
                 </div>
             </div>
+        </div>
+    </div>
+    <div class="tab-pane fade show active" id="pills-standardFeatures" role="tabpanel" aria-labelledby="pills-standardFeatures-tab">
+        <div class="bg-dark rounded-15 p-3">
+            <div style="width: 400px;">
+                <h5 for="featuresInputList">NA Code</h5>
+                <input class="form-control bg-dark-light" list="featuresDataListNACodes" id="featuresInputList" placeholder="Type to search...">
+                <datalist id="featuresDataListNACodes"></datalist>
+            </div>
+        </div>
+        <div class="bg-dark rounded-15 p-3 mt-2 position-relative" style="overflow-y: auto; height: calc(100vh - 320px);">
+            <div class="d-flex justify-content-between">
+                <button type="button" class="btn btn-sm btn-primary" onclick="formatFeatures()"
+                ><i class="fa-solid fa-table-columns"></i> Format</button>
+            </div>
             <hr>
-            <div class="row mx-0 px-0" id="techSpecsTemplates" style="height: calc(90vh - 240px); overflow-y: auto;">
-                <div class="d-flex align-items-start justify-content-between px-0">
-                    <div class="tab-content" id="v-templates-tabContent">
-                        
-                    </div>
-                    <div class="px-3 sticky-top" style="min-width: 200px;">
-                        <h5 class="text-light">Templates Name</h5>
-                        <hr>
-                        <div class="nav flex-column nav-pills" id="v-templateslist-tab"
-                        aria-orientation="vertical" role="tablist">
-
-                        </div>
-                    </div>
-                </div>
+            <div id="featuresfromNaCode">
+                
             </div>
         </div>
     </div>

@@ -454,6 +454,70 @@ th, td {
   margin-bottom: 0 !important;
 }
 
+.string-json {
+  color: #a1e599;
+}
+
+.number-json {
+  color: #9c8fff;
+}
+
+.boolean-json {
+  color: #ff7171;
+}
+
+.null-json {
+  color: #9f71be;
+}
+
+.key-json {
+  color: #cfcece;
+}
+
+.offcanvas-custom-end {
+  display: none;
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 430px;
+  height: 100%;
+  z-index: 9999;
+  background-color: #1A1A1A;
+}
+.offcanvas-custom-end.active {
+  display: block;
+}
+
+#offcanvasBg {
+  opacity: 0;
+  display: none;
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(14, 14, 14, 0.7);
+  z-index: 9998;
+}
+#offcanvasBg.active {
+  opacity: 1;
+  display: block;
+}
+
+.accordion-button {
+  text-align: start !important;
+  color: #fff !important;
+  background-color: transparent !important;
+  justify-content: space-between;
+  align-content: space-between;
+  width: 100%;
+  padding: 1rem 0rem !important;
+}
+
+.accordion-item {
+  border: none !important;
+}
+
 /*!
  * Bootstrap v5.1.3 (https://getbootstrap.com/)
  * Copyright 2011-2021 The Bootstrap Authors
@@ -5109,7 +5173,7 @@ textarea.form-control-lg {
   height: 1.25rem;
   margin-left: auto;
   content: "";
-  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23212529'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
+  background-image: "\f4fa";
   background-repeat: no-repeat;
   background-size: 1.25rem;
   transition: transform 0.2s ease-in-out;

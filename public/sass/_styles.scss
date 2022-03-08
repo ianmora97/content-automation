@@ -465,3 +465,54 @@ $modal-fade-transform: scaleY(.01) scaleX(0);
 .pagination{
     margin-bottom: 0 !important;
 }
+
+.string-json { color: #a1e599; }
+.number-json { color: #9c8fff; }
+.boolean-json { color: #ff7171; }
+.null-json { color: #9f71be; }
+.key-json { color: $light; }
+
+.offcanvas-custom-end{
+    display: none;
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 430px;
+    height: 100%;
+    z-index: 9999;
+    background-color: $dark;
+    &.active{
+        display: block;
+    }
+}
+#offcanvasBg{
+    opacity: 0;
+    display: none;
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(14, 14, 14, 0.7);
+    z-index: 9998;
+    &.active{
+        opacity: 1;
+        display: block;
+    }
+    
+}
+
+$accordion-button-icon: "\F4FA";
+$accordion-button-icon-active: "\F4FB";
+.accordion-button{
+    text-align: start !important;
+    color: $white !important;
+    background-color: transparent !important;
+    justify-content: space-between;
+    align-content: space-between;
+    width: 100%;
+    padding: 1rem 0rem !important;
+}
+.accordion-item{
+    border: none !important;
+}
