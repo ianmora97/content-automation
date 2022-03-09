@@ -90,53 +90,37 @@ function crawlerGraph(){
     });
     return arr;
 }
+
 function crawlerGraphV2(){
     let arr = new Array();
-    let mapError = new Map();
-    arr.push({data: {id: "bmwusa", url: "https://www.bmwusa.com/", name: "BMW USA", length: 50}});
+    arr.push({data: {id: "bmwusa", url: "https://www.bmwusa.com/", name: "BMW USA", nodeName: "bmwusa.com", length: 50}});
+    g_sitemap_sites.sort();
     g_sitemap_sites.forEach((e,i) => {
         let path = e.split(".com")[1]; // * get the path after .com
-        let children = path.split("/"); // * get all the children
-        children.shift(); // * remove the first element ("") as it empty
-        children = children.filter(e => (e != "")); // * remove empty elements
-        let height = children.length; // ! get the height of the tree
-
         let first = path.split("/")[1];
         let length_path = path.split("/").length;
         if(first != undefined && first.includes(".html")){
-            if(mapError.get(i) == undefined){
-                arr.push({data: {id: first, name: first, url: e, length: (length_path + 15)}});
-                arr.push({data: {id: `${first}-bmwusa`, source: 'bmwusa', target: first }});
-                mapError.set(i,0);
-            }else{
-                // nada
-            }
+            arr.push({data: {id: first, name: first, nodeName: first, url: e, length: (length_path * 5)}});
+            arr.push({data: {id: `${first}-bmwusa`, source: 'bmwusa', target: first }});
         }else{
-            
+            let children = path.split("/"); // * get all the children
+            children.shift(); // * remove the first element ("") as it empty
+            children = children.filter(e => (e != "")); // * remove empty elements
+            let height = children.length; // ! get the height of the tree
             children.forEach((a,j) => {
-                if(mapError.get(a) == undefined){
-                    mapError.set(a,0);
-                    let parent = j == 0 ? "bmwusa" : children[j-1];
-                    arr.push({data: {id: a, name: a, url: e, length: (height + 15)}});
-                    arr.push({data: {id: `${a}-${parent}`, source: parent, target: a }});
-                }
+                let namea = path.replace(/\//g,' ' ).replace('.html','').replace('-'," ");
+                let id = j == 0 ? a : children.slice(0,j+1).join("_");
+                let parent = j == 0 ? "bmwusa" : children.slice(0,j).join("_");
+                arr.push({data: {id: id, name: namea, nodeName: a, url: e, length: ((height - j) * 5)}});
+                arr.push({data: {id: `${id}-${parent}`, source: parent, target: id }});
             });
         }
-        // let length_path = path.split("/").length;
-        // arr.push({data: {id: i, name: path, url: e, length: (length_path + 15)}});
-        // arr.push({data: {id: first, source: 'bmwusa', target: i }});
     });
-    arr.forEach(e => {
-        if(e.data.target != undefined){
-            console.log(e.data.source,"->",e.data.target);
-        }
-    })
     return arr;
 }
 
 function showCytoScape(){
     let arr = crawlerGraphV2();
-    console.log(arr);
     cy = cytoscape({
         container: document.getElementById('canvas'), // container to render in
         elements: arr,
@@ -144,45 +128,51 @@ function showCytoScape(){
             {
                 selector: 'node',
                 style: {
-                    'background-color': '#4659e4',
+                    'background-color': '#242424',
+                    'label': 'data(nodeName)',
                     'color': '#fff',
                     'width': "data(length)",
                     'height': "data(length)",
+                    'font-size': "3px",
+                    "border-color": "#f0f0f0",
+                    "border-width": "0.7px",
+                    'background-image': '../img/bmw.svg',
+                    'background-fit': 'cover cover',
+                    'background-image-opacity': 1
                 }
             },
             {
                 selector: 'edge',
                 style: {
-                    'width': 1,
+                    'width': 0.8,
                     'line-color': '#fff',
                     'target-arrow-color': '#fff',
                     'curve-style': 'bezier',
-                    "target-distance-from-node": 5,
                 }
             }
         ],
         zoom: 1,
-        pan: { x: 500, y: 300 },
         layout: {
-            name: 'breadthfirst',
-            padding: 1,
-            fit: true
+            name: 'cose',
+            circle: false,
+            grid: false,
+            spacingFactor: 3,
+            avoidOverlap: true,
+            animate: true,
+            animationDuration: 300,
+            padding: 100,
+            roots: '#bmwusa'
         }
     });
     // on node over show the node's url on pageNameCy
     cy.on('mouseover', 'node', function(e){
         let node = e.target._private.data;
-        let url = node.url;
-        console.log(node, url);
-        if(url != "bmwusa"){
-            $("#pageNameCy").html(url);
-        }
-        
+        let url = node.id;
+        $("#pageNameCy").html(url.replace(/\_/g,'/'));
     });
-
     cy.on('click', 'node', function(evt){
         let node = evt.target._private.data;
-        if(node.id != undefined){
+        if(node.id != undefined && node.nodeName.includes(".html")){
             $("#sitemap_id").html(node.id);
             $("#sitemap_url").html(`
                 <a role="button" class="text-primary" onclick="openExternalLink('${node.url}')">${node.url}</a>
@@ -191,8 +181,19 @@ function showCytoScape(){
             sitemapModal.show();
         }
     });
+    cy.center();
+    cy.fit();
 }
-
+function changeGraphLayout(name){
+    cy.layout({
+        name: name,
+        animate: false,
+        spacingFactor: 3,
+        avoidOverlap: true,
+        padding: 100,
+        roots: '#bmwusa'
+    }).run();
+}
 function bringAllData(){
     bringModelsfromBMW();
     sitemapFetch();
