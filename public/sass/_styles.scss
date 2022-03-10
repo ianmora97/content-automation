@@ -535,3 +535,8 @@ $accordion-button-icon-active: "\F4FB";
         display: block;
     }
 }
+.breakTitle{
+    display: block;
+    overflow: hidden;
+    max-width: 600px;
+}

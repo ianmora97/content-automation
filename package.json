@@ -51,6 +51,7 @@
     "jquery": "^3.6.0",
     "lodash": "^4.17.21",
     "path": "^0.12.7",
+    "play-sound": "^1.1.5",
     "sigma": "^2.2.0",
     "sitemapper": "^3.2.2",
     "sqlite3": "^5.0.2",

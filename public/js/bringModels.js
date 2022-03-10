@@ -63,9 +63,6 @@ function showCytoScape(){
                     'width': "data(length)",
                     'height': "data(length)",
                     'font-size': "3px",
-                    'background-image': '../img/bmw.svg',
-                    'background-fit': 'cover cover',
-                    'background-image-opacity': 1
                 }
             },
             {
@@ -118,8 +115,8 @@ function fillModalSitemap(node){
     });
     $("#sitemap_id").html(node.id.replace(/\_/g,'/'));
     let live = node.url;
-    let prod = "https://prod.bmwusacm.co/"+node.id.replace(/\_/g,'/');
-    let staging = "https://staging.bmwusacm.co/"+node.id.replace(/\_/g,'/');
+    let prod = "https://www.prod.bmwusacm.co/"+node.id.replace(/\_/g,'/');
+    let staging = "https://www.staging.bmwusacm.co/"+node.id.replace(/\_/g,'/');
     let author = "https://author.staging.bmwusacm.co/editor.html/"+node.id.replace(/\_/g,'/');
     let sites = "https://author.staging.bmwusacm.co/sites.html/"+node.id.replace(/\_/g,'/');
     let aem = `<img src="../img/aem.png" width="20px">`;

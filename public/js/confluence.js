@@ -118,30 +118,12 @@ function showContentDeployments(){
         });
     });
 }
-var g_user_atlasian = {};
-function getCurrentUserAltassian() {
-    return new Promise((resolve, reject) => {
-        $.ajax({
-            type: "GET",
-            url: `https://virtuelle-welt.atlassian.net/wiki/rest/api/user/current`,
-            contentType: "application/json",
-            headers: {
-                "Authorization": "Basic " + btoa(json_config.c_email + ":" + json_config.c_token)
-            },
-        }).then((response) => {
-            g_user_atlasian = response;
-            resolve("success");
-        }, (error) => {
-            checkError("currentUser", error.status);
-            reject("error");
-        });
-    });
-}
+
 
 function bringJiraTicketsRelated() {
     $.ajax({
         type: "GET",
-        url: `https://virtuelle-welt.atlassian.net/rest/api/3/search?jql=assignee="${g_user_atlasian.publicName}"`,
+        url: `https://virtuelle-welt.atlassian.net/rest/api/3/search?jql=assignee=${g_user_atlasian.publicName} AND status!=Closed order by key DESC&startAt=0&maxResults=100&&fields=assignee,status,summary,priority,creator&fields=assignee,status,summary,priority,creator`,
         contentType: "application/json",
         headers: {
             "Authorization": "Basic " + btoa(json_config.c_email + ":" + json_config.c_token)
@@ -161,7 +143,7 @@ function bringJiraTicketsRelatedShow(tickets){
         flagStatus = e.fields.status.name.match(/failed/gi) != null ? "danger" : flagStatus;
         $('#ticketsRelated').append(`
             <tr>
-                <td><i class="fa-brands fa-jira text-primary pe-2"></i> ${e.key} - ${e.fields.summary}</td>
+                <td><div class="breakTitle" id="title-Jira-table-${e.id}"><i class="fa-brands fa-jira text-primary pe-2"></i> ${e.key} - ${e.fields.summary}</div></td>
                 <td>
                     <button type="button" class="btn btn-${flagStatus} btn-xs w-100">
                         ${e.fields.status.name}
@@ -177,6 +159,12 @@ function bringJiraTicketsRelatedShow(tickets){
             placement: 'top',
             animation: 'shift-away-extreme',
         });
+        tippy(`#title-Jira-table-${e.id}`, {
+            content: `${e.fields.summary}`,
+            placement: 'top',
+            animation: 'shift-away-extreme',
+        });
+
     });
     $('#JiraTable').DataTable({
         responsive: false,
@@ -280,19 +268,49 @@ var ticketsRelated_temp = new Array();
 function ticketsRelatedInterval(){ // for interval
     $.ajax({
         type: "GET",
-        url: `https://virtuelle-welt.atlassian.net/rest/api/3/search?jql=assignee="${g_user_atlasian.publicName}"`,
+        url: `https://virtuelle-welt.atlassian.net/rest/api/3/search?jql=assignee=${g_user_atlasian.publicName} AND status!=Closed order by key DESC&startAt=0&maxResults=100&fields=assignee,status,summary,priority,creator`,
         contentType: "application/json",
         headers: {
             "Authorization": "Basic " + btoa(json_config.c_email + ":" + json_config.c_token)
         },
     }).then((res) => {
-        ticketsRelated_temp = _.difference(res, g_tickets_related)
-        console.log(ticketsRelated_temp);
-        if(ticketsRelated_temp.length > 0){
-            console.log(ticketsRelated_temp);
-        }
+        let arr_a = [...g_tickets_related.issues];
+        let arr_b = [...res.issues];
+        ticketsRelated_temp = _.differenceWith(arr_a, arr_b, _.isEqual);
+        // (a,b) =>{
+        //     return a.fields.status.name == b.fields.status.name;
+        // }
+        console.log(ticketsRelated_temp.length)
+        g_tickets_related = res;
+        showJiraNotifications(ticketsRelated_temp);
     }, (error) => {
     });
+}
+function showJiraNotifications(newTicket){
+    if(newTicket.length > 0){
+        let title = newTicket[0].key;
+        let subtitle = newTicket[0].fields.summary;
+        let body = `Status: ${newTicket[0].fields.status.name}`;
+        let sound = "sounds/default.mp3";
+        if(newTicket[0].fields.status.name.match(/approved|done|closed/gi) != null){
+            sound = 'sounds/success.mp3';
+        }
+        let args = {
+            title: title,
+            subtitle: subtitle,
+            body: body,
+            silent: true,
+            urgency: 'critical',
+            sound: sound,
+            closeButtonText: 'Close Button',
+            icon: 'jiraLogo.png',
+            actions: [ {
+                type: 'button',
+                text: 'Show Button'
+            }]
+        }
+        sendNotificationJira({args: args, url: `https://virtuelle-welt.atlassian.net/browse/${title}`});
+    }
 }
 function getNotifications(){
     // TODO: Get notifications every 5 min.
@@ -300,7 +318,6 @@ function getNotifications(){
         ticketsRelatedInterval();
         console.log("INTERVAL")
     },10000);
-    // },1000 * 60 * 5);
 }
 
 document.addEventListener("DOMContentLoaded", function(event) {
