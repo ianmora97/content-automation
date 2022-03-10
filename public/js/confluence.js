@@ -276,7 +276,35 @@ function checksend(){
         e.preventDefault();
     });
 }
+var ticketsRelated_temp = new Array();
+function ticketsRelatedInterval(){ // for interval
+    $.ajax({
+        type: "GET",
+        url: `https://virtuelle-welt.atlassian.net/rest/api/3/search?jql=assignee="${g_user_atlasian.publicName}"`,
+        contentType: "application/json",
+        headers: {
+            "Authorization": "Basic " + btoa(json_config.c_email + ":" + json_config.c_token)
+        },
+    }).then((res) => {
+        ticketsRelated_temp = _.difference(res, g_tickets_related)
+        console.log(ticketsRelated_temp);
+        if(ticketsRelated_temp.length > 0){
+            console.log(ticketsRelated_temp);
+        }
+    }, (error) => {
+    });
+}
+function getNotifications(){
+    // TODO: Get notifications every 5 min.
+    let inter = setInterval(() => {
+        ticketsRelatedInterval();
+        console.log("INTERVAL")
+    },10000);
+    // },1000 * 60 * 5);
+}
+
 document.addEventListener("DOMContentLoaded", function(event) {
     checksend();
     formSerachonstatus();
+    getNotifications();
 });
