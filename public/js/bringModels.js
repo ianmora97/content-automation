@@ -1,64 +1,7 @@
 const Sitemapper = require('sitemapper');
 const sitemap = new Sitemapper();
-
-function xmlToJson( xml ) { 
-    // Create the return object
-    var obj = {};
-   
-    if ( xml.nodeType == 1 ) { // element
-      // do attributes
-      if ( xml.attributes.length > 0 ) {
-      obj["@attributes"] = {};
-        for ( var j = 0; j < xml.attributes.length; j++ ) {
-          var attribute = xml.attributes.item( j );
-          obj["@attributes"][attribute.nodeName] = attribute.nodeValue;
-        }
-      }
-    } else if ( xml.nodeType == 3 ) { // text
-      obj = xml.nodeValue;
-    }
-   
-    // do children
-    if ( xml.hasChildNodes() ) {
-      for( var i = 0; i < xml.childNodes.length; i++ ) {
-        var item = xml.childNodes.item(i);
-        var nodeName = item.nodeName;
-        if ( typeof(obj[nodeName] ) == "undefined" ) {
-          obj[nodeName] = xmlToJson( item );
-        } else {
-          if ( typeof( obj[nodeName].push ) == "undefined" ) {
-            var old = obj[nodeName];
-            obj[nodeName] = [];
-            obj[nodeName].push( old );
-          }
-          obj[nodeName].push( xmlToJson( item ) );
-        }
-      }
-    }
-    return obj;
-};
-
-var g_modelsURLs = [];
-function bringModelsfromBMW(){
-    let sitemap = {};
-    $.ajax({
-        type: "GET",
-        url: 'https://www.bmwusa.com/sitemap.xml',
-        contentType: "application/json",
-    }).then((response) => {
-        sitemap = xmlToJson(response);
-        let urls = sitemap.urlset.url;
-        urls.forEach(element => {
-            if(Object.values(element.loc)[0].includes("/vehicles/")){
-                g_modelsURLs.push(Object.values(element.loc)[0]);
-            }            
-        });
-    }, (error) => {
-        checkError("sitemap",error.status)
-    });
-}
-
 var g_sitemap_sites = new Array()
+
 
 function sitemapFetch(){
     sitemap.fetch('https://www.bmwusa.com/sitemap.xml').then(function(sites) {
@@ -70,36 +13,19 @@ function promtDataSitemap(){
     $("#sitemap_totalSites").html(g_sitemap_sites.length);
     showCytoScape();
 }
+
 var cy;
 var sitemapModal = new bootstrap.Modal(document.getElementById('sitemap_modal'));
-
-
-function crawlerGraph(){
-    let arr = new Array();
-    arr.push({data: {id: "bmwusa", url: "https://www.bmwusa.com/", name: "BMW USA", length: 100}});
-
-    g_sitemap_sites.forEach((e,i) => {
-        let serve = e.split(".com")[1];
-        let first = serve.split("/")[1];
-        let length_serve = serve.split("/").length;
-        console.log(serve);
-        if(first != undefined && first.includes(".html")){
-            arr.push({data: {id: i, name: first, url: e, length: (length_serve + 15)}});
-            arr.push({data: {id: first, source: 'bmwusa', target: i }});
-        }
-    });
-    return arr;
-}
-
 function crawlerGraphV2(){
     let arr = new Array();
     arr.push({data: {id: "bmwusa", url: "https://www.bmwusa.com/", name: "BMW USA", nodeName: "bmwusa.com", length: 50}});
     g_sitemap_sites.sort();
     g_sitemap_sites.forEach((e,i) => {
-        let path = e.split(".com")[1]; // * get the path after .com
+        let path = e.split(".com")[1];
         let first = path.split("/")[1];
         let length_path = path.split("/").length;
         if(first != undefined && first.includes(".html")){
+            sitesCollection.push({data: {id: first, name: first, nodeName: first, url: e, length: (length_path * 5)}});
             arr.push({data: {id: first, name: first, nodeName: first, url: e, length: (length_path * 5)}});
             arr.push({data: {id: `${first}-bmwusa`, source: 'bmwusa', target: first }});
         }else{
@@ -111,6 +37,9 @@ function crawlerGraphV2(){
                 let namea = path.replace(/\//g,' ' ).replace('.html','').replace('-'," ");
                 let id = j == 0 ? a : children.slice(0,j+1).join("_");
                 let parent = j == 0 ? "bmwusa" : children.slice(0,j).join("_");
+                if(a.includes(".html")){
+                    sitesCollection.push({data: {id: id, name: namea, nodeName: a, url: e, length: ((height - j) * 5)}});
+                }
                 arr.push({data: {id: id, name: namea, nodeName: a, url: e, length: ((height - j) * 5)}});
                 arr.push({data: {id: `${id}-${parent}`, source: parent, target: id }});
             });
@@ -118,7 +47,7 @@ function crawlerGraphV2(){
     });
     return arr;
 }
-
+var sitesCollection = new Array();
 function showCytoScape(){
     let arr = crawlerGraphV2();
     cy = cytoscape({
@@ -128,14 +57,12 @@ function showCytoScape(){
             {
                 selector: 'node',
                 style: {
-                    'background-color': '#242424',
+                    'background-color': '#F2CC39',
                     'label': 'data(nodeName)',
                     'color': '#fff',
                     'width': "data(length)",
                     'height': "data(length)",
                     'font-size': "3px",
-                    "border-color": "#f0f0f0",
-                    "border-width": "0.7px",
                     'background-image': '../img/bmw.svg',
                     'background-fit': 'cover cover',
                     'background-image-opacity': 1
@@ -159,7 +86,7 @@ function showCytoScape(){
             spacingFactor: 3,
             avoidOverlap: true,
             animate: true,
-            animationDuration: 300,
+            animationDuration: 500,
             padding: 100,
             roots: '#bmwusa'
         }
@@ -173,29 +100,149 @@ function showCytoScape(){
     cy.on('click', 'node', function(evt){
         let node = evt.target._private.data;
         if(node.id != undefined && node.nodeName.includes(".html")){
-            $("#sitemap_id").html(node.id);
-            $("#sitemap_url").html(`
-                <a role="button" class="text-primary" onclick="openExternalLink('${node.url}')">${node.url}</a>
-            `);
-            $("#sitemap_name").html(node.name.replace(".html","").replace("-"," "));
-            sitemapModal.show();
+            fillModalSitemap(node);
         }
     });
     cy.center();
     cy.fit();
 }
+function fillModalSitemap(node){
+    let j = cy.$('#'+node.id);
+    cy.animate({
+        fit: {
+            eles: j,
+            padding: 30
+        }
+        }, {
+        duration: 1000
+    });
+    $("#sitemap_id").html(node.id.replace(/\_/g,'/'));
+    let live = node.url;
+    let prod = "https://prod.bmwusacm.co/"+node.id.replace(/\_/g,'/');
+    let staging = "https://staging.bmwusacm.co/"+node.id.replace(/\_/g,'/');
+    let author = "https://author.staging.bmwusacm.co/editor.html/"+node.id.replace(/\_/g,'/');
+    let sites = "https://author.staging.bmwusacm.co/sites.html/"+node.id.replace(/\_/g,'/');
+    let aem = `<img src="../img/aem.png" width="20px">`;
+    let bmw = `<img src="../img/bmw.svg" width="20px">`;
+    $("#sitemap_url").html(`
+        <hr>
+        <div class="bg-dark rounded-15 p-3 mb-2">
+            ${bmw} Live:
+            <hr>
+            <div class="d-flex justify-content-between align-items-center">
+                <p class="mb-0 text-decoration-underline">${live}</p>
+                <a role="button" class="text-white" id="live-LinkSi†emapModal" onclick="openExternalLink('${live}')"><i class="fa-brands fa-safari fa-2x"></i></a>
+            </div>
+        </div>
+        <div class="bg-dark rounded-15 p-3 mb-2">
+            ${bmw} Prod:
+            <hr>
+            <div class="d-flex justify-content-between align-items-center">
+                <p class="mb-0 text-decoration-underline">${prod}</p>
+                <a role="button" class="text-white" id="prod-LinkSi†emapModal" onclick="openExternalLink('${prod}')"><i class="fa-brands fa-safari fa-2x"></i></a>
+            </div>
+        </div>
+        <div class="bg-dark rounded-15 p-3 mb-2">
+            ${bmw} Staging:
+            <hr>
+            <div class="d-flex justify-content-between align-items-center">
+                <p class="mb-0 text-decoration-underline">${staging}</p>
+                <a role="button" class="text-white" id="staging-LinkSi†emapModal" onclick="openExternalLink('${staging}')"><i class="fa-brands fa-safari fa-2x"></i></a>
+            </div>
+        </div>
+        <div class="bg-dark rounded-15 p-3 mb-2">
+            ${aem} Author:
+            <hr>
+            <div class="d-flex justify-content-between align-items-center">
+                <p class="mb-0 text-decoration-underline">${author}</p>
+                <a role="button" class="text-white" id="author-LinkSi†emapModal" onclick="openExternalLink('${author}')"><i class="fa-brands fa-safari fa-2x"></i></a>
+            </div>
+        </div>
+        <div class="bg-dark rounded-15 p-3 mb-2">
+            ${aem} Sites:
+            <hr>
+            <div class="d-flex justify-content-between align-items-center">
+                <p class="mb-0 text-decoration-underline">${sites}</p>
+                <a role="button" class="text-white" id="sites-LinkSi†emapModal" onclick="openExternalLink('${sites}')"><i class="fa-brands fa-safari fa-2x"></i></a>
+            </div>
+        </div>
+    `);
+    // tippy
+    tippy('#live-LinkSi†emapModal', {
+        content: 'Open in browser',
+        placement: 'top',
+        animation: 'shift-away-extreme',
+    });
+    tippy('#prod-LinkSi†emapModal', {
+        content: 'Open in browser',
+        placement: 'top',
+        animation: 'shift-away-extreme',
+    });
+    tippy('#staging-LinkSi†emapModal', {
+        content: 'Open in browser',
+        placement: 'top',
+        animation: 'shift-away-extreme',
+    });
+    tippy('#author-LinkSi†emapModal', {
+        content: 'Open in browser',
+        placement: 'top',
+        animation: 'shift-away-extreme',
+    });
+    tippy('#sites-LinkSi†emapModal', {
+        content: 'Open in browser',
+        placement: 'top',
+        animation: 'shift-away-extreme',
+    });
+    let name = node.url.split(".com")[1].replace(/\//g,' ').replace('.html','');
+    $("#sitemap_name").html(name);
+    sitemapModal.show();
+}
 function changeGraphLayout(name){
     cy.layout({
         name: name,
-        animate: false,
+        animate: true,
+        animationDuration: 500,
         spacingFactor: 3,
         avoidOverlap: true,
         padding: 100,
         roots: '#bmwusa'
     }).run();
 }
+function searchonSitemap(){
+    let search = $("#inputBarSitemap").val();
+    if(search.length > 0){
+        $(".dropdown-search").html('')
+        $(".dropdown-search").addClass("active");
+        [...new Set(sitesCollection)]
+        .map(e => {return {id:e.data.id, url:e.data.url}})
+        .filter(e => e.url.includes(search))
+        .forEach(e => {
+            $(".dropdown-search").append(`<button class="dropdown-item" onclick="openSitemapModal('${e.id}', '${e.name}', '${e.nodeName}', '${e.url}', '${e.length}')">${e.url}</button>`)
+        });
+    }else{
+        $(".dropdown-search").removeClass("active");
+    }
+}
+function openSitemapModal(id, name, nodeName, url, length){
+    $("#inputBarSitemap").val('')
+    $(".dropdown-search").removeClass("active");
+    $(".dropdown-search").html('')
+    let _url = url.split(".com/")[1].replace(/\//g,'_');
+    let j = cy.$('#'+_url);
+    cy.animate({
+        fit: {
+            eles: j,
+            padding: 100
+        }
+        }, {
+        duration: 1000
+    });
+    setTimeout(() => {
+        fillModalSitemap({id, name, nodeName, url, length});
+    }, 1000);
+}
+
 function bringAllData(){
-    bringModelsfromBMW();
     sitemapFetch();
 }
 document.addEventListener('DOMContentLoaded', function() {
