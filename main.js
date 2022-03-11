@@ -3,10 +3,10 @@ const ejse = require('ejs-electron');
 const path = require('path');
 var player = require('play-sound')(opts = {});
 
-require('update-electron-app')({
-  repo: 'ianmora97/content-automation',
-  updateInterval: '1 hour'
-})
+// require('update-electron-app')({
+//   repo: 'ianmora97/content-automation',
+//   updateInterval: '1 hour'
+// })
 
 function createWindow () {
     const win = new BrowserWindow({
