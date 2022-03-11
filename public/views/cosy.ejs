@@ -1,6 +1,11 @@
 <h2 class="fw-bold mb-0">CoSy Images</h2>
 <hr>
 <div style="height: calc(100vh - 140px); overflow-y: auto;">
+    <div class="position-absolute" style="top: 15px; right: 1rem;">
+        <button type="button" class="btn btn-primary btn-sm rounded-15" data-bs-toggle="modal" data-bs-target="#cosyProcess">
+            <i class="fas fa-question-circle"></i>
+        </button>
+    </div>
     <div class="row mx-0">
         <div class="col-7 ps-0">
             <div class="bg-dark rounded-15 w-100 my-2 px-3 pt-3" 
@@ -319,4 +324,32 @@
             </div>
         </div>
     </div>
+    <div class="modal fade" id="cosyProcess" tabindex="-1" aria-labelledby="offersProcessLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="cosyProcessLabel"><i class="fas fa-question-circle pe-2 text-light"></i> CoSy Process</h4>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="d-flex justify-content-start align-items-end">
+                        <a class="btn btn-primary btn-sm" role="button"
+                            onclick="openExternalLink('https://virtuelle-welt.atlassian.net/wiki/spaces/BMW/pages/886341921/Cosy+Images+-+Optimization')"><i
+                                class="fab fa-confluence pe-1"></i> Cosy Images Optimization</a>
+                        <a class="btn btn-primary btn-sm ms-2" role="button"
+                            onclick="openExternalLink('https://virtuelle-welt.atlassian.net/wiki/spaces/BMW/pages/12616174/CoSy+URL+Creation')"><i
+                                class="fab fa-confluence pe-1"></i> Cosy Images Creation</a>
+                    </div>
+                    <hr>
+                
+                    <div class="bg-dark-light rounded-15 mt-2 mb-4 p-3">
+                        <h5 class="mb-0">UBYO Server Side Configurator:</h5>
+                        <a class="mb-2" role="button" 
+                            onclick="openExternalLink('http://ssc.byo.sulzer-us.com/#!/')">PROD UBYO</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div>

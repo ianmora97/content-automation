@@ -1,33 +1,79 @@
-<h2 class="fw-bold mb-0">Text Editor</h2>
+<h2 class="fw-bold mb-0">Text Format</h2>
 <hr>
-<div class="p-2" style="height: calc(100vh - 140px);overflow-y: auto;">
-    <div class="bg-dark rounded-15 p-3 mb-3">
-        <div class="d-flex justify-content-start py-2">
-            <button type="button" class="btn btn-primary btn-sm" onclick="formatLinks()"><i class="fa-solid fa-link"></i> Generate Links</button>
-        </div>
-        <hr class="my-1">
-        <textarea class="form-control bg-dark" id="urlsTextarea" rows="8" placeholder="Links"></textarea>
-        <div class="d-flex justify-content-end py-2">
-            <button type="button" class="btn btn-danger btn-xs" onclick="clearTextareaUrls()"><i class="fa-solid fa-delete-left"></i> Clear</button>
-        </div>
-    </div>
-    <div class="bg-dark rounded-15 p-3" style="min-height: 400px; max-height: 500px; overflow-y: auto;">
-        <div class="d-flex justify-content-between align-items-center py-1">
-            <h5 class="m-0">Links</h5>
-            <button type="button" class="btn btn-primary btn-xs btn-to-clip" data-clipboard-target="#buildOutput" id="urlstextEditorCopy">
-                <i class="fa-solid fa-copy"></i> Copy
+<div style="height: calc(100vh - 140px);overflow-y: auto;">
+    <ul class="nav justify-content-start nav-pills mb-3" id="text-editor-tab" role="tablist" aria-orientation="vertical">
+        <li class="nav-item me-3">
+            <button class="nav-link active" id="text-editor-links-tab" data-bs-toggle="pill" data-bs-target="#text-editor-links"
+                type="button" role="tab" aria-controls="text-editor-links" aria-selected="true">
+                <i class="fa-solid fa-link pe-2"></i> Links
             </button>
+        </li>
+        <li class="nav-item">
+            <button class="nav-link" id="text-editor-compare-tab" data-bs-toggle="pill" data-bs-target="#text-editor-compare"
+                type="button" role="tab" aria-controls="text-editor-compare" aria-selected="true">
+                <i class="fa-solid fa-text-slash pe-2"></i> Text Compare
+            </button>
+        </li>
+    </ul>
+    <hr>
+    <div class="tab-content" id="pills-tab-textEditor">
+        <div class="tab-pane fade show active" id="text-editor-links" role="tabpanel" aria-labelledby="text-editor-links-tab">
+            <div class="bg-dark rounded-15 p-3 mb-3">
+                <div class="d-flex justify-content-start py-2">
+                    <button type="button" class="btn btn-transparent text-primary btn-sm" onclick="formatLinks()"><i class="fa-solid fa-link"></i> Generate Links</button>
+                </div>
+                <hr class="my-1">
+                <textarea class="form-control bg-dark" id="urlsTextarea" rows="8" placeholder="Links"></textarea>
+                <div class="d-flex justify-content-end py-2">
+                    <button type="button" class="btn btn-transparent text-danger btn-xs" onclick="clearTextareaUrls()"><i class="fa-solid fa-delete-left"></i> Clear</button>
+                </div>
+            </div>
+            <div class="bg-dark rounded-15 p-3" style="min-height: 400px; max-height: 500px; overflow-y: auto;">
+                <div class="d-flex justify-content-end align-items-center py-1">
+                    <button type="button" class="btn btn-transparent text-primary btn-xs btn-to-clip" data-clipboard-target="#buildOutput" id="urlstextEditorCopy">
+                        <i class="fa-solid fa-copy"></i> Copy
+                    </button>
+                </div>
+                <div id="buildOutput">
+        
+                </div>
+            </div>
+            <script>
+                tippy('#urlstextEditorCopy', {
+                    content: "Copied!",
+                    trigger: 'click',
+                    animation: 'shift-away-extreme',
+                });
+            </script>
         </div>
-        <hr>
-        <div id="buildOutput">
-
+        <div class="tab-pane fade" id="text-editor-compare" role="tabpanel" aria-labelledby="text-editor-compare-tab">
+            <div class="bg-dark rounded-15 p-3">
+                <div class="d-flex justify-content-start mb-2">
+                    <button type="button" class="btn btn-transparent text-primary btn-sm me-3" onclick="textCompare()"><i class="fa-solid fa-text-width"></i> Compare Text</button>
+                    <button type="button" class="btn btn-transparent text-danger btn-sm" onclick="clearTextareaTextCompare('1')"><i class="fa-solid fa-delete-left"></i> Clear</button>
+                </div>
+                <hr>
+                <div class="row mx-0">
+                    <div class="col-6 ps-0 border-end border-dark-light">
+                        <small class="text-muted">Old Text</small>
+                        <textarea class="form-control bg-dark" id="textCompareTextarea1" rows="8" placeholder="Text 1 to compare"></textarea>
+                    </div>
+                    <div class="col-6 pe-0">
+                        <small class="text-muted">New Text</small>
+                        <textarea class="form-control bg-dark" id="textCompareTextarea2" rows="8" placeholder="Text 2 to compare"></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-dark rounded-15 p-3 mt-3" id="bottomTextCompare" style="display: none;">
+                <div class="row mx-0">
+                    <div class="col-6 ps-0 border-end border-dark-light">
+                        <div id="outputTextarea1"></div>
+                    </div>
+                    <div class="col-6 pe-0">
+                        <div id="outputTextarea2"></div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-    <script>
-        tippy('#urlstextEditorCopy', {
-            content: "Copied!",
-            trigger: 'click',
-            animation: 'shift-away-extreme',
-        });
-    </script>
 </div>

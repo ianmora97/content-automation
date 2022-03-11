@@ -159,8 +159,7 @@ var template_SAV = (model) => {
 
 var template_SEDAN = (model) => {
     return `
-    sedan
-    <div class="row animate__animated animate__fadeIn">
+    <div class="row mx-0 animate__animated animate__fadeIn">
         <div class="col-6">
             <h5 class="hl">Engine</h5>
             <p>
@@ -304,6 +303,274 @@ var template_SEDAN = (model) => {
                 <span class="fw-bold">${model.interior.shoulderRoomFront != undefined ? model.interior.shoulderRoomFront : 'TBA'} /
                 ${model.interior.shoulderRoomRear != undefined ? model.interior.shoulderRoomRear : 'TBA'}</span>
             </p>
+        </div>
+    </div>
+    `
+}
+
+var template_standardFeatures = (model) => {
+    console.log(model)
+    return `
+    <div class="row justify-content-center mx-0 animate__animated animate__fadeIn">
+        <div class="col-7">
+            <div class="accordion" id="accordionExample">
+                <div class="accordion-item text-light border-bottom border-dark-light">
+                    <h2 class="accordion-header" id="headingOne">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                            <div class="position-absolute" style="top:0.7rem;left:-200px;">
+                                <h5 class="fw-light text-light">01 Driver</h4>
+                            </div>
+                            <div>
+                                <span class="hl d-block small mb-2">01.1</span>
+                                <h4 class="mb-2"><b><u>${model["Performance and efficiency"].categoryName}</u></b></h4>
+                                <p class="fw-light text-light">Engine, transmission, and aerodynamic features.</p>
+                            </div>
+                        </button>
+                    </h2>
+                    <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                        <div class="accordion-body">
+                            <div class="row">
+                                ${model["Performance and efficiency"].features.map(feature => {
+                                    return `
+                                    <div class="col-6 mb-2">
+                                        <span class="d-block small">${feature}</span>
+                                        <hr>
+                                    </div>
+                                    `}).join('')}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item text-light border-bottom border-dark-light">
+                    <h2 class="accordion-header" id="headingTwo">
+                        <button class="accordion-button  collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                            <div>
+                                <span class="hl d-block small mb-2">01.2</span>
+                                <h4 class="mb-2"><b><u>${model["Handling, ride and braking"].categoryName}</u></b></h4>
+                                <p class="fw-light text-light">Ensuring a smooth, safe, comfortable drive.</p>
+                            </div>
+                        </button>
+                    </h2>
+                    <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+                        <div class="accordion-body">
+                            <div class="row">
+                                ${model["Handling, ride and braking"].features.map(feature => {
+                                    return `
+                                    <div class="col-6 mb-2">
+                                        <span class="d-block small">${feature}</span>
+                                        <hr>
+                                    </div>
+                                `}).join('')}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item text-light border-bottom border-dark-light mt-4">
+                    <h2 class="accordion-header" id="headingThree">
+                        <button class="accordion-button  collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                            <div class="position-absolute" style="top:0.7rem;left:-200px;">
+                                <h5 class="fw-light text-light">02 Appearance</h4>
+                            </div>
+                            <div>
+                                <span class="hl d-block small mb-2">02.1</span>
+                                <h4 class="mb-2"><b><u>${model["Exterior"].categoryName}</u></b></h4>
+                                <p class="fw-light text-light">Paint, accents, and lights.</p>
+                            </div>
+                        </button>
+                    </h2>
+                    <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+                        <div class="accordion-body">
+                            <div class="row">
+                                ${model["Exterior"].features.map(feature => {
+                                    return `
+                                    <div class="col-6 mb-2">
+                                        <span class="d-block small">${feature}</span>
+                                        <hr>
+                                    </div>
+                                `}).join('')}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item text-light border-bottom border-dark-light">
+                    <h2 class="accordion-header" id="headingFour">
+                        <button class="accordion-button  collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                            <div>
+                                <span class="hl d-block small mb-2">02.2</span>
+                                <h4 class="mb-2"><b><u>${model["Interior trim"].categoryName}</u></b></h4>
+                                <p class="fw-light text-light">Upholstery and trim.</p>
+                            </div>
+                        </button>
+                    </h2>
+                    <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#accordionExample">
+                        <div class="accordion-body">
+                            <div class="row">
+                                ${model["Interior trim"].features.map(feature => {
+                                    return `
+                                    <div class="col-6 mb-2">
+                                        <span class="d-block small">${feature}</span>
+                                        <hr>
+                                    </div>
+                                `}).join('')}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item text-light border-bottom border-dark-light mt-4">
+                    <h2 class="accordion-header" id="headingFive">
+                        <button class="accordion-button  collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+                            <div class="position-absolute" style="top:0.7rem;left:-200px;">
+                                <h5 class="fw-light text-light">03 Technology</h4>
+                            </div>
+                            <div>
+                                <span class="hl d-block small mb-2">03.1</span>
+                                <h4 class="mb-2"><b><u>${model["Connectivity"].categoryName}</u></b></h4>
+                                <p class="fw-light text-light">Wireless features, remote services, and intuitive technology.</p>
+                            </div>
+                        </button>
+                    </h2>
+                    <div id="collapseFive" class="accordion-collapse collapse" aria-labelledby="headingFive" data-bs-parent="#accordionExample">
+                        <div class="accordion-body">
+                            <div class="row">
+                                ${model["Connectivity"].features.map(feature => {
+                                    return `
+                                    <div class="col-6 mb-2">
+                                        <span class="d-block small">${feature}</span>
+                                        <hr>
+                                    </div>
+                                `}).join('')}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item text-light border-bottom border-dark-light">
+                    <h2 class="accordion-header" id="headingSix">
+                        <button class="accordion-button  collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSix" aria-expanded="false" aria-controls="collapseSix">
+                            <div>
+                                <span class="hl d-block small mb-2">03.2</span>
+                                <h4 class="mb-2"><b><u>${model["Audio system"].categoryName}</u></b></h4>
+                                <p class="fw-light text-light">Systems, speakers and more.</p>
+                            </div>
+                        </button>
+                    </h2>
+                    <div id="collapseSix" class="accordion-collapse collapse" aria-labelledby="headingSix" data-bs-parent="#accordionExample">
+                        <div class="accordion-body">
+                            <div class="row">
+                                ${model["Audio system"].features.map(feature => {
+                                    return `
+                                    <div class="col-6 mb-2">
+                                        <span class="d-block small">${feature}</span>
+                                        <hr>
+                                    </div>
+                                `}).join('')}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item text-light border-bottom border-dark-light">
+                    <h2 class="accordion-header" id="headingSeven">
+                        <button class="accordion-button  collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSeven" aria-expanded="false" aria-controls="collapseSeven">
+                            <div>
+                                <span class="hl d-block small mb-2">03.3</span>
+                                <h4 class="mb-2"><b><u>${model["Instrumentation and controls"].categoryName}</u></b></h4>
+                                <p class="fw-light text-light">Advanced features for a smarter drive.</p>
+                            </div>
+                        </button>
+                    </h2>
+                    <div id="collapseSeven" class="accordion-collapse collapse" aria-labelledby="headingSeven" data-bs-parent="#accordionExample">
+                        <div class="accordion-body">
+                            <div class="row">
+                                ${model["Instrumentation and controls"].features.map(feature => {
+                                    return `
+                                    <div class="col-6 mb-2">
+                                        <span class="d-block small">${feature}</span>
+                                        <hr>
+                                    </div>
+                                `}).join('')}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item text-light border-bottom border-dark-light">
+                    <h2 class="accordion-header" id="headingEight">
+                        <button class="accordion-button  collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseEight" aria-expanded="false" aria-controls="collapseEight">
+                            <div>
+                                <span class="hl d-block small mb-2">03.4</span>
+                                <h4 class="mb-2"><b><u>${model["Comfort and convenience"].categoryName}</u></b></h4>
+                                <p class="fw-light text-light">Comfort and Convenience Luxury features for a pleasant ride.</p>
+                            </div>
+                        </button>
+                    </h2>
+                    <div id="collapseEight" class="accordion-collapse collapse" aria-labelledby="headingEight" data-bs-parent="#accordionExample">
+                        <div class="accordion-body">
+                            <div class="row">
+                                ${model["Comfort and convenience"].features.map(feature => {
+                                    return `
+                                    <div class="col-6 mb-2">
+                                        <span class="d-block small">${feature}</span>
+                                        <hr>
+                                    </div>
+                                `}).join('')}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="accordion-item text-light border-bottom border-dark-light mt-4">
+                    <h2 class="accordion-header" id="headingNine">
+                        <button class="accordion-button  collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseNine" aria-expanded="false" aria-controls="collapseNine">
+                            <div class="position-absolute" style="top:0.7rem;left:-200px;">
+                                <h5 class="fw-light text-light">04 Protection</h4>
+                            </div>
+                            <div>
+                                <span class="hl d-block small mb-2">04.1</span>
+                                <h4 class="mb-2"><b><u>${model["Safety and security"].categoryName}</u></b></h4>
+                                <p class="fw-light text-light">Protecting you and your vehicle, on the road and off.</p>
+                            </div>
+                        </button>
+                    </h2>
+                    <div id="collapseNine" class="accordion-collapse collapse" aria-labelledby="headingNine" data-bs-parent="#accordionExample">
+                        <div class="accordion-body">
+                            <div class="row">
+                                ${model["Safety and security"].features.map(feature => {
+                                    return `
+                                    <div class="col-6 mb-2">
+                                        <span class="d-block small">${feature}</span>
+                                        <hr>
+                                    </div>
+                                `}).join('')}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item text-light border-bottom border-dark-light">
+                    <h2 class="accordion-header" id="headingTen">
+                        <button class="accordion-button  collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTen" aria-expanded="false" aria-controls="collapseTen">
+                            <div>
+                                <span class="hl d-block small mb-2">04.2</span>
+                                <h4 class="mb-2"><b><u>${model["Warranty"].categoryName}</u></b></h4>
+                                <p class="fw-light text-light">Complete coverage and peace of mind.</p>
+                            </div>
+                        </button>
+                    </h2>
+                    <div id="collapseTen" class="accordion-collapse collapse" aria-labelledby="headingTen" data-bs-parent="#accordionExample">
+                        <div class="accordion-body">
+                            <div class="row">
+                                ${model["Warranty"].features.map(feature => {
+                                    return `
+                                    <div class="col-6 mb-2">
+                                        <span class="d-block small">${feature}</span>
+                                        <hr>
+                                    </div>
+                                `}).join('')}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
         </div>
     </div>
     `

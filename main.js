@@ -1,6 +1,7 @@
-const { app, BrowserWindow, shell, ipcMain, Menu } = require('electron')
-const ejse = require('ejs-electron')
-const path = require('path')
+const { app, BrowserWindow, shell, ipcMain, Menu, Notification } = require('electron');
+const ejse = require('ejs-electron');
+const path = require('path');
+var player = require('play-sound')(opts = {});
 
 require('update-electron-app')({
   repo: 'ianmora97/content-automation',
@@ -139,6 +140,18 @@ ipcMain.on('open-url', (event, arg) => {
         shell.openExternal('https://'+arg)
     }
     
+})
+// Send A Notification
+ipcMain.on('notification-jira', (event, arg) => {
+	player.play(path.join(__dirname, arg.args.sound), function(err){
+		if (err) throw err
+	});
+	arg.args.icon = path.join(__dirname, arg.args.icon);
+	const notification = new Notification(arg.args);
+		notification.on('click', (event, argNot) => {
+			shell.openExternal(arg.url)
+	});
+    notification.show()    
 })
 
 // open window on ready

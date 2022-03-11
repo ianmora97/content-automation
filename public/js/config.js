@@ -6,7 +6,7 @@ var json_config;
  * @param cosy_config cosy domains list Configuration
  */
 var cosy_config;
-function loadUserConfig(){
+async function loadUserConfig(){
     db.get("SELECT * FROM config WHERE id = 1", (err, rows) => {
         if (err) {
             console.log(err);
@@ -33,12 +33,33 @@ function loadUserConfig(){
             if(json_config.c_email != '' && json_config.c_token != ''){
                 $('#ticketJiraWarning').remove();
             }
-            bringConfluenceContentDeployments()
+            getCurrentUserAltassian().then(res => {
+                bringConfluenceContentDeployments();
+                bringJiraTicketsRelated();
+            });
         }
     });
 }
 loadUserConfig()
-
+var g_user_atlasian = {};
+function getCurrentUserAltassian() {
+    return new Promise((resolve, reject) => {
+        $.ajax({
+            type: "GET",
+            url: `https://virtuelle-welt.atlassian.net/wiki/rest/api/user/current`,
+            contentType: "application/json",
+            headers: {
+                "Authorization": "Basic " + btoa(json_config.c_email + ":" + json_config.c_token)
+            },
+        }).then((response) => {
+            g_user_atlasian = response;
+            resolve("success");
+        }, (error) => {
+            checkError("currentUser", error.status);
+            reject("error");
+        });
+    });
+}
 function setCondigJsonCosyYear(se){
     json_config.p_year = $(se).val();
     db.run(`UPDATE config set p_year = ? WHERE id = 1`, 

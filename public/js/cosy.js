@@ -120,6 +120,7 @@ function getImagesCosysByModelAll(model) {
             let wheels = colors.filter(obj => {return obj.isWheel;});
             let current_trim = "";
             let ejem = _.intersectionBy(wheels, current_config, 'code');
+            console.log(ejem)
             if(ejem.length > 0){
                 current_trim = {
                     code: ejem[0].code,
@@ -132,10 +133,12 @@ function getImagesCosysByModelAll(model) {
                 }
             }
             showimagePathsCosysAll(config,colors_filter,fabricCodes,wheels,current_trim);
-        }, (error) => {
-            checkError("optionsCosy", error.status);
+        }, (errorOptions) => {
+            console.log(errorOptions);
+            checkError("optionsCosy", errorOptions.status);
         });
     }, (error) => {
+        console.log(error);
         checkError("modelnotfound", error.status);
     });
 }
@@ -440,20 +443,22 @@ function changeUpholOnPreviewAll(fabric){
     });
 }
 function changeTrimsOnPreviewAll(wheel){
-    let walkaround_path = $('#pathCosyModel').html().replaceAll('&amp;','&');
-    let new_path = walkaround_path.replace(g_cosy_wheel, wheel);
-    console.log(g_cosy_wheel, wheel)
-    showPathImageCosyOnLoadAll(new_path);
-    showImageCosyAll(new_path);
-    bringAllAnglesCache(new_path);
-    g_cosy_wheel = wheel;
-    let wheelf = _.find(g_fetch_options, ['code', wheel]);
-    $('#trimCosyModel').html(`<span id="trimCodeCosy">${wheelf.code}</span> - ${wheelf.name}`);
-    tippy('#trimCodeCosy', {
-        content: "Copied!",
-        trigger: 'click',
-        animation: 'shift-away-extreme',
-    });
+    if(g_cosy_wheel != ""){
+        let walkaround_path = $('#pathCosyModel').html().replaceAll('&amp;','&');
+        let new_path = walkaround_path.replace(g_cosy_wheel, wheel);
+        console.log(g_cosy_wheel, wheel)
+        showPathImageCosyOnLoadAll(new_path);
+        showImageCosyAll(new_path);
+        bringAllAnglesCache(new_path);
+        g_cosy_wheel = wheel;
+        let wheelf = _.find(g_fetch_options, ['code', wheel]);
+        $('#trimCosyModel').html(`<span id="trimCodeCosy">${wheelf.code}</span> - ${wheelf.name}`);
+        tippy('#trimCodeCosy', {
+            content: "Copied!",
+            trigger: 'click',
+            animation: 'shift-away-extreme',
+        });
+    }
 }
 function changeQualityImage(){
     let quali = $("#rangeQuality").val();

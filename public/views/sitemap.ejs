@@ -1,0 +1,59 @@
+<h2 class="fw-bold mb-0">Sitemap</h2>
+<hr>
+<div style="height: calc(100vh - 140px); overflow-y: auto;">
+    <div class="d-flex flex-column">
+        <div>
+            <div class="bg-dark rounded-15 p-3 mb-3">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class="position-relative flex-fill">
+                        <input class="form-control form-control-sm bg-dark-light mb-0" onkeyup="searchonSitemap()" id="inputBarSitemap" placeholder="Type to search...">
+                        <div class="dropdown-search dropdown-menu-dark bg-dark-light pm-2"></div>
+                    </div>
+                    <div>
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-dark-light btn-sm dropdown-toggle" 
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fa-solid fa-diagram-project pe-2"></i>Graph Style
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-dark">
+                                <li><button type="button" class="dropdown-item" onclick="changeGraphLayout('cose')">Cose</button></li>
+                                <li><button type="button" class="dropdown-item" onclick="changeGraphLayout('breadthfirst')">Breadthfirst</button></li>
+                                <li><button type="button" class="dropdown-item" onclick="changeGraphLayout('grid')">Grid</button></li>
+                                <li><button type="button" class="dropdown-item" onclick="changeGraphLayout('circle')">Circle</button></li>
+                                <li><button type="button" class="dropdown-item" onclick="changeGraphLayout('concentric')">Concentric</button></li>
+                                <li><button type="button" class="dropdown-item" onclick="changeGraphLayout('random')">Random</button></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-dark rounded-15 p-3 position-relative">
+                <div class="d-flex justify-content-between align-item-center bg-dark rounded-15">
+                    <div class="small">
+                        <span class="text-secondary" id="pageNameCy"></span>
+                    </div>
+                    <div class="small">
+                        <span id="sitemap_totalSites"></span> pages found.
+                    </div>
+                </div>
+                <div id="canvas" style="width: 100%; height: calc(100vh - 270px);"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="sitemap_modal" tabindex="-1" aria-labelledby="sitemap_modalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+        <div class="modal-content bg-dark-light">
+            <div class="modal-header pb-0">
+                <h5><i class="fa-solid fa-link"></i> URLs:</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="">
+                    <h4 id="sitemap_name" class="text-capitalize"></h4>
+                    <div id="sitemap_url"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,39 +1,184 @@
+const { mode } = require("crypto-js");
+
 function techEvents(event) {
     askInputTechSpecs()
     bringKeyValuesTechSpecs()
     onSelectTechValueChange();
     onSearchTemplatesModels()
+    askInputStandardFeatures();
 }
-
+function toggleOffCanvas(){
+    $('#offcanvasMissingValues').toggleClass('active');
+    animateCSS('#offcanvasMissingValues','fadeInRight');
+    $('#offcanvasBg').toggleClass('active');
+    animateCSS('#offcanvasBg','fadeIn');
+    $("#canvasBGTechspecs").css('overflow-y','hidden');
+}
+function closeOffCavas(){
+    $("#canvasBGTechspecs").css('overflow-y','auto');
+    animateCSS('#offcanvasMissingValues','fadeOutRight').then(()=>{
+        $('#offcanvasMissingValues').removeClass('active');
+    });
+    animateCSS('#offcanvasBg','fadeOut').then(()=>{
+        $('#offcanvasBg').removeClass('active');
+    });
+}
 function askInputTechSpecs() {
-    $('#naCodeModelTech').on('change', function(event) {
-        let val = $('#naCodeModelTech').val();
+    $('#featuresInputList').on('change', function(event) {
+        let val = $('#featuresInputList').val();
+        getFeaturesApi(val);
+    });
+}
+function askInputStandardFeatures() {
+    $('#specsInputList').on('change', function(event) {
+        let val = $('#specsInputList').val();
         getTechSpecsApi(val);
     });
 }
-function validateModel(json) {
-    if(json.name.match(/(X[1-7])/g)){ //modelo X
-        console.log('X Model')
-    }else if(json.name.match(/(M[2-8])/g)){ // Modelo M
-        console.log('M Model')
-    }else if(json.name.match(/(i[3])/g)){ // i3
-        console.log('i3 Model')
-    }else if(json.name.match(/(iX)/g)){ // iX
-        console.log('iX Model')
-    }else if(json.name.match(/(i[4-7])/g)){ // i4-7
-        console.log('i4-7 Model')
-    }
-}
-function getTechSpecsApi(model) {
+
+var tempFeatures;
+var g_features_view = "json";
+function getFeaturesApi(model) {
+    g_features_view = "json";
     $.ajax({
         type: "GET",
-        url: `${cosy_config.ubyo}/v4/BM/techspecs/`+model,
+        url: `${cosy_config.ubyo}/v1/static/BM/standardfeatures/`+model,
         contentType: "application/json",
-    }).then((response) => {
-        printNaCodeSpecs(response,model)
+    }).then((resTech) => {
+        tempFeatures = {
+            tech: resTech
+        };
+        printStandardFeatures(resTech)
     }, (error) => {
     
     });
+}
+
+var tempTech;
+var g_techspecs_view = "json";
+function getTechSpecsApi(model) {
+    g_techspecs_view = "json";
+    $.ajax({
+        type: "GET",
+        url: `${cosy_config.ubyo}/v4/BM/model/`+model,
+        contentType: "application/json",
+    }).then((resModel) => {
+        $.ajax({
+            type: "GET",
+            url: `${cosy_config.ubyo}/v4/BM/techspecs/`+model,
+            contentType: "application/json",
+        }).then((resTech) => {
+            tempTech = {
+                model: resModel,
+                tech: resTech
+            };
+            printNaCodeSpecs(resTech,resModel)
+            evalPropertiesTech(resTech, resModel)
+        }, (error) => {
+        
+        });
+    }, (error) => {
+    
+    });
+}
+function evalPropertiesTech(tech, model){
+    let flag = true;
+    $("#missingBtnTech").hide();
+    $("#techSpecsfromNaCodeEmptyValues").html('')
+    if(!model.isBmwi){ // not Electric
+        console.log(model.series.match(/X[1-7]/g), model.series)
+        if(model.bodyStyle == 'Coupe' || model.bodyStyle == 'Gran Coupe' 
+        || model.bodyStyle == 'Sedan' || model.bodyStyle == 'Convertible'){ // Sedan, Coupe, Convertible - Standard
+            g_tech_sedan_specs.forEach(element => {
+                flag = _.has(tech, element);
+                if(!flag){
+                    $("#missingBtnTech").show();
+                    $("#techSpecsfromNaCodeEmptyValues").append(`
+                        <div class="text-danger me-2">${element}</div>
+                    `)
+                }
+            });
+        }else if(model.series.match(/X[1-7]/g)){ // SAV - Standard
+            g_tech_savStandard_specs.forEach(element => {
+                flag = _.has(tech, element);
+                if(!flag){
+                    $("#techSpecsfromNaCodeEmptyValues").append(`
+                        <div class="text-danger me-2">${element}</div>
+                    `)
+                }
+            });
+        }
+    }else{ // Electric
+
+    }
+}
+function syntaxHighlight(json) {
+    json = json.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    return json.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, function (match) {
+        var cls = 'number-json';
+        if (/^"/.test(match)) {
+            if (/:$/.test(match)) {
+                cls = 'key-json';
+            } else {
+                cls = 'string-json';
+            }
+        } else if (/true|false/.test(match)) {
+            cls = 'boolean-json';
+        } else if (/null/.test(match)) {
+            cls = 'null-json';
+        }
+        return '<span class="' + cls + '">' + match + '</span>';
+    });
+}
+function printNaCodeSpecs(model,code){
+    $('#techSpecsfromNaCode').html(`
+        <pre style="white-space: wrap; font-weight:500;" class="animate__animated animate__fadeIn">${syntaxHighlight(JSON.stringify(model, undefined, 4))}</pre>
+    `)
+}
+function printStandardFeatures(model){
+    $('#featuresfromNaCode').html(`
+        <pre style="white-space: wrap; font-weight:500;" class="animate__animated animate__fadeIn">${syntaxHighlight(JSON.stringify(model, undefined, 4))}</pre>
+    `)
+}
+const convertArrayToObject = (array, key) => {
+    const initialValue = {};
+    return array.reduce((obj, item) => {
+        return {
+            ...obj,
+            [item[key]]: item,
+        };
+    }, initialValue);
+};
+function formatFeatures(){
+    if(g_features_view == "naCode"){
+        printStandardFeatures(tempFeatures.tech);
+        g_features_view = "json";
+    }else{
+        g_features_view = "naCode";
+        $("#featuresfromNaCode").html(template_standardFeatures(convertArrayToObject(tempFeatures.tech.standardFeaturesElements,"categoryName")));
+    }
+}
+function formatTechSpecs(){
+    if(g_techspecs_view == "naCode"){
+        printNaCodeSpecs(tempTech.tech,tempTech.model);
+        evalPropertiesTech(tempTech.tech, tempTech.model);
+        g_techspecs_view = "json";
+    }else{
+        g_techspecs_view = "naCode";
+        $("#techSpecsfromNaCode").html(template_SEDAN(tempTech.tech));
+    }
+}
+
+function iterateOverObjectTech(obj, stack) {
+    for (var property in obj) {
+        if (obj.hasOwnProperty(property)) {
+            if (typeof obj[property] == "object") {
+                iterateOverObjectTech(obj[property], stack + '.' + property);
+            } else {
+                console.log(stack + '.' + property);
+            }
+        }
+    }
 }
 async function getTechSpecsApiV2(model){
     return new Promise((resolve,reject)=>{
@@ -48,36 +193,6 @@ async function getTechSpecsApiV2(model){
         });
     })
 }
-function printNaCodeSpecs(model,code){
-    $('#techSpecsfromNaCode').html('')
-    let template = g_mapTemplates_techspecs.get(code);
-    if(template != undefined){
-        if(template.name == "SAV"){ //SAV Template
-            $('#techSpecsfromNaCode').html(template_SAV(model))
-        }else if(template.name == "SEDAN"){ // Modelo M
-            $('#techSpecsfromNaCode').html(template_SEDAN(model))
-        }
-    }else{
-        $('#techSpecsfromNaCode').html('')
-    }
-}
-function iterateOverObjectTech(obj, stack) {
-    for (var property in obj) {
-        if (obj.hasOwnProperty(property)) {
-            if (typeof obj[property] == "object") {
-                iterateOverObjectTech(obj[property], stack + '.' + property);
-            } else {
-                $('#techSpecsfromNaCode').append(`
-                    <p>
-                        <span class="text-light">${property}</span><br>
-                        <span class="fw-bold">${obj[property]}</span>
-                    </p>
-                `)
-            }
-        }
-    }
-}
-
 function showEngineType(models) {
     models.forEach(model => {
         if(model.name.match(/(X[1-7])/g)){
@@ -118,7 +233,8 @@ function loadDataListInput(list){
     });
 }
 function fillDataList(model){
-    $('#naCodeModelTech').append(`<option value="${model.code}">${model.code} ${model.name}</option>`)
+    $('#specsDataListNACodes').append(`<option value="${model.code}">`)
+    $('#featuresDataListNACodes').append(`<option value="${model.code}">`)
     $('#naCodeModelCosysModal').append(`<option value="${model.code}">${model.code} ${model.name}</option>`)
     $('#naCodeModelCosysModalBefore').append(`<option value="${model.code}">${model.code} ${model.name}</option>`)
 }
