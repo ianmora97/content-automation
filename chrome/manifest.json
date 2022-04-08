@@ -1,14 +1,15 @@
 {
   "name": "Content Automation",
   "description": "Content process automation!",
-  "version": "1.0",
+  "version": "3.0",
   "manifest_version": 3,
   "content_scripts": [
     {
       "matches": ["https://www.bmwusa.com/*", "https://*.bmwusacm.co/*","https://*.atlassian.net/*"],
-      "js": ["content-script.js"]
+      "js": ["content-script.js","scriptImages.js"]
     }
   ],
+  "devtools_page": "devtools.html",
   "commands": {
     "showHeaders": {
       "suggested_key": {

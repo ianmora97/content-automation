@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="devtoolsActivate.js"></script>
+    
+	<!-- <link rel="stylesheet" href="bootstrap.css"> -->
+	<link rel="stylesheet" href="style.css">
+	<script src="jquery.js"></script>
+	<script src="popper.min.js"></script>
+	<script src="tippy-bundle.umd.js"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css"/>
+	<script src="clipboard.js"></script>
+</head>
+<body>
+	<div class="container-fluid">
+		<div class="logo">
+			<img src="/images/logo.png" width="50px">
+			<div class="logo-brand">
+				<h1 class="ms-3">Content Automation</h1>
+				<h6 class="ms-3 mt-1 text-muted">BMW</h6>
+			</div>
+		</div>
+		<hr>
+        <div class="d-flex jcs a-i-c">
+            <button type="button" class="me-2 btn-primary" id="btnImagesInfo"><i class="fas fa-images"></i> Toogle Images Info</button>
+
+        </div>
+		<hr>
+        <table class="table table-hover table-striped">
+            <thead class="table-dark-light">
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">SRC</th>
+                    <th scope="col">AltText</th>
+                    <th scope="col">Replace Image</th>
+                </tr>
+            </thead>
+            <tbody id="tableimages_dbody">
+              
+            </tbody>
+        </table>
+    </div>
+    <script src="devtools.js"></script>
+</body>
+</html>

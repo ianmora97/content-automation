@@ -1,7 +1,7 @@
 chrome.runtime.onInstalled.addListener(() => {
     console.log('Links loaded');
 });
-
+// ! ------------------------------------------ Commands ------------------------------------------
 chrome.commands.onCommand.addListener(function (command) {
     switch (command) {
         case 'toggleGrid':
@@ -63,5 +63,6 @@ chrome.contextMenus.create({
 	contexts:["link"], 
 	id: "openOnAem"
 });
-
 chrome.contextMenus.onClicked.addListener(openAuthor)
+
+// ! ------------------------------------------ Dev Tools ------------------------------------------
