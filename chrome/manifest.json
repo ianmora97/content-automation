@@ -1,11 +1,11 @@
 {
   "name": "Content Automation",
   "description": "Content process automation!",
-  "version": "3.0",
+  "version": "4.0",
   "manifest_version": 3,
   "content_scripts": [
     {
-      "matches": ["https://www.bmwusa.com/*", "https://*.bmwusacm.co/*","https://*.atlassian.net/*"],
+      "matches": ["https://www.bmwusa.com/*", "https://*.bmwusacm.co/*","https://virtuelle-welt.atlassian.net/*"],
       "js": ["content-script.js","scriptImages.js"]
     }
   ],
@@ -25,12 +25,12 @@
       },
       "description": "Toggle grid"
     },
-    "placeholder": {
+    "jiraTicket": {
       "suggested_key": {
           "default": "Ctrl+Shift+2",
           "mac": "MacCtrl+D"
       },
-      "description": "Toggle UT3 placeholder"
+      "description": "Copy Jira Ticket"
     },
     "toggleSpacers": {
       "suggested_key": {

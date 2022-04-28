@@ -22,9 +22,12 @@ setTimeout(() => {
 }, 2000);
 `;
 const changeImage = (e, n) => `
-	document.querySelector("[srcset='${e.src}']").setAttribute("srcset", "${n}")
+	Array.from(document.querySelectorAll("[srcset='${e.src}']")).forEach(e => {
+		e.setAttribute("srcset", "${n}");
+	})
 	document.querySelector("[src='${e.src}']").setAttribute("src", "${n}")
 `;
+// document.querySelector("[srcset='${e.src}']").setAttribute("srcset", "${n}")
 
 btnImagesInfo.addEventListener("click", () => {
 	chrome.devtools.inspectedWindow.eval(inspectImages,function(result,isError){
@@ -63,8 +66,8 @@ btnImagesInfo.addEventListener("click", () => {
 					<td>${e.alt}</td>
 					<td>
 						<div class="d-flex jcs a-i-e" style="width:100%;">
-							<input type="text" class="form-control-light form-sm" id="inputQueryImage-${i}">
-							<button id="btnQueryImage-${i}" class="btn-primary btn-sm" style="margin-left:10px;"><i class="fa-solid fa-repeat"></i></button>
+							<input type="text" class="form-control-light form-sm-cus" id="inputQueryImage-${i}">
+							<button id="btnQueryImage-${i}" class="btn-primary btn-sm-cus" style="margin-left:10px;"><i class="fa-solid fa-repeat"></i></button>
 						</div>
 					</td>
 				</tr>

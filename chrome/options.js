@@ -4,6 +4,10 @@ var bpTablet = document.getElementById("bpTablet");
 var bpMobile = document.getElementById("bpMobile");
 var aemDomainInput = document.getElementById("aemDomainInput");
 var aemRootInput = document.getElementById("aemRootInput");
+
+var aemDomainInput2 = document.getElementById("aemDomainInput2");
+var aemRootInput2 = document.getElementById("aemRootInput2");
+
 var jsonText = document.getElementById("jsonText");
 
 var btnSaveBP = document.getElementById("btnSaveBP");
@@ -70,7 +74,9 @@ function handleButtonClickBP(event) {
 function handleButtonClickDomain(event) {
 	let domain = {
 		aem: aemDomainInput.value,
-		root: aemRootInput.value
+		root: aemRootInput.value,
+		aem2: aemDomainInput2.value,
+		root2: aemRootInput2.value
 	}
 	domain = JSON.stringify(domain);
 	chrome.storage.sync.set({ domain });
@@ -100,6 +106,8 @@ function evalOptions(buttonColors) {
 		let domain = JSON.parse(data.domain);
 		aemDomainInput.value = domain.aem;
 		aemRootInput.value = domain.root;
+		aemDomainInput2.value = domain.aem2;
+		aemRootInput2.value = domain.root2;
 	});
 	chrome.storage.sync.get("environments", (data) => {
 		let environments = JSON.parse(data.environments);

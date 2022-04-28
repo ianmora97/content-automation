@@ -26,11 +26,23 @@
 	<div class="wrapper-800">
 		<div class="card">
 			<h2 class="bold mb-4">URL options</h2>
-			<label for="aemDomainInput" class="p">AEM Domain:</label>
-			<input type="text" id="aemDomainInput" class="form-control">
-			
-			<label for="aemRootInput" class="p">Root</label>
-			<input type="text" id="aemRootInput" class="form-control">
+			<div class="d-flex jcs">
+				<div style="width: 450px;">
+					<label for="aemDomainInput" class="p">AEM Domain</label>
+					<input type="text" id="aemDomainInput" class="form-control">
+					
+					<label for="aemRootInput" class="p">Root</label>
+					<input type="text" id="aemRootInput" class="form-control">
+				</div>
+				<div style="width: 450px;">
+					<label for="aemDomainInput2" class="p">AEM Domain <small class="small">(Secondary)</small></label>
+					<input type="text" id="aemDomainInput2" class="form-control">
+					
+					<label for="aemRootInput2" class="p">Root <small class="small">(Secondary)</small></label>
+					<input type="text" id="aemRootInput2" class="form-control">
+				</div>
+
+			</div>
 			<hr>
 			<p class="bold mb-3">Environment</p>
 			<div id="envsInputs">
@@ -73,7 +85,6 @@
 		<hr>
 		<div class="card">
 			<h2 class="bold mb-4">JSON</h2>
-			<label for="bpDesktop" class="p">BP for Desktop:</label>
 			<textarea placeholder="JSON Configuration" id="jsonText" class="form-control w-100" rows="5"></textarea>
 			<br>
 			<button type="button" class="btn-primary" id="btnJsonText"><i class="fas fa-save"></i> Save</button>

@@ -9,9 +9,9 @@ async function evaluateDomain(url){
 		if(res){
 			createPathsV2(url);
 		}else if(url.indexOf(".atlassian.net") !== -1){
-			let btnJira = document.getElementById("btnJira");
-			btnJira.disabled = false;
-			btnJira.classList.remove("disabled");
+			// let btnJira = document.getElementById("btnJira");
+			// btnJira.disabled = false;
+			// btnJira.classList.remove("disabled");
 	
 			let jira = document.createElement("div");
 			jira.innerHTML="<p>Jira<p>"
@@ -47,7 +47,8 @@ function createPathsV2(url){
 		chrome.storage.sync.get("environments", (data2) => {
 			// * get AEM domain from local storage
 			let LSdomain = JSON.parse(data1.domain);
-			domainvec.push({d:`${LSdomain.aem}/editor.html/`,n:"/editor.html"});
+			domainvec.push({d:`${LSdomain.aem}/editor.html/`,n:"/editor.html 1"});
+			domainvec.push({d:`${LSdomain.aem2}/editor.html/`,n:"/editor.html 2"});
 			let rootPath = `${LSdomain.root}`;
 			// * get all environments from local storage
 			let envs = JSON.parse(data2.environments);
@@ -201,66 +202,38 @@ btnBPMobile.addEventListener("click", async () => {
 		});
 	});
 });
-//TODO: Reset window
-let btnBPReset = document.getElementById("btnBPReset");
-btnBPReset.addEventListener("click", async () => {
-	chrome.windows.getCurrent(function(wind) {
-		var maxWidth = window.screen.availWidth;
-		var maxHeight = window.screen.availHeight;
-		var updateInfo = {
-			width: maxWidth,
-			height: maxHeight
-		};
-		chrome.windows.update(wind.id, updateInfo);
-	});
-});
-//TODO: resize window custom
-let customBPInput = document.getElementById("customBPInput");
-customBPInput.addEventListener("keyup", async (event) => {
-	if (event.keyCode === 13) {
-		chrome.windows.getCurrent(function(wind) {
-			var maxWidth = parseInt(customBPInput.value);
-			var maxHeight = window.screen.availHeight;
-			var updateInfo = {
-				width: maxWidth,
-				height: maxHeight
-			};
-			chrome.windows.update(wind.id, updateInfo);
-		});
-	}
-});
 
 // ! ------------------------------------------ Get NAME from JIRA ------------------------------------------
 // * READY TO USE
 // TODO: Build Jira "CONT-ID" + "name" to create Versions or Workflows
-let btnJira = document.getElementById("btnJira");
-tippy('#btnJira', {
-	content: 'Copied to clipboard',
-	trigger: 'click',
-	allowHTML: true
-});
-btnJira.addEventListener("click", async () => {
-	let [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
-	chrome.scripting.executeScript({
-		target: { tabId: tab.id },
-		function: getJiraTitle,
-	});
-});
+// let btnJira = document.getElementById("btnJira");
+// tippy('#btnJira', {
+// 	content: 'Copied to clipboard',
+// 	trigger: 'click',
+// 	allowHTML: true
+// });
+// btnJira.addEventListener("click", async () => {
+// 	let [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+// 	chrome.scripting.executeScript({
+// 		target: { tabId: tab.id },
+// 		function: getJiraTitle,
+// 	});
+// });
 
-function getJiraTitle() {
-	// * Get the title of the current page and refactor it to a Jira name
-	let jiraName = document.getElementsByTagName('title')[0].innerText;
-	jiraName = jiraName.replace('[','').replace(']',' -').replace(/\|/g,'-').split(" - Virtuelle Welt Jira")[0];
+// function getJiraTitle() {
+// 	// * Get the title of the current page and refactor it to a Jira name
+// 	let jiraName = document.getElementsByTagName('title')[0].innerText;
+// 	jiraName = jiraName.replace('[','').replace(']',' -').replace(/\|/g,'-').split(" - Virtuelle Welt Jira")[0];
 
-	// * Build an object with the Jira name and copy it to the clipboard
-	var input = document.createElement('textarea');
-    input.innerHTML = jiraName;
-    document.body.appendChild(input);
-    input.select();
-    var result = document.execCommand('copy');
-    document.body.removeChild(input);
-    return result;
-}
+// 	// * Build an object with the Jira name and copy it to the clipboard
+// 	var input = document.createElement('textarea');
+//     input.innerHTML = jiraName;
+//     document.body.appendChild(input);
+//     input.select();
+//     var result = document.execCommand('copy');
+//     document.body.removeChild(input);
+//     return result;
+// }
 
 // ! ------------------------------------------ Show spacers ------------------------------------------
 // * READY TO USE

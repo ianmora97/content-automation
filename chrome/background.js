@@ -19,9 +19,9 @@ chrome.commands.onCommand.addListener(function (command) {
                 chrome.tabs.sendMessage(tabs[0].id, { msg: "showHeaders" });
             })
             break;
-        case 'placeholder':
+        case 'jiraTicket':
             chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-                // chrome.tabs.sendMessage(tabs[0].id, { msg: "placeholder" });
+                chrome.tabs.sendMessage(tabs[0].id, { msg: "jiraTicket" });
             })
             break;
         default:

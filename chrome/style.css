@@ -215,6 +215,16 @@ a, .a{
 .rounded-8{
   border-radius: 8px;
 }
+.btn-sm-cus{
+  padding: .1rem .4rem !important;
+  font-size: 10px !important;
+  min-height: 25px !important;
+}
+.form-sm-cus{
+  padding: .1rem .4rem !important;
+  font-size: 10px !important;
+  min-height: 20px !important;
+}
 button {
   outline: none; 
   min-height: 35px;

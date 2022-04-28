@@ -1,23 +1,35 @@
 chrome.runtime.onMessage.addListener((data, sender, sendResponse) => {
-	
     if (data.msg == 'toggleGrid') {
         toogleGrid();
     }else if(data.msg == 'toggleSpacers'){
         showSpacers();
-		sendResponse({res: "goodbye"});
     }else if(data.msg == 'showHeaders'){
         showHeaders();
-    }else if(data.msg == 'placeholder'){
-        ut3PLaceholder();
+    }else if(data.msg == 'jiraTicket'){
+        copyJiraTicket();
     }
 });
 function toogleGrid(){
     document.body.classList.toggle('show-bmw-grid-overlay');
 }
-function ut3PLaceholder() {
-	document.querySelector('[id*="bmw-personalization"]').classList.toggle('active-placeholder')
+function copyJiraTicket() {
+	console.log("hola")
+	// * Get the title of the current page and refactor it to a Jira name
+	let jiraName = document.getElementsByTagName('title')[0].innerText;
+	console.log(jiraName);
+	jiraName = jiraName.replace('[','').replace(']',' -').replace(/\|/g,'-').split(" - Virtuelle Welt Jira")[0];
+	console.log(jiraName);
+
+	// * Build an object with the Jira name and copy it to the clipboard
+	var input = document.createElement('textarea');
+    input.innerHTML = jiraName;
+    document.body.appendChild(input);
+    input.select();
+    document.execCommand('copy');
+    document.body.removeChild(input);
 }
 function showSpacers() {
+	console.log("Showing Spacers");
 	// * get viewport width
 	let viewport = window.screen.availWidth;
 
