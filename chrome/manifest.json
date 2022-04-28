@@ -1,63 +1,77 @@
 {
-  "name": "Content Automation",
-  "description": "Content process automation!",
-  "version": "4.0",
-  "manifest_version": 3,
-  "content_scripts": [
-    {
-      "matches": ["https://www.bmwusa.com/*", "https://*.bmwusacm.co/*","https://virtuelle-welt.atlassian.net/*"],
-      "js": ["content-script.js","scriptImages.js"]
-    }
-  ],
-  "devtools_page": "devtools.html",
-  "commands": {
-    "showHeaders": {
-      "suggested_key": {
-          "default": "Ctrl+Shift+4",
-          "mac": "MacCtrl+H"
-      },
-      "description": "Toggle Headers."
-    },
-    "toggleGrid": {
-      "suggested_key": {
-          "default": "Ctrl+Shift+1",
-          "mac": "MacCtrl+G"
-      },
-      "description": "Toggle grid"
-    },
-    "jiraTicket": {
-      "suggested_key": {
-          "default": "Ctrl+Shift+2",
-          "mac": "MacCtrl+D"
-      },
-      "description": "Copy Jira Ticket"
-    },
-    "toggleSpacers": {
-      "suggested_key": {
-          "default": "Ctrl+Shift+3",
-          "mac": "MacCtrl+S"
-      },
-      "description": "Toggle Spacer."
-    }
-  },
-  "background": {
-    "service_worker": "background.js"
-  },
-  "permissions": ["storage", "activeTab", "scripting", "contextMenus", "notifications"],
-  "action": {
-    "default_popup": "popup.html",
-    "default_icon": {
-      "16": "/images/logo.png",
-      "32": "/images/logo.png",
-      "48": "/images/logo.png",
-      "128": "/images/logo.png"
-    }
-  },
-  "icons": {
-    "16": "/images/logo.png",
-    "32": "/images/logo.png",
-    "48": "/images/logo.png",
-    "128": "/images/logo.png"
-  },
-  "options_page": "options.html"
+	"name": "Content Automation",
+	"description": "Easy Testing!",
+	"version": "5.0",
+	"manifest_version": 3,
+	"content_scripts": [
+		{
+			"matches": [
+				"https://www.bmwusa.com/*",
+				"https://*.bmwusacm.co/*",
+				"https://virtuelle-welt.atlassian.net/*"
+			],
+			"js": ["content-script.js"]
+		}
+	],
+	"devtools_page": "/devtools/devtools.html",
+	"commands": {
+		"showHeaders": {
+			"suggested_key": {
+				"default": "Ctrl+Shift+4",
+				"mac": "MacCtrl+H"
+			},
+			"description": "Toggle Headers."
+		},
+		"toggleGrid": {
+			"suggested_key": {
+				"default": "Ctrl+Shift+1",
+				"mac": "MacCtrl+G"
+			},
+			"description": "Toggle grid"
+		},
+		"jiraTicket": {
+			"suggested_key": {
+				"default": "Ctrl+Shift+2",
+				"mac": "MacCtrl+D"
+			},
+			"description": "Copy Jira Ticket"
+		},
+		"toggleSpacers": {
+			"suggested_key": {
+				"default": "Ctrl+Shift+3",
+				"mac": "MacCtrl+S"
+			},
+			"description": "Toggle Spacer."
+		}
+	},
+	"background": {
+		"service_worker": "background.js"
+	},
+	"web_accessible_resources": [{
+		"resources": ["scriptInjected.js"],
+		"matches": ["<all_urls>"]
+	}],
+	"permissions": [
+		"storage",
+		"activeTab",
+		"scripting",
+		"contextMenus",
+		"notifications"
+	],
+	"action": {
+		"default_popup": "/popup/popup.html",
+		"default_icon": {
+		"16": "/images/logo.png",
+		"32": "/images/logo.png",
+		"48": "/images/logo.png",
+		"128": "/images/logo.png"
+		}
+	},
+	"icons": {
+		"16": "/images/logo.png",
+		"32": "/images/logo.png",
+		"48": "/images/logo.png",
+		"128": "/images/logo.png"
+	},
+	"options_page": "/options/options.html"
 }

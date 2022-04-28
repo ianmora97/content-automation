@@ -64,5 +64,3 @@ chrome.contextMenus.create({
 	id: "openOnAem"
 });
 chrome.contextMenus.onClicked.addListener(openAuthor)
-
-// ! ------------------------------------------ Dev Tools ------------------------------------------

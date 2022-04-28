@@ -7,8 +7,190 @@ chrome.runtime.onMessage.addListener((data, sender, sendResponse) => {
         showHeaders();
     }else if(data.msg == 'jiraTicket'){
         copyJiraTicket();
-    }
+    }else if(data.msg == 'preorderflag'){
+		if (window.localStorage.getItem('preorder_enabled') == null) {
+			sendResponse({preorder: true});
+			window.localStorage.setItem('preorder_enabled', 'true');
+		} else {
+			sendResponse({preorder: false});
+			window.localStorage.removeItem('preorder_enabled');
+		}
+	}else if(data.msg == 'checkPreorder'){
+		let preorder = window.localStorage.getItem('preorder_enabled') == null ? false : true;
+		sendResponse({preorder: preorder});
+	}else if(data.msg == 'mksflag'){
+		if (window.localStorage.getItem('QATesting') == null) {
+			sendResponse({mks: true});
+			window.localStorage.setItem('QATesting', 'true');
+		} else {
+			sendResponse({mks: false});
+			window.localStorage.removeItem('QATesting');
+		}
+	}else if(data.msg == 'checkmksflag'){
+		let mks = window.localStorage.getItem('QATesting') == null ? false : true;
+		sendResponse({mks: mks});
+	}else if(data.msg == 'showPageData'){
+		showPageData();
+	}
 });
+function showPageData(){
+	var s = document.createElement('script');
+	s.src = chrome.runtime.getURL('scriptInjected.js');
+	s.onload = function() {
+		this.remove();
+	};
+	(document.body || document.documentElement).appendChild(s);
+	function syntaxHighlight(json) {
+		json = json.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+		return json.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, function (match) {
+			var cls = 'number';
+			if (/^"/.test(match)) {
+				if (/:$/.test(match)) {
+					cls = 'key';
+				} else {
+					cls = 'string';
+				}
+			} else if (/true|false/.test(match)) {
+				cls = 'boolean';
+			} else if (/null/.test(match)) {
+				cls = 'null';
+			}
+			return '<span class="' + cls + '">' + match + '</span>';
+		});
+	}
+	if(document.getElementById("schema-element") !== null){
+		document.getElementsByTagName("body")[0].style.overflow = "auto";
+		document.getElementById("schema-element").remove();
+	}else {
+		let body = document.getElementsByTagName("body");
+		let elm = document.createElement("div");
+		body[0].style.overflow = "hidden";
+		elm.id = "schema-element";
+		elm.style.margin = "auto";
+		elm.style.color = "black";
+		elm.style.backgroundColor = "#1A1A1A";
+		elm.style.padding = "18px";
+		elm.style.borderRadius = "5px";
+		elm.style.zIndex = "9999";
+		elm.style.position = "fixed";
+		elm.style.top = "2%";
+		elm.style.left = "2%";
+		elm.style.width = "96%";
+		elm.style.height = "96%";
+		elm.style.overflow = "auto";
+		elm.style.boxShadow = "0px 0px 10px rgba(0,0,0,0.5)";
+		elm.innerHTML = `
+			<div style="display:flex; justify-content:space-between;align-items:stretch;">
+				<div id="pagedata-tabs" style="display:flex; justify-content:start;align-items:center;">
+
+				</div>
+				<button role="button" style="cursor:pointer;margin:0px; padding:0px; border:none; background-color:#2d2d2d; outline:none; width:30px; height:30px; border-radius:50%;" 
+				onclick="document.getElementById('schema-element').remove(); document.getElementsByTagName('body')[0].style.overflow = 'auto';">
+					<span style="font-size:20px; color:white;">X</span>
+				</button>
+			</div>
+			<div id="pagedata-container">
+
+			</div>
+			
+			<style>
+				.string { color: green; }
+				.number { color: blue; }
+				.boolean { color: red; }
+				.null { color: magenta; }
+				.key { color: white; }
+				#pagedata-tabs {
+					overflow: hidden;
+					width: 100%;
+					background-color: transparent;
+				}
+				#pagedata-tabs div button {
+					background-color: #242424;
+					color:white;
+					font-weight: bold;
+					float: left;
+					border: none;
+					outline: none;
+					cursor: pointer;
+					padding: 8px 16px;
+					transition: 0.3s;
+					font-size: 17px;
+				}
+				#pagedata-tabs div button:hover {
+					background-color: #2d2d2d;
+				}
+				#pagedata-tabs div button.active {
+					background-color: #2d2d2d;
+				}
+				.tabcontent {
+					display: none;
+					padding: 6px 12px;
+					border-top: none;
+				}
+			</style>
+		`;
+		body[0].appendChild(elm);
+
+		// get all seo meta data
+		let metaDesc = document.querySelector("meta[name='description']");
+		let metaTitle = document.querySelector("title");
+		let metaKeywords = document.querySelector("meta[name='keywords']");
+		let metaCanonical = document.querySelector("link[rel='canonical']");
+		let url = window.location.href;
+
+		let button = document.createElement("div");
+		button.innerHTML = `<button class="tablinks active" onclick="openTabPageData(event, 'SEO')">SEO</button>`;
+		document.getElementById("pagedata-tabs").appendChild(button);
+
+		let container = document.createElement("div");
+		container.id = 'SEO';
+		container.className = "tabcontent";
+		container.style.display = "block";
+		container.innerHTML = `
+		<div style="overflow-y:scroll; font-weight:500;border-top:1px solid #cacaca; margin-top:5px;padding-top:5px;">
+			<div style="display:flex; flex-direction:column;align-items:start; margin-top:50px;">
+				<div style="display:flex; align-items:center;border-bottom:1px solid gray; margin-bottom:15px; width:100%; padding-bottom:10px;">
+					<p style="margin:0 !important;color:white;font-weight:bold; font-size:22px; min-width:155px;">Title:</p>
+					<p style="margin:0 !important;color:white;font-size:20px;">${metaTitle.innerHTML}</p>
+				</div>
+				<div style="display:flex; align-items:center;border-bottom:1px solid gray; margin-bottom:15px; width:100%; padding-bottom:10px;">
+					<p style="margin:0 !important;color:white;font-weight:bold; font-size:22px; min-width:155px;">Description:</p>
+					<p style="margin:0 !important;color:white;font-size:20px;">${metaDesc.content}</p>
+				</div>
+				<div style="display:flex; align-items:center;border-bottom:1px solid gray; margin-bottom:15px; width:100%; padding-bottom:10px;">
+					<p style="margin:0 !important;color:white;font-weight:bold; font-size:22px; min-width:155px;">Keywords:</p>
+					<p style="margin:0 !important;color:white;font-size:20px;">${metaKeywords.content}</p>
+				</div>
+				<div style="display:flex; align-items:center;border-bottom:1px solid gray; margin-bottom:15px; width:100%; padding-bottom:10px;">
+					<p style="margin:0 !important;color:white;font-weight:bold; font-size:22px; min-width:155px;">URL:</p>
+					<p style="margin:0 !important;color:white;font-size:20px;">${url}</p>
+				</div>
+				<div style="display:flex; align-items:center;border-bottom:1px solid gray; margin-bottom:15px; width:100%; padding-bottom:10px;">
+					<p style="margin:0 !important;color:white;font-weight:bold; font-size:22px; min-width:155px;">Canonical:</p>
+					<p style="margin:0 !important;color:white;font-size:20px;">${metaCanonical.href}</p>
+				</div>
+			</div>
+		</div>`;
+		document.getElementById("pagedata-container").appendChild(container);
+
+		let schemas = Array.from(document.querySelectorAll("[type='application/ld+json']"));
+		schemas.forEach(e => {
+			let innerText = JSON.parse(e.innerText);
+			let button = document.createElement("div");
+			button.innerHTML = `<button class="tablinks" onclick="openTabPageData(event, '${innerText['@type']}')">${innerText['@type']}</button>`;
+			document.getElementById("pagedata-tabs").appendChild(button);
+
+			let container = document.createElement("div");
+			container.id = innerText['@type'];
+			container.className = "tabcontent";
+			let print = JSON.stringify(innerText,null,4);
+			container.innerHTML = `<div style="overflow-y:scroll; white-space: pre-wrap; font-weight:500;color:white; margin-top:5px;padding-top:5px;">${syntaxHighlight(print)}</div>`;
+			document.getElementById("pagedata-container").appendChild(container);
+		})
+		
+	}
+}
+
 function toogleGrid(){
     document.body.classList.toggle('show-bmw-grid-overlay');
 }

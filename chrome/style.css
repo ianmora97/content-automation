@@ -185,6 +185,9 @@ a, .a{
 .mt-4{
   margin-top:1.2rem;
 }
+.text-success{
+  color:#28a745;
+}
 .text-pr{
   color:#4659e4;
 }

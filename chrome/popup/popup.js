@@ -2,17 +2,28 @@ new ClipboardJS('.btn-clip');
 
 chrome.tabs.query({active: true, lastFocusedWindow: true}, tabs => {
 	evaluateDomain(tabs[0].url);
+	evaluateFlags(tabs[0].url);
 });
+async function evaluateFlags(url){
+	chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+		chrome.tabs.sendMessage(tabs[0].id, { msg: "checkPreorder" }, function (response) {
+			if (response.preorder) {
+				document.getElementById("btnPreOrderFlag").classList.add("text-success");
+			}
+		});
+		chrome.tabs.sendMessage(tabs[0].id, { msg: "checkmksflag" }, function (response) {
+			if (response.mks) {
+				document.getElementById("btnMKSflag").classList.add("text-success");
+			}
+		});
+	});
+}
 
 async function evaluateDomain(url){
 	existsDomain(url).then((res)=>{
 		if(res){
 			createPathsV2(url);
 		}else if(url.indexOf(".atlassian.net") !== -1){
-			// let btnJira = document.getElementById("btnJira");
-			// btnJira.disabled = false;
-			// btnJira.classList.remove("disabled");
-	
 			let jira = document.createElement("div");
 			jira.innerHTML="<p>Jira<p>"
 			document.body.appendChild(jira); 
@@ -109,7 +120,7 @@ function createPathsV2(url){
 			}
 			document.body.appendChild(paths_div);
 			for(const path of domainvec1){
-				tippy(`#clip-${path.n.replace(/\/|\./g,"")}`, {
+				tippy(`#clip-${path.n.replace(/\/|\./g,"").replace(' ','-')}`, {
 					content: `Copied!`,
 					trigger: "click",
 				});
@@ -368,172 +379,59 @@ function ut3PLaceholder() {
 
 
 
-// ! ------------------------------------------ Schema ------------------------------------------
+// ! ------------------------------------------ Page Data ------------------------------------------
 // * Ready to use
-// TODO: Show the schema of the page
-let btnSchema = document.getElementById("btnSchema");
-btnSchema.addEventListener("click", async () => {
-	let [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
-	chrome.scripting.executeScript({
-		target: { tabId: tab.id },
-		function: showSchema,
+// TODO: Show the schemas, and important data of the page
+let btnPageData = document.getElementById("btnPageData");
+btnPageData.addEventListener("click", async () => {
+	chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+		chrome.tabs.sendMessage(tabs[0].id, { msg: "showPageData" }, function (response) {
+
+		});
 	});
 });
-function showSchema() {
-	function syntaxHighlight(json) {
-		json = json.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-		return json.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, function (match) {
-			var cls = 'number';
-			if (/^"/.test(match)) {
-				if (/:$/.test(match)) {
-					cls = 'key';
-				} else {
-					cls = 'string';
-				}
-			} else if (/true|false/.test(match)) {
-				cls = 'boolean';
-			} else if (/null/.test(match)) {
-				cls = 'null';
-			}
-			return '<span class="' + cls + '">' + match + '</span>';
-		});
-	}
-	let text = "";
-	document.querySelectorAll("[type='application/ld+json']").forEach(e => {
-		let json1 = JSON.parse(e.innerText);
-		if(json1['@type'] == "Car"){
-			if(document.getElementById("schema-element") !== null){
-				document.getElementsByTagName("body")[0].style.overflow = "auto";
-				document.getElementById("schema-element").remove();
-			}else {
-				let print = JSON.stringify(json1,null,4);
-				let body = document.getElementsByTagName("body");
-				let elm = document.createElement("div");
-				body[0].style.overflow = "hidden";
-				elm.id = "schema-element";
-				elm.style.margin = "auto";
-				elm.style.color = "black";
-				elm.style.backgroundColor = "white";
-				elm.style.padding = "18px";
-				elm.style.borderRadius = "5px";
-				elm.style.zIndex = "9999";
-				elm.style.position = "fixed";
-				elm.style.top = "2%";
-				elm.style.left = "2%";
-				elm.style.width = "96%";
-				elm.style.height = "96%";
-				elm.style.overflow = "auto";
-				elm.style.boxShadow = "0px 0px 10px rgba(0,0,0,0.5)";
-				elm.innerHTML = `
-					<div style="display:flex; justify-content:space-between;align-items-center;">
-						<h4 style="margin:0px;">Schema</h4>
-						<button role="button" style="cursor:pointer;margin:0px; padding:0px; border:none; background-color:white; outline:none; width:30px; height:30px; border-radius:50%;" onclick="document.getElementById('schema-element').remove(); document.getElementsByTagName('body')[0].style.overflow = 'auto';">
-							<img style="width:25px; height:25px;" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAABmJLR0QA/wD/AP+gvaeTAAABDElEQVRoge3ZXQqCQBSG4a8WUdIWbbmBtRq70A8kxBw9fzOc96oukvOg6QwCWZZlLdUD6LyHwDRDf/THTwAjgAG+mG6eYZxnKu4G4DUf4APgITba/u6LGd5nZvDEiCGYB0YcwSwxaghmgVFHME2MGYJpYMwRTBLjhmASGHcEO4MJg2BHMOEQrAQTFsH2YMIj2BamGgRbw1SHYMs9xPDzOcJGrajlmVE/E1etAwO4/PleRU1cWmt/7Ajb5qK27k7VYPbcYsNjSp4TYTFHHnbhMGee2GEwEssOd4zk2skNo7EANMdormLNMBZLcXWM5X5CDeOxKRLHeO7sxDARtqcimGZevQGNvAzNsiyL1xcbE8X3wv0coQAAAABJRU5ErkJggg=="/>
-						</button>
-					</div>
-					<div style="overflow-y:scroll; white-space: pre-wrap; font-weight:500;border-top:1px solid #cacaca; margin-top:5px;padding-top:5px;">${syntaxHighlight(print)}</div>
-					<style>
-						.string { color: green; }
-						.number { color: blue; }
-						.boolean { color: red; }
-						.null { color: magenta; }
-						.key { color: black; }
-					</style>
-				`;
-				body[0].appendChild(elm);
-			}
-		}
-	})
-}
+// ! ------------------------------------------ Preorder Flag ------------------------------------------
+// * WIP, needs to be tested by dev
+// TODO: Toggle PreOrder Flag to test preorderpage
+let btnPreOrderFlag = document.getElementById("btnPreOrderFlag");
 
-// ! ------------------------------------------ List Items ------------------------------------------
+btnPreOrderFlag.addEventListener("click", function () {
+	chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+		chrome.tabs.sendMessage(tabs[0].id, { msg: "preorderflag" }, function (response) {
+			console.log(response)
+			if(response.preorder){
+				chrome.storage.sync.set({preorder: true}, function() {
+					btnPreOrderFlag.classList.add("text-success");
+				});
+			}else{
+				chrome.storage.sync.set({preorder: false}, function() {
+					btnPreOrderFlag.classList.remove("text-success");
+				});
+			}
+		});
+	})
+});
+
+// ! ------------------------------------------ MKS Flag ------------------------------------------
 // * WIP, needs to be tested by MKS
 // TODO: Toggle MKS/QA Flag to test without login any metrics
 let btnMKSflag = document.getElementById("btnMKSflag");
 
 btnMKSflag.addEventListener("click", async () => {
-	let [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
-	chrome.scripting.executeScript({
-		target: { tabId: tab.id },
-		function: toggleQATesting,
-	});
+	chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+		chrome.tabs.sendMessage(tabs[0].id, { msg: "mksflag" }, function (response) {
+			if(response.mks){
+				chrome.storage.sync.set({mks: true}, function() {
+					btnMKSflag.classList.add("text-success");
+				});
+			}else{
+				chrome.storage.sync.set({mks: false}, function() {
+					btnMKSflag.classList.remove("text-success");
+				});
+			}
+		});
+	})
 });
-function toggleQATesting() {
-	let body = document.getElementsByTagName("body")[0];
-	if (window.localStorage.getItem('QATesting') == null) {
-		let elm = document.createElement("div");
-		elm.id = "QATesting";
-		elm.className = "fadein";
-		elm.style.position = "fixed";
-		elm.style.top = "2%";
-		elm.style.left = "40%";
-		elm.style.width = "20%";
-		elm.style.textAlign = "center";
-		elm.style.backgroundColor = "#c2ffc4";
-		elm.style.borderRadius = "5px";
-		elm.style.zIndex = "9999";
-		elm.style.padding = "18px";
-		elm.style.boxShadow = "0px 0px 10px rgba(0,0,0,0.5)";
-		elm.innerHTML = `
-			<div style="display:flex; justify-content:center;align-items:center;">
-				<h6 style="margin:0px;">&#9989; QATesting Flag is ON</h6>
-			</div>
-			<style>
-				@keyframes fadein {
-					from { opacity: 0; }
-					to { opacity: 1; }
-				}
-				.fadein {
-					animation-name: fadein;
-					animation-duration: 1s;
-				}
-			</style>
-		`;
-		body.appendChild(elm);
-		window.localStorage.setItem('QATesting', true);
-		setTimeout(() => {
-			document.getElementById("QATesting").remove();
-		}, 3000);
-	}else{
-		let b = document.getElementById("QATesting");
-		if(b){
-			b.remove();
-		}
-		let elm = document.createElement("div");
-		elm.id = "QATesting";
-		elm.className = "fadein";
-		elm.style.position = "fixed";
-		elm.style.top = "2%";
-		elm.style.left = "40%";
-		elm.style.width = "20%";
-		elm.style.textAlign = "center";
-		elm.style.backgroundColor = "#ffe2ad";
-		elm.style.borderRadius = "5px";
-		elm.style.zIndex = "9999";
-		elm.style.padding = "18px";
-		elm.style.boxShadow = "0px 0px 10px rgba(0,0,0,0.5)";
-		elm.innerHTML = `
-			<div style="display:flex; justify-content:center;align-items:center;">
-				<h6 style="margin:0px;">&#11093; QATesting Flag is OFF</h6>
-			</div>
-			<style>
-				@keyframes fadein {
-					from { opacity: 0; }
-					to { opacity: 1; }
-				}
-				.fadein {
-					animation-name: fadein;
-					animation-duration: 1s;
-				}
-			</style>
-		`;
-		body.appendChild(elm);
-		window.localStorage.removeItem('QATesting');
-		setTimeout(() => {
-			document.getElementById("QATesting").remove();
-		}, 3000);
-	}
-}
 
 // ! ------------------------------------------ Templates ------------------------------------------
 // * Ready to use
