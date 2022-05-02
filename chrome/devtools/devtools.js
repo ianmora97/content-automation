@@ -12,14 +12,40 @@ const inspectImages = `
 		return ({src:src, alt: alt });
 	});
 `;
+const inspectNameEvents = `
+	Array.from(document.querySelectorAll("[analytics-event]")).map(e => {
+		let aria = e.getAttribute("aria-label") || e.innerText || e.getAttribute("href");
+		let name = e.getAttribute("analytics-event");
+		return ({aria:aria, name: name });
+	});
+`;
+const inspectSProps = `
+	(function (){
+		let sProps = {
+			pageName: s.pageName,
+		};
+		console.log(sProps);
+		return sProps;
+	}());
+`;
+
 const queryImageOnDOM = (e) => `
-document.querySelector("[src='${e.src}']").scrollIntoView({
-	behavior: 'smooth'
-});
-document.querySelector("[src='${e.src}']").style.border = "8px solid blue";
-setTimeout(() => {
-	document.querySelector("[src='${e.src}']").style.border = "";
-}, 2000);
+	document.querySelector("[src='${e.src}']").scrollIntoView({
+		behavior: 'smooth'
+	});
+	document.querySelector("[src='${e.src}']").style.border = "8px solid blue";
+	setTimeout(() => {
+		document.querySelector("[src='${e.src}']").style.border = "";
+	}, 2000);
+`;
+const queryCTAOnDOM = (e) => `
+	document.querySelector("[analytics-event='${e.name}']").scrollIntoView({
+		behavior: 'smooth'
+	});
+	document.querySelector("[analytics-event='${e.name}']").style.border = "5px solid blue";
+	setTimeout(() => {
+		document.querySelector("[analytics-event='${e.name}']").style.border = "";
+	}, 2000);
 `;
 const changeImage = (e, n) => `
 	Array.from(document.querySelectorAll("[srcset='${e.src}']")).forEach(e => {
@@ -27,9 +53,14 @@ const changeImage = (e, n) => `
 	})
 	document.querySelector("[src='${e.src}']").setAttribute("src", "${n}")
 `;
-// document.querySelector("[srcset='${e.src}']").setAttribute("srcset", "${n}")
 
-btnImagesInfo.addEventListener("click", () => {
+function sprops(){
+	console.log("sprops");
+	chrome.devtools.inspectedWindow.eval(inspectSProps,function(result,isError){
+		console.log(result);
+	});
+}
+function loadImages() {
 	chrome.devtools.inspectedWindow.eval(inspectImages,function(result,isError){
 		$('#tableimages_dbody').html('');
 		let imagesMap = new Map();
@@ -53,12 +84,11 @@ btnImagesInfo.addEventListener("click", () => {
 				return false;
 			}
 		});
-		
 		images.forEach((e,i) =>{
 			$('#tableimages_dbody').append(`
 				<tr>
-					<td>${i+1}</td>
-					<td id="queryImageSelector-${i}">
+					<td style="width:30px;">${i+1}</td>
+					<td id="queryImageSelector-${i}" style="max-width:50vw;">
 						<span style="cursor:pointer;">
 							${e.src}
 						</span>
@@ -79,11 +109,69 @@ btnImagesInfo.addEventListener("click", () => {
 			});
 			$(`#btnQueryImage-${i}`).click(function(event){
 				let newSrc = $(`#inputQueryImage-${i}`).val();
-				console.log("IMAGEN NUEVA", newSrc);
 				chrome.devtools.inspectedWindow.eval(changeImage(e,newSrc),function(result,isError){
 					console.log(result);
 				});
 			});
 		});
 	});
+}
+function loadEvents(){
+	chrome.devtools.inspectedWindow.eval(inspectNameEvents,function(result,isError){
+		$('#tableevents_dbody').html('');
+		result.filter(e => {
+			if(!e.name.includes("footer") &&
+				!e.name.includes("topnav")){
+				return true;
+			}else{
+				return false;
+			}
+		})
+		.forEach((e,i) => {
+			$('#tableevents_dbody').append(`
+				<tr>
+					<td id="queryCTASelector-${i}" style="max-width:50vw;">
+						<span style="cursor:pointer;">
+							${e.aria}
+						</span>
+					</td>
+					<td>${e.name}</td>
+				</tr>
+			`);
+			$(`#queryCTASelector-${i}`).click(function(){
+				chrome.devtools.inspectedWindow.eval(queryCTAOnDOM(e),function(result,isError){
+					console.log(result);
+				});
+			});
+		});
+	});
+}
+
+function openTab(evt, tab) {
+    var i, tabcontent, tablinks;
+    tabcontent = document.getElementsByClassName("tabcontent");
+    for (i = 0; i < tabcontent.length; i++) {
+          tabcontent[i].style.display = "none";
+    }
+    tablinks = document.getElementsByClassName("tablinks");
+    for (i = 0; i < tablinks.length; i++) {
+          tablinks[i].className = tablinks[i].className.replace(" active", "");
+    }
+    document.getElementById(tab).style.display = "block";
+    evt.currentTarget.className += " active";
+}
+
+function checkForTabs(){
+	Array.from(document.querySelectorAll("[data-tab]")).forEach(e => {
+		e.addEventListener("click", function(event){
+			openTab(event, e.dataset.tab);
+		});
+	});
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+	checkForTabs()
+	loadImages();
+	loadEvents();
+	sprops();
 });

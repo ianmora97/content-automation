@@ -1,5 +1,5 @@
 chrome.devtools.panels.create(
     "Content Automation",
     null,
-    'devtools.html'
+    '../devtools/devtools.html'
 );

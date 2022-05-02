@@ -1,6 +1,11 @@
 chrome.runtime.onInstalled.addListener(() => {
-    console.log('Links loaded');
+    chrome.contextMenus.create({
+        title: "Open on AEM", 
+        contexts:["link"], 
+        id: "openOnAem"
+    });
 });
+chrome.contextMenus.onClicked.addListener(openAuthor)
 // ! ------------------------------------------ Commands ------------------------------------------
 chrome.commands.onCommand.addListener(function (command) {
     switch (command) {
@@ -58,9 +63,5 @@ function openAuthor(info,tab) {
         
 	}
 }
-chrome.contextMenus.create({
-	title: "Open on AEM", 
-	contexts:["link"], 
-	id: "openOnAem"
-});
-chrome.contextMenus.onClicked.addListener(openAuthor)
+
+

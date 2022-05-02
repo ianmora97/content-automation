@@ -103,6 +103,8 @@ th{
   text-align: left;
 }
 td{
+  overflow: scroll;
+  word-break: break-all;
   font-size: 12px;
   border-bottom: 1px solid #343434
 }
@@ -256,16 +258,15 @@ button.current {
   transition: all 0.2s ease-in-out;
 }
 .btn-primary.active{
-  background-color: #FF9500;
+  background-color: #1a246d;
   color:#fff;
 }
 .btn-primary:hover{
-  background-color: #2e3dad;
+  background-color: #1a246d;
   color:#fff;
 }
 .btn-primary:active{
-  background-color: #2e3dad;
-  box-shadow: 0 4px 15px 0 rgba(70, 89, 228, 0.4);
+  background-color: #1a246d;
 }
 /* ! ------- btn-danger ------ */
 .btn-danger{

@@ -195,7 +195,6 @@ function toogleGrid(){
     document.body.classList.toggle('show-bmw-grid-overlay');
 }
 function copyJiraTicket() {
-	console.log("hola")
 	// * Get the title of the current page and refactor it to a Jira name
 	let jiraName = document.getElementsByTagName('title')[0].innerText;
 	console.log(jiraName);

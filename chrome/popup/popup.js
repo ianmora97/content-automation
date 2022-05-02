@@ -58,9 +58,9 @@ function createPathsV2(url){
 		chrome.storage.sync.get("environments", (data2) => {
 			// * get AEM domain from local storage
 			let LSdomain = JSON.parse(data1.domain);
-			domainvec.push({d:`${LSdomain.aem}/editor.html/`,n:"/editor.html 1"});
-			domainvec.push({d:`${LSdomain.aem2}/editor.html/`,n:"/editor.html 2"});
-			let rootPath = `${LSdomain.root}`;
+			domainvec.push({d:`${LSdomain.aem}/editor.html/${LSdomain.root}`,n:"/editor.html 1"});
+			domainvec.push({d:`${LSdomain.aem2}/editor.html/${LSdomain.root2}`,n:"/editor.html 2"});
+			let rootPath = ``;
 			// * get all environments from local storage
 			let envs = JSON.parse(data2.environments);
 			if(envs.length === 0 ) return false;
@@ -74,7 +74,7 @@ function createPathsV2(url){
 					if(url.split("/content/launches/")[1] === undefined){ // * is not a launch page
 						if(domain.n === "/editor.html"){
 							domainvec1.push({
-								d: `${domain.d}${rootPath}`,
+								d: `${domain.d}`,
 								n: `${domain.n}`
 							});
 						}else{
@@ -217,34 +217,34 @@ btnBPMobile.addEventListener("click", async () => {
 // ! ------------------------------------------ Get NAME from JIRA ------------------------------------------
 // * READY TO USE
 // TODO: Build Jira "CONT-ID" + "name" to create Versions or Workflows
-// let btnJira = document.getElementById("btnJira");
-// tippy('#btnJira', {
-// 	content: 'Copied to clipboard',
-// 	trigger: 'click',
-// 	allowHTML: true
-// });
-// btnJira.addEventListener("click", async () => {
-// 	let [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
-// 	chrome.scripting.executeScript({
-// 		target: { tabId: tab.id },
-// 		function: getJiraTitle,
-// 	});
-// });
+let btnJira = document.getElementById("btnJiraC");
+tippy('#btnJiraC', {
+	content: 'Copied to clipboard',
+	trigger: 'click',
+	allowHTML: true
+});
+btnJiraC.addEventListener("click", async () => {
+	let [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+	chrome.scripting.executeScript({
+		target: { tabId: tab.id },
+		function: getJiraTitle,
+	});
+});
 
-// function getJiraTitle() {
-// 	// * Get the title of the current page and refactor it to a Jira name
-// 	let jiraName = document.getElementsByTagName('title')[0].innerText;
-// 	jiraName = jiraName.replace('[','').replace(']',' -').replace(/\|/g,'-').split(" - Virtuelle Welt Jira")[0];
+function getJiraTitle() {
+	// * Get the title of the current page and refactor it to a Jira name
+	let jiraName = document.getElementsByTagName('title')[0].innerText;
+	jiraName = jiraName.replace('[','').replace(']',' -').replace(/\|/g,'-').split(" - Virtuelle Welt Jira")[0];
 
-// 	// * Build an object with the Jira name and copy it to the clipboard
-// 	var input = document.createElement('textarea');
-//     input.innerHTML = jiraName;
-//     document.body.appendChild(input);
-//     input.select();
-//     var result = document.execCommand('copy');
-//     document.body.removeChild(input);
-//     return result;
-// }
+	// * Build an object with the Jira name and copy it to the clipboard
+	var input = document.createElement('textarea');
+    input.innerHTML = jiraName;
+    document.body.appendChild(input);
+    input.select();
+    var result = document.execCommand('copy');
+    document.body.removeChild(input);
+    return result;
+}
 
 // ! ------------------------------------------ Show spacers ------------------------------------------
 // * READY TO USE
@@ -474,7 +474,20 @@ btnAnalytics.addEventListener("click", async () => {
 	});
 });
 function showAnalytics() {
-	Array.from(document.querySelectorAll("[analytics-event]")).forEach((e,i) =>{
+	let result = Array.from(document.querySelectorAll("[analytics-event]")).map(e => {
+		let aria = e.getAttribute("aria-label") || e.innerText || e.getAttribute("href");
+		let name = e.getAttribute("analytics-event");
+		return ({aria:aria, name: name });
+	})
+	result.filter(e => {
+		if(!e.name.includes("footer") &&
+			!e.name.includes("topnav")){
+			return true;
+		}else{
+			return false;
+		}
+	})
+	.forEach((e,i) =>{
 		if(document.getElementById("event-element-"+i)){
 			document.getElementById("event-element-"+i).remove();
 		}else{
@@ -485,8 +498,8 @@ function showAnalytics() {
 			elm.style.color = "white";
 			elm.style.whiteSpace = "nowrap";
 			elm.style.zIndex = "9999";
-			elm.innerHTML = `<span style="border-radius:2px; padding:2px; font-size:13px; font-weight:bold; vertical-align:middle; background-color:rgba(255, 0, 0, 0.9);">${e.getAttribute("analytics-event")}</span>`;
-			e.prepend(elm);
+			elm.innerHTML = `<span style="border-radius:2px; padding:2px; font-size:13px; font-weight:bold; vertical-align:middle; background-color:rgba(255, 0, 0, 0.9);">${e.name}</span>`;
+			document.querySelector("[analytics-event='"+e.name+"']").parentNode.appendChild(elm);
 		}
 	});
 }
