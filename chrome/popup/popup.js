@@ -213,6 +213,19 @@ btnBPMobile.addEventListener("click", async () => {
 		});
 	});
 });
+//TODO: reset resize
+let btnBPReset = document.getElementById("btnBPReset");
+btnBPReset.addEventListener("click", async () => {
+	chrome.windows.getCurrent(function(wind) {
+		var maxWidth = window.screen.availWidth;
+		var maxHeight = window.screen.availHeight;
+		var updateInfo = {
+			width: maxWidth,
+			height: maxHeight
+		};
+		chrome.windows.update(wind.id, updateInfo);
+	});
+});
 
 // ! ------------------------------------------ Get NAME from JIRA ------------------------------------------
 // * READY TO USE
@@ -378,7 +391,6 @@ function ut3PLaceholder() {
 }
 
 
-
 // ! ------------------------------------------ Page Data ------------------------------------------
 // * Ready to use
 // TODO: Show the schemas, and important data of the page
@@ -503,3 +515,15 @@ function showAnalytics() {
 		}
 	});
 }
+
+// ! ------------------------------------------ Resize Components ------------------------------------------
+// * WIP
+// TODO: resize components on the current page
+let btnResize = document.getElementById("btnResize");
+btnResize.addEventListener("click", async () => {
+	chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+		chrome.tabs.sendMessage(tabs[0].id, { msg: "resizeComponents" }, function (response) {
+
+		});
+	});
+});

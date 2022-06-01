@@ -1,7 +1,7 @@
 {
 	"name": "Content Automation",
 	"description": "Easy Testing!",
-	"version": "5.0",
+	"version": "6.0",
 	"manifest_version": 3,
 	"content_scripts": [
 		{

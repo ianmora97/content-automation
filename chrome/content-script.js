@@ -31,8 +31,113 @@ chrome.runtime.onMessage.addListener((data, sender, sendResponse) => {
 		sendResponse({mks: mks});
 	}else if(data.msg == 'showPageData'){
 		showPageData();
+	}else if(data.msg == 'resizeComponents'){
+		addCSSReizer();
+		resizeComponents();
 	}
 });
+function addCSSReizer(){
+	let css = `
+		.plusIcon-con{
+			color: black;
+			text-align: center;
+			cursor: pointer;
+			position: absolute;
+			width: 30px;
+			height: 30px;
+			background-color: white;
+			border: 1px solid black;
+			border-radius: 50%;		
+		}
+	`;
+	let style = document.createElement('style');
+	style.type = 'text/css';
+	style.innerHTML = css;
+	document.head.appendChild(style);
+}
+function resizeComponents(){
+	let vw = window.innerWidth
+	let bp = vw >=1280 ? 'desktop' : vw >= 768 && vw < 1280 ? 'tablet' : 'mobile';
+	let arrComp = [...document.getElementsByClassName('standalone-cta'),
+	]
+	arrComp
+	.filter(el =>{
+		if(el.classList.contains('globalnav-local__cta') || 
+			el.classList.contains('standalone-cta--aem-fluid'))
+			return false;
+		return true;
+	})
+	.forEach((elm,i) => {
+		elm.style.position = "relative";
+		let rightPlus = document.createElement('div');
+		rightPlus.classList.add('plusIcon-con');
+		rightPlus.style.right = "-10px";
+		rightPlus.style.top = "-10px";
+		rightPlus.innerHTML = `+`;
+		rightPlus.addEventListener('click', () => {
+			if(bp == 'desktop'){
+				elm.className.split(' ').forEach(c => {
+					if(/aem-GridColumn--default--\d+/.test(c)){
+						let num = c.split('--')[2];
+						elm.classList.replace(c, 'aem-GridColumn--default--'+(parseInt(num)+1));
+					}
+				});
+			}
+		});
+		elm.appendChild(rightPlus);
+
+		let rightBottomPlus = document.createElement('div');
+		rightBottomPlus.classList.add('plusIcon-con');
+		rightBottomPlus.style.right = "-10px";
+		rightBottomPlus.style.bottom = "-10px";
+		rightBottomPlus.innerHTML = `-`;
+		rightBottomPlus.addEventListener('click', () => {
+			if(bp == 'desktop'){
+				elm.className.split(' ').forEach(c => {
+					if(/aem-GridColumn--default--\d+/.test(c)){
+						let num = c.split('--')[2];
+						elm.classList.replace(c, 'aem-GridColumn--default--'+(parseInt(num)-1));
+					}
+				});
+			}
+		});
+		elm.appendChild(rightBottomPlus);
+
+		let leftPlus = document.createElement('div');
+		leftPlus.classList.add('plusIcon-con');
+		leftPlus.style.left = "-10px";
+		leftPlus.style.top = "-10px";
+		leftPlus.innerHTML = `+`;
+		leftPlus.addEventListener('click', () => {
+			if(bp == 'desktop'){
+				elm.className.split(' ').forEach(c => {
+					if(/aem-GridColumn--offset--default--\d+/.test(c)){
+						let num = c.split('--')[3];
+						elm.classList.replace(c, 'aem-GridColumn--offset--default--'+(parseInt(num)+1));
+					}
+				});
+			}
+		});
+		elm.appendChild(leftPlus);
+
+		let leftBottomPlus = document.createElement('div');
+		leftBottomPlus.classList.add('plusIcon-con');
+		leftBottomPlus.style.left = "-10px";
+		leftBottomPlus.style.bottom = "-10px";
+		leftBottomPlus.innerHTML = `-`;
+		leftBottomPlus.addEventListener('click', () => {
+			if(bp == 'desktop'){
+				elm.className.split(' ').forEach(c => {
+					if(/aem-GridColumn--offset--default--\d+/.test(c)){
+						let num = c.split('--')[3];
+						elm.classList.replace(c, 'aem-GridColumn--offset--default--'+(parseInt(num)-1));
+					}
+				});
+			}
+		});
+		elm.appendChild(leftBottomPlus);
+	});
+}
 function showPageData(){
 	var s = document.createElement('script');
 	s.src = chrome.runtime.getURL('scriptInjected.js');
