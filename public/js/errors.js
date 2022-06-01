@@ -18,7 +18,7 @@ function checkError(type,status){
             _modellistError("No options found for this model.",status);
             break;
         case "modelnotfound":
-            _modellistError("Method not allowed or incorrect NA Code",status);
+            _modellistError("Invalid NA Code or data is not available",status);
             break;
         case "currentUser":
             _modellistError("Couldn't load user from Atlassian",status);
