@@ -248,7 +248,9 @@ function getJiraTitle() {
 	// * Get the title of the current page and refactor it to a Jira name
 	let jiraName = document.getElementsByTagName('title')[0].innerText;
 	jiraName = jiraName.replace('[','').replace(']',' -').replace(/\|/g,'-').split(" - Virtuelle Welt Jira")[0];
+	jiraName = jiraName.replace('&', 'and').replace(/\"/g, '');
 
+	
 	// * Build an object with the Jira name and copy it to the clipboard
 	var input = document.createElement('textarea');
     input.innerHTML = jiraName;
@@ -519,11 +521,81 @@ function showAnalytics() {
 // ! ------------------------------------------ Resize Components ------------------------------------------
 // * WIP
 // TODO: resize components on the current page
-let btnResize = document.getElementById("btnResize");
-btnResize.addEventListener("click", async () => {
-	chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-		chrome.tabs.sendMessage(tabs[0].id, { msg: "resizeComponents" }, function (response) {
 
-		});
+// let btnResize = document.getElementById("btnResize");
+// btnResize.addEventListener("click", async () => {
+// 	chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+// 		chrome.tabs.sendMessage(tabs[0].id, { msg: "resizeComponents" }, function (response) {
+
+// 		});
+// 	});
+// });
+
+// ! ------------------------------------------ Compare page ------------------------------------------
+// * WIP
+// TODO: compare current page with another env
+
+// let btnCompareEnv = document.getElementById("btnCompareEnv");
+// btnCompareEnv.addEventListener("click", async () => {
+// 	chrome.tabs.create({
+// 		url: '../compare/compare.html'
+// 	});
+// });
+
+// ! ------------------------------------------ Show Alt-text ------------------------------------------
+// * WIP
+// TODO: compare current page with another env
+
+let btnAlttext = document.getElementById("btnAlttext");
+btnAlttext.addEventListener("click", async () => {
+	let [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+	chrome.scripting.executeScript({
+		target: { tabId: tab.id },
+		function: showAltText,
 	});
 });
+
+function showAltText(){
+	Array.from(document.querySelectorAll("[alt]")).map(e => {
+		let name = e.getAttribute("alt");
+		let datasrc = e.getAttribute("src");
+		return ({name: name , datasrc: datasrc});
+	})
+	.forEach((e,i) =>{
+		if(document.getElementById("alt-text-element-"+i)){
+			document.getElementById("alt-text-element-"+i).remove();
+		}else{
+			let elm = document.createElement("div");
+			elm.id = "alt-text-element-"+i;
+			elm.style.margin = "0px";
+			elm.style.lineHeight = "17px";
+			elm.style.color = "white";
+			elm.style.whiteSpace = "nowrap";
+			elm.style.maxWidth = "80%";
+			elm.style.zIndex = "999999";
+			elm.innerHTML = `<span style="border-radius:2px; padding:2px; font-size:13px; font-weight:bold; vertical-align:middle; background-color:rgba(255, 0, 0, 0.9);">${e.name}</span>`;
+			document.querySelector("[src='"+e.datasrc+"']").parentNode.appendChild(elm);
+		}
+	});
+	Array.from(document.querySelectorAll("video")).map(e => {
+		let name = e.getAttribute("aria-label");
+		let id = e.getAttribute("data-video-id");
+		return ({name: name , id: id});
+	})
+	.forEach((e,i) =>{
+		if(document.getElementById("aria-label-element-"+i)){
+			document.getElementById("aria-label-element-"+i).remove();
+		}else{
+			let elm = document.createElement("div");
+			elm.id = "aria-label-element-"+i;
+			elm.style.margin = "0px";
+			elm.style.lineHeight = "17px";
+			elm.style.color = "white";
+			elm.style.whiteSpace = "nowrap";
+			elm.style.maxWidth = "80%";
+			elm.style.zIndex = "9999";
+			elm.innerHTML = `<span style="border-radius:2px; padding:2px; font-size:13px; font-weight:bold; vertical-align:middle; background-color:rgba(255, 0, 0, 0.9);">${e.name}</span>`;
+			document.querySelector("[data-video-id='"+e.id+"']").appendChild(elm);
+		}
+	});
+}

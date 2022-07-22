@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="../style.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/color-js/1.0.1/color.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodssh.js/4.17.21/lodash.min.js"></script>
+	<script src="../jquery.js"></script>
+    <script src="diff.js"></script>
+</head>
+<body>
+	
+  	<div class="logo">
+		<img src="../images/logo.png" width="50px">
+		<div class="logo-brand">
+			<h1 class="ms-3">Content Automation</h1>
+			<h6 class="ms-3 mt-1 text-muted">BMW</h6>
+		</div>
+	</div>
+	<hr>
+	<div class="wrapper">
+		<div>
+            <h3 class="text-center w-100">Compare Pages</h3>
+            <button type="button" class="btn btn-transparent text-primary btn-sm me-3" onclick="textCompare()"><i class="fa-solid fa-text-width"></i> Compare Text</button>
+
+            <div class="d-flex jcb mt-5">
+                <div class="px-3 w-100 d-flex jce">
+                    <input type="text" name="envCompare1" id="textCompareTextarea1" class="form-control form-control-light mt-1 w-75 min-80">
+                </div>
+                <div class="px-3 w-100">
+                    <input type="text" name="envCompare2" id="textCompareTextarea2" class="form-control form-control-light mt-1 w-75 min-80">
+                </div>
+            </div>
+            <hr>
+            <div class="d-flex jcb mt-5">
+                <div id="outputTextarea1"></div>
+                <div id="outputTextarea2"></div>
+            </div>
+        </div>
+	</div>
+	<script src="compare.js"></script>
+</body>
+</html>

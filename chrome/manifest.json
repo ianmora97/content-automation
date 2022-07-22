@@ -13,6 +13,9 @@
 			"js": ["content-script.js"]
 		}
 	],
+	"content_security_policy": {
+		"extension_pages": "script-src 'self'; object-src 'self'; script-src-elem 'self' 'unsafe-inline' https://cdnjs.cloudflare.com/ajax/libs/color-js/1.0.1/color.min.js https://cdnjs.cloudflare.com/ajax/libs/lodssh.js/4.17.21/lodash.min.js;"
+	},
 	"devtools_page": "/devtools/devtools.html",
 	"commands": {
 		"showHeaders": {
