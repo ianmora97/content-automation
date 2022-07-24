@@ -227,6 +227,27 @@ btnBPReset.addEventListener("click", async () => {
 	});
 });
 
+// ! ------------------------------------------ Generate Lorem Ipsum ------------------------------------------
+// * READY TO USE
+// TODO: Generate Lorem Ipsum
+
+let btnLoremIpsum = document.getElementById("btnLoremIpsum");
+btnLoremIpsum.addEventListener("click", async () => {
+	let [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+	chrome.scripting.executeScript({
+		target: { tabId: tab.id },
+		function: createLoremIpsum,
+	});
+});
+function createLoremIpsum(){
+	var input = document.createElement('textarea');
+	input.innerHTML = `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quamut rproin tesque adipisci ligulain tristi odiophas. Auris nas lacusp tur que loremin musetiam erat. Arcuduis nislae metusdo fames luctus ssed magna. Facilis metussed ipsumnam disse hendrer penatib nunc turpis asin bibendu. Uam enim sapiendo lus sque nostra malesu lum lacusp insuspen. Pharetra metussed imperdie bulum iam semnunc quamal. Imperdie ibulum dolordo cursus pellent iquam conubia. Tique posuered magnaqu natis dictumst ipsumma conubia.`;
+	document.body.appendChild(input);
+	input.select();
+	var result = document.execCommand('copy');
+	document.body.removeChild(input);
+}
+
 // ! ------------------------------------------ Get NAME from JIRA ------------------------------------------
 // * READY TO USE
 // TODO: Build Jira "CONT-ID" + "name" to create Versions or Workflows
@@ -535,12 +556,12 @@ function showAnalytics() {
 // * WIP
 // TODO: compare current page with another env
 
-// let btnCompareEnv = document.getElementById("btnCompareEnv");
-// btnCompareEnv.addEventListener("click", async () => {
-// 	chrome.tabs.create({
-// 		url: '../compare/compare.html'
-// 	});
-// });
+let btnCompareEnv = document.getElementById("btnCompareEnv");
+btnCompareEnv.addEventListener("click", async () => {
+	chrome.tabs.create({
+		url: '../compare/compare.html'
+	});
+});
 
 // ! ------------------------------------------ Show Alt-text ------------------------------------------
 // * WIP

@@ -6,34 +6,6 @@ chrome.runtime.onInstalled.addListener(() => {
     });
 });
 chrome.contextMenus.onClicked.addListener(openAuthor)
-// ! ------------------------------------------ Commands ------------------------------------------
-chrome.commands.onCommand.addListener(function (command) {
-    switch (command) {
-        case 'toggleGrid':
-            chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-                chrome.tabs.sendMessage(tabs[0].id, { msg: "toggleGrid" });
-            })
-            break;
-        case 'toggleSpacers':
-            chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-                chrome.tabs.sendMessage(tabs[0].id, { msg: "toggleSpacers" });
-            })
-            break;
-        case 'showHeaders':
-            chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-                chrome.tabs.sendMessage(tabs[0].id, { msg: "showHeaders" });
-            })
-            break;
-        case 'jiraTicket':
-            chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-                chrome.tabs.sendMessage(tabs[0].id, { msg: "jiraTicket" });
-            })
-            break;
-        default:
-            console.log(`Command ${command} not found`);
-    }
-});
-
 // ! ------------------------------------------ Right Click ------------------------------------------
 // TODO: 
 function openAuthor(info,tab) {
@@ -63,5 +35,30 @@ function openAuthor(info,tab) {
         
 	}
 }
-
-
+// ! ------------------------------------------ Commands ------------------------------------------
+chrome.commands.onCommand.addListener(function (command) {
+    switch (command) {
+        case 'toggleGrid':
+            chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+                chrome.tabs.sendMessage(tabs[0].id, { msg: "toggleGrid" });
+            })
+            break;
+        case 'toggleSpacers':
+            chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+                chrome.tabs.sendMessage(tabs[0].id, { msg: "toggleSpacers" });
+            })
+            break;
+        case 'showHeaders':
+            chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+                chrome.tabs.sendMessage(tabs[0].id, { msg: "showHeaders" });
+            })
+            break;
+        case 'jiraTicket':
+            chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+                chrome.tabs.sendMessage(tabs[0].id, { msg: "jiraTicket" });
+            })
+            break;
+        default:
+            console.log(`Command ${command} not found`);
+    }
+});

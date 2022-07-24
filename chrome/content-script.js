@@ -7,6 +7,8 @@ chrome.runtime.onMessage.addListener((data, sender, sendResponse) => {
         showHeaders();
     }else if(data.msg == 'jiraTicket'){
         copyJiraTicket();
+	}else if(data.msg == 'createLoremIpsum'){
+		createLoremIpsum();
     }else if(data.msg == 'preorderflag'){
 		if (window.localStorage.getItem('preorder_enabled') == null) {
 			sendResponse({preorder: true});
@@ -36,6 +38,10 @@ chrome.runtime.onMessage.addListener((data, sender, sendResponse) => {
 		resizeComponents();
 	}
 });
+function createLoremIpsum(){
+
+	
+}
 function addCSSReizer(){
 	let css = `
 		.plusIcon-con{

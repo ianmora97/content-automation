@@ -4,6 +4,10 @@ body{
   padding: 15px;
   margin: 0;
 }
+label{
+  font-size: 15px;
+  user-select: none;
+}
 .container{
   width: 85%;
   margin: 0 auto;
@@ -21,17 +25,9 @@ body{
   color: #4659e4;
   cursor: pointer;
 }
-/* .inline-item::before{
-  content: "\2B55";
-  padding-right: 5px;
-} */
 .inline-item.active{
   color: #ffc107;
 }
-/* .inline-item.active::before{
-  content: "\2705";
-  padding-right: 5px;
-} */
 .apart{
   display: flex;
   justify-content: space-between;
@@ -160,6 +156,9 @@ a, .a{
 .bold{
   font-weight: bold;
 }
+.m-0{
+  margin: 0;
+}
 .ms-2{
   margin-left: .2rem;
 }
@@ -186,6 +185,9 @@ a, .a{
 }
 .mb-0{
   margin-bottom:0 !important;
+}
+.mt-2{
+  margin-top:.5rem;
 }
 .mt-4{
   margin-top:1.2rem;
@@ -228,6 +230,9 @@ a, .a{
 }
 .fa-1-5x{
   font-size:1.2rem;
+}
+.bg-white{
+  background-color:#fff;
 }
 .bg-success{
   background-color: rgba(0, 180, 45, 0.9);
@@ -390,6 +395,17 @@ button.current {
   display: flex;
   justify-content: start;
 }
+.form-group{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+.form-checkbox{
+  display: inline;
+  margin: 0 .5rem;
+
+}
 .card{
   border-radius: 15px;
   padding: 20px 25px;
@@ -432,4 +448,43 @@ button.current {
 }
 .tippy-box[data-theme~='cont'][data-placement^='right'] > .tippy-arrow::before {
   border-right-color: #4659e4;
+}
+
+/* ! --------------- Compare HTML CSS --------------- */
+
+#outputTextarea1{
+  text-align: center;
+  width: 50%;
+  max-height: 80vh;
+}
+#outputTextarea2{
+  text-align: center;
+  width: 50%;
+  max-height: 80vh;
+}
+
+/* ! --------------- LOADER --------------- */
+.lds-dual-ring {
+  display: inline-block;
+  width: 80px;
+  height: 80px;
+}
+.lds-dual-ring:after {
+  content: " ";
+  display: block;
+  width: 64px;
+  height: 64px;
+  margin: 8px;
+  border-radius: 50%;
+  border: 6px solid #fff;
+  border-color: #fff transparent #fff transparent;
+  animation: lds-dual-ring 1.2s linear infinite;
+}
+@keyframes lds-dual-ring {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
