@@ -1,8 +1,20 @@
 {
 	"name": "Content Automation",
 	"description": "Easy Testing",
-	"version": "7.0",
+	"version": "6.0",
 	"manifest_version": 3,
+	"content_scripts": [
+		{
+			"matches": [
+				"https://www.bmwusa.com/*",
+				"https://*.bmwusacm.co/*",
+				"https://virtuelle-welt.atlassian.net/*"
+			],
+			"js": [
+				"content-script.js"
+			]
+		}
+	],
 	"devtools_page": "/devtools/devtools.html",
 	"commands": {
 		"showHeaders": {
@@ -45,9 +57,7 @@
 		"storage",
 		"activeTab",
 		"scripting",
-		"contextMenus",
-		"notifications",
-		"https://*/*"	
+		"contextMenus"
 	],
 	"action": {
 		"default_popup": "/popup/popup.html",

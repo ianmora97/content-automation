@@ -4,6 +4,14 @@ body{
   padding: 15px;
   margin: 0;
 }
+.vl{
+  display: block;
+  border-right:2px solid rgb(52, 52, 52); 
+  margin: 0 10px;
+}
+.global{
+  background-color: #1A1A1A;
+}
 label{
   font-size: 15px;
   user-select: none;
@@ -36,13 +44,16 @@ label{
 .logo{
   display: flex;
   justify-content: start;
-  align-items: start;
+  align-items: center;
 }
 .logo-brand{
   display: flex;
   flex-direction: column;
   justify-content: start;
   align-items: start;
+}
+.text-bold{
+  font-weight: bold;
 }
 .text-center{
   text-align: center;
@@ -66,7 +77,7 @@ input{
   display: block;
 }
 hr{
-  margin: 1rem 0;
+  margin: 0.5rem 0;
   border-color: #434343;
 }
 h1{
@@ -174,6 +185,9 @@ a, .a{
 .ms-2{
   margin-left: .5rem;
 }
+.mb-0{
+  margin-bottom: 0;
+}
 .mb-2{
   margin-bottom:.5rem;
 }
@@ -254,9 +268,8 @@ a, .a{
   min-height: 20px !important;
 }
 button {
-  outline: none; 
-  min-height: 35px;
-  border-radius: 6px;
+  outline: none;
+  border-radius: 4.5px;
   border: none;
   cursor: pointer;
   padding: 0.3rem 0.6rem;
@@ -281,15 +294,26 @@ button.current {
   transition: all 0.2s ease-in-out;
 }
 .btn-primary.active{
-  background-color: #1a246d;
+  background-color: #2ad038 !important;
   color:#fff;
+  transition: all 0.2s ease-in-out;
 }
+
 .btn-primary:hover{
   background-color: #1a246d;
   color:#fff;
 }
 .btn-primary:active{
   background-color: #1a246d;
+}
+.btn-outline-primary{
+  background-color: transparent;
+  border: 1px solid #4659e4 ;
+  transition: all 0.2s ease-in-out;
+}
+.btn-outline-primary:hover{
+  background-color: #4659e4;
+  transition: all 0.2s ease-in-out;
 }
 /* ! ------- btn-danger ------ */
 .btn-danger{
@@ -313,10 +337,23 @@ button.current {
   font-size: 10px;
   min-height: min-content;
   background-color: #4659e4;
+  border: 1px solid #4659e4 ;
   color:#fff;
 }
 .btn-sm-primary:hover{
   background-color: #333f99;
+}
+.btn-outline-sm-primary{
+  color: #4659e4;
+  background-color: transparent;
+  border: 1px solid #4659e4 ;
+  transition: all 0.2s ease-in-out;
+  padding: 3px 5px;
+  font-size: 10px;
+}
+.btn-outline-sm-primary:hover{
+  background-color: #4659e4;
+  color: #ffffff;
 }
 .btn-min{
   min-width: 45px;
@@ -426,6 +463,9 @@ button.current {
 }
 .pos-rel{
   position: relative;
+}
+.pos-fixed{
+  position: fixed;
 }
 .disabled{
   pointer-events: none;

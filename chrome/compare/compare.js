@@ -55,19 +55,32 @@ async function renderText(url1,url2){
     }else{
         const diff = Diff.diffWords(text1, text2);
         let diffs = new Array();
+        let differences = new Array();
         fragment = document.createDocumentFragment();
         diff.forEach(function (part) {
             if(part.added){
-                diffs.push(`<span class="text-success">${part.value}</span>`);
+                diffs.push(`<span style="color:green;">${part.value}</span>`);
+                differences.push(`<span style="color:green;">${part.value}</span>`);
             }else if(part.removed){
-                diffs.push(`<span class="text-danger">${part.value}</span>`);
+                diffs.push(`<span style="color:red;">${part.value}</span>`);
+                differences.push(`<span style="color:red;">${part.value}</span>`);
             }else{
                 diffs.push(part.value);
             }
         });
-        $('#outputTextarea1').html(text1);
-        $('#outputTextarea2').html(diffs.join(''));
+        // $('#outputTextarea2').html(diffs.join(''));
+        renderIframeOnly(url1);
+        differences.forEach(e => {
+            $('#outputTextarea2').append(`${e}<br>`);
+        });
     }
+}
+function renderIframeOnly(url1){
+    $('#outputTextarea1').html(`
+        <div class="bg-white">
+            <iframe src="${url1}" style="width:100%;height:80vh;border:none;"></iframe>
+        </div>
+    `);
 }
 function renderIframe(url1,url2){
     $('#outputTextarea1').html(`

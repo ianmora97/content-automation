@@ -4,6 +4,7 @@ chrome.tabs.query({active: true, lastFocusedWindow: true}, tabs => {
 	evaluateDomain(tabs[0].url);
 	evaluateFlags(tabs[0].url);
 });
+
 async function evaluateFlags(url){
 	chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
 		chrome.tabs.sendMessage(tabs[0].id, { msg: "checkPreorder" }, function (response) {
@@ -15,6 +16,13 @@ async function evaluateFlags(url){
 			if (response.mks) {
 				document.getElementById("btnMKSflag").classList.add("text-success");
 			}
+		});
+		chrome.tabs.sendMessage(tabs[0].id, { msg: "mainbuttons" }, function (response) {
+			if(response.grid) document.getElementById("btnShowGrid").classList.add("active");
+			if(response.spacers) document.getElementById("btnShowSpacers").classList.add("active");
+			if(response.headers) document.getElementById("btnHeaders").classList.add("active");
+			if(response.alt) document.getElementById("btnAlttext").classList.add("active");
+			if(response.analytics) document.getElementById("btnAnalytics").classList.add("active");
 		});
 	});
 }
@@ -59,7 +67,7 @@ function createPathsV2(url){
 			// * get AEM domain from local storage
 			let LSdomain = JSON.parse(data1.domain);
 			domainvec.push({d:`${LSdomain.aem}/editor.html/${LSdomain.root}`,n:"/editor.html 1"});
-			domainvec.push({d:`${LSdomain.aem2}/editor.html/${LSdomain.root2}`,n:"/editor.html 2"});
+			if(LSdomain.aem2 != undefined && LSdomain.aem2 != "") domainvec.push({d:`${LSdomain.aem2}/editor.html/${LSdomain.root2}`,n:"/editor.html 2"});
 			let rootPath = ``;
 			// * get all environments from local storage
 			let envs = JSON.parse(data2.environments);
@@ -94,15 +102,18 @@ function createPathsV2(url){
 			// * create the container for all paths
 			let paths_div = document.createElement("div");
 			let p_domain = document.createElement("p");
-			p_domain.innerHTML = `You are on <span class="text-se">${build.n}</span>`;
+			p_domain.innerHTML = `You are on <span class="text-se text-bold">${build.n}</span>`;
 			paths_div.appendChild(p_domain);
 			for(const path of domainvec1){ // * iterate through the paths
 				let urlSplit = url.split(build.d)[1];
 				let div_payloads = document.createElement("div");
 				div_payloads.innerHTML = `
-					<div class="d-flex jcs a-i-e mb-2">
-						<h6>${path.n}:</h6>
-						<button class="btn-sm-primary ms-2 btn-clip" id="clip-${path.n.replace(/\/|\./g,"")}" data-clipboard-text="${path.d + urlSplit}"><i class="fas fa-copy"></i> Copy</button>
+					<div class="mb-2">
+						<h6>${path.n}:</h6><br>
+						<div class="d-flex jcs a-i-e mt-2">
+							<button class="btn-sm-primary me-2" id="openLink-${path.n.replace(/\/|\./g,"")}" data-url="${path.d + urlSplit}"><i class="fas fa-external-link-alt"></i> Open</button>
+							<button class="btn-outline-sm-primary me-2 btn-clip" id="clip-${path.n.replace(/\/|\./g,"").replace(' ','-')}" data-clipboard-text="${path.d + urlSplit}"><i class="fas fa-copy"></i> Copy</button>
+						</div>
 					</div>
 				`;
 				let hr = document.createElement("hr");
@@ -110,15 +121,20 @@ function createPathsV2(url){
 				linkAddEvent.classList = "link";
 				linkAddEvent.innerHTML = `${path.d + urlSplit}`;
 				paths_div.appendChild(div_payloads);
-				paths_div.appendChild(linkAddEvent);
+				// paths_div.appendChild(linkAddEvent);
 				paths_div.appendChild(hr);
+				
+			}
+			document.body.appendChild(paths_div);
+			for(const path of domainvec1){
+				let openLink = document.getElementById(`openLink-${path.n.replace(/\/|\./g,"")}`);
+				let dataURL = openLink.getAttribute("data-url");
 				chrome.tabs.query({currentWindow: true,active: true,}, (tabs) => {
-					linkAddEvent.addEventListener("click", function(){
-						chrome.tabs.create({url: path.d + urlSplit, index: tabs[0].index + 1});
+					openLink.addEventListener("click", function(){
+						chrome.tabs.create({url: dataURL, index: tabs[0].index + 1});
 					});
 				})
 			}
-			document.body.appendChild(paths_div);
 			for(const path of domainvec1){
 				tippy(`#clip-${path.n.replace(/\/|\./g,"").replace(' ','-')}`, {
 					content: `Copied!`,
@@ -136,14 +152,112 @@ tippy('#btnShowGrid', {
 	content: 'Toggle Grid',
 });
 btnShowGrid.addEventListener("click", async () => {
+	chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+		chrome.tabs.sendMessage(tabs[0].id, { msg: "toggleGrid" }, function (response) {
+			if (response.grid) document.getElementById("btnShowGrid").classList.add("active");
+			else document.getElementById("btnShowGrid").classList.remove("active");
+		});
+	});
+});
+
+// ! ------------------------------------------ Show spacers ------------------------------------------
+// * READY TO USE
+// TODO: Show BMW Spacers
+let btnShowSpacers = document.getElementById("btnShowSpacers");
+tippy('#btnShowSpacers', {
+	content: 'Toggle Spacers',
+});
+btnShowSpacers.addEventListener("click", async () => {
+	chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+		chrome.tabs.sendMessage(tabs[0].id, { msg: "toggleSpacers" }, function (response) {
+			if (response.spacers) document.getElementById("btnShowSpacers").classList.add("active");
+			else document.getElementById("btnShowSpacers").classList.remove("active");
+		});
+	});
+});
+
+// ! ------------------------------------------ GET HEADERS ------------------------------------------
+// * Ready to use
+// TODO: Get all headers from the page and show them in popup
+let btnHeaders = document.getElementById("btnHeaders");
+tippy('#btnHeaders', {
+	content: 'Toggle Headers',
+});
+btnHeaders.addEventListener("click", async () => {
+	chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+		chrome.tabs.sendMessage(tabs[0].id, { msg: "showHeaders" }, function (response) {
+			if (response.headers) document.getElementById("btnHeaders").classList.add("active");
+			else document.getElementById("btnHeaders").classList.remove("active");
+		});
+	});
+});
+
+
+// ! ------------------------------------------ Analytics Events ------------------------------------------
+// * Ready to use
+// TODO: Show the analytics events on the current page
+let btnAnalytics = document.getElementById("btnAnalytics");
+tippy('#btnAnalytics', {
+	content: 'Toggle Analytics',
+});
+btnAnalytics.addEventListener("click", async () => {
+	chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+		chrome.tabs.sendMessage(tabs[0].id, { msg: "showAnalytics" }, function (response) {
+			if (response.analytics) document.getElementById("btnAnalytics").classList.add("active");
+			else document.getElementById("btnAnalytics").classList.remove("active");
+		});
+	});
+});
+
+// ! ------------------------------------------ Show Alt-text ------------------------------------------
+// * WIP
+// TODO: show alt-text on every image
+let btnAlttext = document.getElementById("btnAlttext");
+tippy('#btnAlttext', {
+	content: 'Toggle Alt-text',
+});
+btnAlttext.addEventListener("click", async () => {
+	chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+		chrome.tabs.sendMessage(tabs[0].id, { msg: "showAltText" }, function (response) {
+			if (response.alt) document.getElementById("btnAlttext").classList.add("active");
+			else document.getElementById("btnAlttext").classList.remove("active");
+		});
+	});
+});
+
+// ! ------------------------------------------ Get NAME from JIRA ------------------------------------------
+// * READY TO USE
+// TODO: Build Jira "CONT-ID" + "name" to create Versions or Workflows
+let btnJira = document.getElementById("btnJiraC");
+tippy('#btnJiraC', {
+	content: 'Copied to clipboard',
+	trigger: 'click',
+	allowHTML: true
+});
+btnJiraC.addEventListener("click", async () => {
 	let [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
 	chrome.scripting.executeScript({
 		target: { tabId: tab.id },
-		function: function(){
-			document.body.classList.toggle('show-bmw-grid-overlay');
-		},
+		function: getJiraTitle,
 	});
 });
+
+function getJiraTitle() {
+	// * Get the title of the current page and refactor it to a Jira name
+	let jiraName = document.getElementsByTagName('title')[0].innerText;
+	jiraName = jiraName.replace('[','').replace(']',' -').replace(/\|/g,'-').split(" - Virtuelle Welt Jira")[0];
+	jiraName = jiraName.replace('&', 'and').replace(/\"/g, '');
+
+	
+	// * Build an object with the Jira name and copy it to the clipboard
+	var input = document.createElement('textarea');
+    input.innerHTML = jiraName;
+    document.body.appendChild(input);
+    input.select();
+    var result = document.execCommand('copy');
+    document.body.removeChild(input);
+    return result;
+}
 
 // ! ------------------------------------------ Resize Window ------------------------------------------
 // * READY TO USE
@@ -232,6 +346,11 @@ btnBPReset.addEventListener("click", async () => {
 // TODO: Generate Lorem Ipsum
 
 let btnLoremIpsum = document.getElementById("btnLoremIpsum");
+tippy('#btnLoremIpsum', {
+	content: 'Copied to clipboard',
+	trigger: 'click',
+	allowHTML: true
+});
 btnLoremIpsum.addEventListener("click", async () => {
 	let [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
 	chrome.scripting.executeScript({
@@ -246,156 +365,6 @@ function createLoremIpsum(){
 	input.select();
 	var result = document.execCommand('copy');
 	document.body.removeChild(input);
-}
-
-// ! ------------------------------------------ Get NAME from JIRA ------------------------------------------
-// * READY TO USE
-// TODO: Build Jira "CONT-ID" + "name" to create Versions or Workflows
-let btnJira = document.getElementById("btnJiraC");
-tippy('#btnJiraC', {
-	content: 'Copied to clipboard',
-	trigger: 'click',
-	allowHTML: true
-});
-btnJiraC.addEventListener("click", async () => {
-	let [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
-	chrome.scripting.executeScript({
-		target: { tabId: tab.id },
-		function: getJiraTitle,
-	});
-});
-
-function getJiraTitle() {
-	// * Get the title of the current page and refactor it to a Jira name
-	let jiraName = document.getElementsByTagName('title')[0].innerText;
-	jiraName = jiraName.replace('[','').replace(']',' -').replace(/\|/g,'-').split(" - Virtuelle Welt Jira")[0];
-	jiraName = jiraName.replace('&', 'and').replace(/\"/g, '');
-
-	
-	// * Build an object with the Jira name and copy it to the clipboard
-	var input = document.createElement('textarea');
-    input.innerHTML = jiraName;
-    document.body.appendChild(input);
-    input.select();
-    var result = document.execCommand('copy');
-    document.body.removeChild(input);
-    return result;
-}
-
-// ! ------------------------------------------ Show spacers ------------------------------------------
-// * READY TO USE
-// TODO: Show BMW Spacers
-let btnShowSpacers = document.getElementById("btnShowSpacers");
-tippy('#btnShowSpacers', {
-	content: 'Toggle Spacers',
-});
-btnShowSpacers.addEventListener("click", async () => {
-	let [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
-	chrome.scripting.executeScript({
-		target: { tabId: tab.id },
-		function: showSpacers,
-	});
-});
-function showSpacers() {
-	// * get viewport width
-	let viewport = window.screen.availWidth;
-
-	// * set breakpoint for spacers
-	let bp = {};
-	if(viewport < 768){bp = {n:"mobile",ex:"spacer-exclude-mobile"}}
-	if(viewport >= 768 && viewport < 1280){bp = {n:"tablet",ex:"spacer-exclude-tablet"}}
-	if(viewport >= 1280 && viewport < 2000){bp = {n:"desktop",ex:"spacer-exclude-desktop"}}
-	if(viewport >= 2000){bp = {n:"desktop-large",ex:"spacer-exclude-desktop-large"}}
-
-	// * set spacers styles
-	let spacersArray = [
-		{"spacer-gnl":{height:"190px",heightS:"160px",bg:"192, 233, 243, 0.95",border:"#33A7FF",fs:"1.5rem"}},
-		{"spacer-xx-large":{height:"120px",heightS:"100px",bg:"244, 239, 252, 0.95",border:"#AA75FF",fs:"1.5rem"}},
-		{"spacer-x-large":{height:"100px",heightS:"90px",bg:"204, 245, 238, 0.95",border:"#95FFED",fs:"1.5rem"}},
-		{"spacer-large":{height:"80px",heightS:"60px",bg:"194, 212, 244, 0.95",border:"#6C97E5",fs:"1.5rem"}},
-		{"spacer-medium":{height:"50px",heightS:"40px",bg:"244, 241, 225, 0.95",border:"#DCC33E",fs:"1rem"}},
-		{"spacer-small":{height:"25px",heightS:"20px",bg:"223, 251, 223, 0.95",border:"#44E03E",fs:"1rem"}},
-		{"spacer-x-small":{height:"10px",heightS:"10px",bg:"243, 246, 206, 0.95",border:"#E3F31D",fs:"0.7rem"}},
-		{"spacer-xx-small":{height:"5px",heightS:"5px",bg:"247, 225, 187, 0.95",border:"#FFA0A0",fs:"0.6rem"}}
-	];
-	
-	// * toggle spacers
-	spacersArray.forEach(spacer => {
-		let dom = [...document.getElementsByClassName(`${Object.keys(spacer)[0]}`)];
-		dom.filter(spacerDOM => {
-			return !spacerDOM.classList.contains(`${bp.ex}`);
-		}).forEach(spacerDOM => { 
-			if(spacerDOM.style.backgroundColor == `rgba(${spacer[Object.keys(spacer)[0]].bg})`){
-				spacerDOM.style.backgroundColor = null;
-				spacerDOM.style.height = null;
-				spacerDOM.style.marginBottom = null;
-				spacerDOM.style.borderLeft = null;
-				spacerDOM.style.display = null;
-				spacerDOM.style.justifyContent = null;
-				spacerDOM.style.alignItems = null;
-				spacerDOM.innerHTML = "";
-			}else{
-				spacerDOM.style.backgroundColor = `rgba(${spacer[Object.keys(spacer)[0]].bg})`;
-				spacerDOM.style.borderLeft = `5px solid ${spacer[Object.keys(spacer)[0]].border}`;
-				if(bp.n == "mobile" || bp.n == "tablet"){
-					spacerDOM.style.height = `${spacer[Object.keys(spacer)[0]].heightS}`;
-				}else{
-					spacerDOM.style.height = `${spacer[Object.keys(spacer)[0]].height}`;
-				}
-				spacerDOM.style.marginBottom = "0px";
-				spacerDOM.style.display = "flex";
-				spacerDOM.style.justifyContent = "center";
-				spacerDOM.style.alignItems = "center";
-				spacerDOM.innerHTML = `<span class="h-center" style="font-weight:bold;font-size:calc(${spacer[Object.keys(spacer)[0]].fs} - 4px);display:block;">${spacer[Object.keys(spacer)[0]].height} - ${Object.keys(spacer)[0].split("spacer-")[1]}</span>`
-			}
-		});
-	});
-}
-
-
-// ! ------------------------------------------ GET HEADERS ------------------------------------------
-// * Ready to use
-// TODO: Get all headers from the page and show them in popup
-let btnHeaders = document.getElementById("btnHeaders");
-tippy('#btnHeaders', {
-	content: 'Toggle Headers',
-});
-btnHeaders.addEventListener("click", async () => {
-	let [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
-	chrome.scripting.executeScript({
-		target: { tabId: tab.id },
-		function: showHeaders,
-	});
-});
-
-function showHeaders() {
-	let hsTagNames = new Array();
-	for (let i = 1; i <= 6; i++) {
-		hsTagNames.push(...document.getElementsByTagName('h' + i));
-	}
-	hsTagNames.forEach((hl,i) => {
-		let regexMatch = /(headline|eyebrow|label)/
-		let type = null;
-		[...hl.classList].forEach(a => {
-			type = regexMatch.test(a) ? a : null
-		});
-		if(type){
-			if(document.getElementById("header-element-"+i)){
-				document.getElementById("header-element-"+i).remove();
-			}else{
-				let cords = hl.getBoundingClientRect();
-				let elm = document.createElement("div");
-				elm.id = "header-element-"+i;
-				elm.style.margin = "0px";
-				elm.style.lineHeight = "17px";
-				elm.style.color = "white";
-				elm.style.whiteSpace = "nowrap";
-				elm.style.zIndex = "9999";
-				elm.innerHTML = `<span style="border-radius:2px; padding:2px; font-size:13px; font-weight:bold; vertical-align:middle; background-color:rgba(255, 0, 0, 0.9);">${hl.tagName} - ${type}</span>`;
-				hl.prepend(elm);
-			}
-		}
-	});
 }
 
 // ! ------------------------------------------ UT3 Placeholder ------------------------------------------
@@ -421,7 +390,15 @@ let btnPageData = document.getElementById("btnPageData");
 btnPageData.addEventListener("click", async () => {
 	chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
 		chrome.tabs.sendMessage(tabs[0].id, { msg: "showPageData" }, function (response) {
-
+			if(response.showPageData){
+				chrome.storage.sync.set({showPageData: true}, function() {
+					btnPageData.classList.add("text-success");
+				});
+			}else{
+				chrome.storage.sync.set({showPageData: false}, function() {
+					btnPageData.classList.remove("text-success");
+				});
+			}
 		});
 	});
 });
@@ -433,7 +410,6 @@ let btnPreOrderFlag = document.getElementById("btnPreOrderFlag");
 btnPreOrderFlag.addEventListener("click", function () {
 	chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
 		chrome.tabs.sendMessage(tabs[0].id, { msg: "preorderflag" }, function (response) {
-			console.log(response)
 			if(response.preorder){
 				chrome.storage.sync.set({preorder: true}, function() {
 					btnPreOrderFlag.classList.add("text-success");
@@ -496,62 +472,6 @@ function toggleTemplates() {
 	})
 }
 
-// ! ------------------------------------------ Analytics Events ------------------------------------------
-// * WIP
-// TODO: Show the analytics events on the current page
-let btnAnalytics = document.getElementById("btnAnalytics");
-
-btnAnalytics.addEventListener("click", async () => {
-	let [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
-	chrome.scripting.executeScript({
-		target: { tabId: tab.id },
-		function: showAnalytics,
-	});
-});
-function showAnalytics() {
-	let result = Array.from(document.querySelectorAll("[analytics-event]")).map(e => {
-		let aria = e.getAttribute("aria-label") || e.innerText || e.getAttribute("href");
-		let name = e.getAttribute("analytics-event");
-		return ({aria:aria, name: name });
-	})
-	result.filter(e => {
-		if(!e.name.includes("footer") &&
-			!e.name.includes("topnav")){
-			return true;
-		}else{
-			return false;
-		}
-	})
-	.forEach((e,i) =>{
-		if(document.getElementById("event-element-"+i)){
-			document.getElementById("event-element-"+i).remove();
-		}else{
-			let elm = document.createElement("div");
-			elm.id = "event-element-"+i;
-			elm.style.margin = "0px";
-			elm.style.lineHeight = "17px";
-			elm.style.color = "white";
-			elm.style.whiteSpace = "nowrap";
-			elm.style.zIndex = "9999";
-			elm.innerHTML = `<span style="border-radius:2px; padding:2px; font-size:13px; font-weight:bold; vertical-align:middle; background-color:rgba(255, 0, 0, 0.9);">${e.name}</span>`;
-			document.querySelector("[analytics-event='"+e.name+"']").parentNode.appendChild(elm);
-		}
-	});
-}
-
-// ! ------------------------------------------ Resize Components ------------------------------------------
-// * WIP
-// TODO: resize components on the current page
-
-// let btnResize = document.getElementById("btnResize");
-// btnResize.addEventListener("click", async () => {
-// 	chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-// 		chrome.tabs.sendMessage(tabs[0].id, { msg: "resizeComponents" }, function (response) {
-
-// 		});
-// 	});
-// });
-
 // ! ------------------------------------------ Compare page ------------------------------------------
 // * WIP
 // TODO: compare current page with another env
@@ -562,61 +482,3 @@ btnCompareEnv.addEventListener("click", async () => {
 		url: '../compare/compare.html'
 	});
 });
-
-// ! ------------------------------------------ Show Alt-text ------------------------------------------
-// * WIP
-// TODO: compare current page with another env
-
-let btnAlttext = document.getElementById("btnAlttext");
-btnAlttext.addEventListener("click", async () => {
-	let [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
-	chrome.scripting.executeScript({
-		target: { tabId: tab.id },
-		function: showAltText,
-	});
-});
-
-function showAltText(){
-	Array.from(document.querySelectorAll("[alt]")).map(e => {
-		let name = e.getAttribute("alt");
-		let datasrc = e.getAttribute("src");
-		return ({name: name , datasrc: datasrc});
-	})
-	.forEach((e,i) =>{
-		if(document.getElementById("alt-text-element-"+i)){
-			document.getElementById("alt-text-element-"+i).remove();
-		}else{
-			let elm = document.createElement("div");
-			elm.id = "alt-text-element-"+i;
-			elm.style.margin = "0px";
-			elm.style.lineHeight = "17px";
-			elm.style.color = "white";
-			elm.style.whiteSpace = "nowrap";
-			elm.style.maxWidth = "80%";
-			elm.style.zIndex = "999999";
-			elm.innerHTML = `<span style="border-radius:2px; padding:2px; font-size:13px; font-weight:bold; vertical-align:middle; background-color:rgba(255, 0, 0, 0.9);">${e.name}</span>`;
-			document.querySelector("[src='"+e.datasrc+"']").parentNode.appendChild(elm);
-		}
-	});
-	Array.from(document.querySelectorAll("video")).map(e => {
-		let name = e.getAttribute("aria-label");
-		let id = e.getAttribute("data-video-id");
-		return ({name: name , id: id});
-	})
-	.forEach((e,i) =>{
-		if(document.getElementById("aria-label-element-"+i)){
-			document.getElementById("aria-label-element-"+i).remove();
-		}else{
-			let elm = document.createElement("div");
-			elm.id = "aria-label-element-"+i;
-			elm.style.margin = "0px";
-			elm.style.lineHeight = "17px";
-			elm.style.color = "white";
-			elm.style.whiteSpace = "nowrap";
-			elm.style.maxWidth = "80%";
-			elm.style.zIndex = "9999";
-			elm.innerHTML = `<span style="border-radius:2px; padding:2px; font-size:13px; font-weight:bold; vertical-align:middle; background-color:rgba(255, 0, 0, 0.9);">${e.name}</span>`;
-			document.querySelector("[data-video-id='"+e.id+"']").appendChild(elm);
-		}
-	});
-}
