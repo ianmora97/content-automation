@@ -66,8 +66,11 @@ function createPathsV2(url){
 		chrome.storage.sync.get("environments", (data2) => {
 			// * get AEM domain from local storage
 			let LSdomain = JSON.parse(data1.domain);
-			domainvec.push({d:`${LSdomain.aem}/editor.html/${LSdomain.root}`,n:"/editor.html 1"});
-			if(LSdomain.aem2 != undefined && LSdomain.aem2 != "") domainvec.push({d:`${LSdomain.aem2}/editor.html/${LSdomain.root2}`,n:"/editor.html 2"});
+			domainvec.push({d:`${LSdomain.aem}/editor.html/${LSdomain.root}`,n:"author 1"});
+			if(LSdomain.aem2 !== "undefined"){
+				alert(typeof LSdomain.aem2)
+				domainvec.push({d:`${LSdomain.aem2}/editor.html/${LSdomain.root2}`,n:"author 2"});
+			}
 			let rootPath = ``;
 			// * get all environments from local storage
 			let envs = JSON.parse(data2.environments);
@@ -101,12 +104,12 @@ function createPathsV2(url){
 			});
 			// * create the container for all paths
 			let paths_div = document.createElement("div");
-			let p_domain = document.createElement("p");
-			p_domain.innerHTML = `You are on <span class="text-se text-bold">${build.n}</span>`;
-			paths_div.appendChild(p_domain);
+			paths_div.classList.add("row");
+
 			for(const path of domainvec1){ // * iterate through the paths
 				let urlSplit = url.split(build.d)[1];
 				let div_payloads = document.createElement("div");
+				div_payloads.classList.add("col-6");
 				div_payloads.innerHTML = `
 					<div class="mb-2">
 						<h6>${path.n}:</h6><br>
@@ -114,18 +117,19 @@ function createPathsV2(url){
 							<button class="btn-sm-primary me-2" id="openLink-${path.n.replace(/\/|\./g,"")}" data-url="${path.d + urlSplit}"><i class="fas fa-external-link-alt"></i> Open</button>
 							<button class="btn-outline-sm-primary me-2 btn-clip" id="clip-${path.n.replace(/\/|\./g,"").replace(' ','-')}" data-clipboard-text="${path.d + urlSplit}"><i class="fas fa-copy"></i> Copy</button>
 						</div>
+						<small class="text-se mt-2 d-block text-bold">${path.d}</small>
 					</div>
+					<hr>
 				`;
-				let hr = document.createElement("hr");
 				let linkAddEvent = document.createElement("p");
 				linkAddEvent.classList = "link";
 				linkAddEvent.innerHTML = `${path.d + urlSplit}`;
 				paths_div.appendChild(div_payloads);
 				// paths_div.appendChild(linkAddEvent);
-				paths_div.appendChild(hr);
 				
 			}
-			document.body.appendChild(paths_div);
+			document.getElementById("envs").appendChild(paths_div);
+
 			for(const path of domainvec1){
 				let openLink = document.getElementById(`openLink-${path.n.replace(/\/|\./g,"")}`);
 				let dataURL = openLink.getAttribute("data-url");
@@ -480,5 +484,78 @@ let btnCompareEnv = document.getElementById("btnCompareEnv");
 btnCompareEnv.addEventListener("click", async () => {
 	chrome.tabs.create({
 		url: '../compare/compare.html'
+	});
+});
+
+// ! ------------------------------------------ Get cosy Info ------------------------------------------
+// * Ready to use
+// TODO: get cosy info from all cosys
+
+let btnCosyInfo = document.getElementById("btnCosyInfo");
+btnCosyInfo.addEventListener("click", async () => {
+	let [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+	chrome.scripting.executeScript({
+		target: { tabId: tab.id },
+		function: toggleCosyInfo,
+	});
+});
+
+function toggleCosyInfo(){
+	Array.from(document.querySelectorAll("img"))
+	.filter(e => e.src.includes("https://cache.bmwusa.com/cosy.arox?"))
+	.map(e => {
+		let datasrc = e.getAttribute("src");
+		let paint = datasrc.split("&paint=")[1].split("&")[0];
+		let vehicle = datasrc.split("&vehicle=")[1].split("&")[0];
+		return ({datasrc: datasrc, paint: paint, vehicle: vehicle});
+	})
+	.forEach((e,i) =>{
+		if(document.getElementById("cosy-info-element-"+i)){
+			document.getElementById("cosy-info-element-"+i).remove();
+		}else{
+			fetch('https://configure.bmwusa.com/UBYOConfigurator/v4/BM/options/'+e.vehicle)
+			.then(response => response.json())
+			.then(data => {
+				let p = data.filter(f => f.code == e.paint)[0];
+				let rgb = p.rgbValues;
+				p = `${p.name}`;
+				let elm = document.createElement("div");
+				elm.id = "cosy-info-element-"+i;
+				elm.style.margin = "5px auto";
+				elm.style.lineHeight = "17px";
+				elm.style.maxWidth = "70%";
+				elm.style.zIndex = "999999";
+				elm.innerHTML = `
+				<div style="border-radius:10px; padding:10px; font-size:15px; box-shadow: 0 0 20px -5px rgba(0, 0, 0, 0.5); vertical-align:middle; background-color:rgba(255, 255, 255, 1);color:black;">
+					<b style="color:red;">${e.vehicle}</b><br>
+					<b style="color: rgb(${rgb[0]},${rgb[1]},${rgb[2]})">${p}</b>
+				</div>`;
+				document.querySelector("[src='"+e.datasrc+"']").parentNode.appendChild(elm);
+			});
+		}
+	});
+}
+
+// ! ------------------------------------------ Show debug Mode DC19 ------------------------------------------
+// * WIP
+// TODO: show debug mode offers component
+let btndc19 = document.getElementById("btndc19");
+
+btndc19.addEventListener("click", async () => {
+	chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+		chrome.tabs.sendMessage(tabs[0].id, { msg: "btndc19" }, function (response) {
+		});
+	});
+});
+
+// ! ------------------------------------------ Show JumpLinks ------------------------------------------
+// * WIP
+// TODO: show debug mode offers component
+let btnJumpLinks = document.getElementById("btnJumpLinks");
+
+btnJumpLinks.addEventListener("click", async () => {
+	chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+		chrome.tabs.sendMessage(tabs[0].id, { msg: "btnJumpLinks" }, function (response) {
+		});
 	});
 });

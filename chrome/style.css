@@ -344,9 +344,9 @@ button.current {
   background-color: #333f99;
 }
 .btn-outline-sm-primary{
-  color: #4659e4;
+  color: #ffffff;
   background-color: transparent;
-  border: 1px solid #4659e4 ;
+  border: 1px solid #ffffff ;
   transition: all 0.2s ease-in-out;
   padding: 3px 5px;
   font-size: 10px;
@@ -354,6 +354,7 @@ button.current {
 .btn-outline-sm-primary:hover{
   background-color: #4659e4;
   color: #ffffff;
+  border: 1px solid #4659e4 ;
 }
 .btn-min{
   min-width: 45px;
@@ -384,6 +385,20 @@ button.current {
 }
 .a-i-c{
   align-items: center;
+}
+
+/* ! ------------------- COLUMNS & ROW ------------------- */
+.row{
+  display: flex;
+  flex-wrap: wrap;
+}
+.col-3{
+  flex: 0 0 auto;
+  width: 25%;
+}
+.col-6{
+  flex: 0 0 auto;
+  width: 50%;
 }
 
 .form-sm{

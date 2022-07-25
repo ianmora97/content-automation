@@ -78,8 +78,55 @@ chrome.runtime.onMessage.addListener((data, sender, sendResponse) => {
 		let alt = window.localStorage.getItem('ca_alt') == null ? false : true;
 		let analytics = window.localStorage.getItem('ca_analytics') == null ? false : true;
 		sendResponse({grid: grid, spacers: spacers, headers: headers, alt: alt, analytics: analytics});
+	}else if(data.msg == 'btndc19'){
+		btndc19();
+	}else if(data.msg == 'btnJumpLinks'){
+		btnJumpLinks();
 	}
 });
+function btnJumpLinks(){
+	Array.from(document.querySelectorAll(".nav-anchorlink")).map(e => {
+		let a = e.firstChild;
+		let id = a.getAttribute("id");
+		return ({id: id});
+	})
+	.forEach((e,i) =>{
+		if(document.getElementById("jumplink-element-"+i)){
+			document.getElementById("jumplink-element-"+i).remove();
+		}else{
+			let elm = document.createElement("div");
+			elm.id = "jumplink-element-"+i;
+			elm.style.height = "40px";
+			elm.style.padding = "6px";
+			elm.style.lineHeight = "25px";
+			elm.style.fontWeight = "bold";
+			elm.style.color = "white";
+			elm.style.maxWidth = "100%";
+			elm.style.textAlign = "center";
+			elm.style.zIndex = "999999";
+			elm.style.backgroundColor = "#00bcd4";
+			elm.innerHTML = `${e.id}`;
+			document.querySelector("[id='"+e.id+"']").appendChild(elm);
+		}
+	});
+}
+function checkdc19LS(){
+	let dc19 = window.localStorage.getItem('ca_debugcd19') == null ? false : true;
+	Array.from(document.querySelectorAll('.standalone-lease-finance--debug-label'))
+	.forEach(e =>{
+		e.style.display = 'none';
+	});
+	Array.from(document.querySelectorAll('.regional-offer--wrapper'))
+	.forEach(e =>{
+		e.style.border = '0px solid transparent';
+	});
+}
+checkdc19LS();
+function btndc19(){
+	let newUrl = window.location.href + "?debugMode=DC19&modelCode=22XD";
+	window.localStorage.setItem('ca_debugcd19', 'true');
+	window.location.href = newUrl;
+}
 
 function showAltText(){
 	let resu = Array.from(document.querySelectorAll("[alt]")).map(e => {
@@ -96,8 +143,8 @@ function showAltText(){
 			elm.style.margin = "0px";
 			elm.style.lineHeight = "17px";
 			elm.style.color = "white";
-			elm.style.whiteSpace = "nowrap";
-			elm.style.maxWidth = "80%";
+			elm.style.maxWidth = "100%";
+			elm.style.textAlign = "center";
 			elm.style.zIndex = "999999";
 			elm.innerHTML = `<span style="border-radius:2px; padding:2px; font-size:13px; font-weight:bold; vertical-align:middle; background-color:rgba(255, 0, 0, 0.9);">${e.name}</span>`;
 			document.querySelector("[src='"+e.datasrc+"']").parentNode.appendChild(elm);
@@ -117,9 +164,9 @@ function showAltText(){
 			elm.style.margin = "0px";
 			elm.style.lineHeight = "17px";
 			elm.style.color = "white";
-			elm.style.whiteSpace = "nowrap";
-			elm.style.maxWidth = "80%";
-			elm.style.zIndex = "9999";
+			elm.style.maxWidth = "100%";
+			elm.style.textAlign = "center";
+			elm.style.zIndex = "999999";
 			elm.innerHTML = `<span style="border-radius:2px; padding:2px; font-size:13px; font-weight:bold; vertical-align:middle; background-color:rgba(255, 0, 0, 0.9);">${e.name}</span>`;
 			document.querySelector("[data-video-id='"+e.id+"']").appendChild(elm);
 		}
