@@ -68,7 +68,6 @@ function createPathsV2(url){
 			let LSdomain = JSON.parse(data1.domain);
 			domainvec.push({d:`${LSdomain.aem}/editor.html/${LSdomain.root}`,n:"author 1"});
 			if(LSdomain.aem2 !== "undefined"){
-				alert(typeof LSdomain.aem2)
 				domainvec.push({d:`${LSdomain.aem2}/editor.html/${LSdomain.root2}`,n:"author 2"});
 			}
 			let rootPath = ``;

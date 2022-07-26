@@ -31,12 +31,12 @@
 			},
 			"description": "Toggle grid"
 		},
-		"jiraTicket": {
+		"togglealttext": {
 			"suggested_key": {
 				"default": "Ctrl+Shift+2",
-				"mac": "MacCtrl+D"
+				"mac": "MacCtrl+A"
 			},
-			"description": "Copy Jira Ticket"
+			"description": "Alt-Text"
 		},
 		"toggleSpacers": {
 			"suggested_key": {

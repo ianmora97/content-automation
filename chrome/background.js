@@ -16,9 +16,9 @@ chrome.commands.onCommand.addListener(function (command) {
                 chrome.tabs.sendMessage(tabs[0].id, { msg: "showHeaders" });
             })
             break;
-        case 'jiraTicket':
+        case 'togglealttext':
             chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-                chrome.tabs.sendMessage(tabs[0].id, { msg: "jiraTicket" });
+                chrome.tabs.sendMessage(tabs[0].id, { msg: "showAltText" });
             })
             break;
         default:
